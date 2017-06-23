@@ -1,0 +1,39 @@
+console.log("Try POST image file to server......!!");
+var boundary = "----7MA4YWxkTrZu0gW";
+var xhr = new XMLHttpRequest();
+var body = '--' + boundary + '\r\n'
+         // Parameter name is "file" and local filename is "temp.txt"
+         + 'Content-Disposition: form-data; name="userPhoto";'
+         + 'filename="test.jpg"\r\n'
+         + 'Content-type: image/jpeg\r\n\r\n'
+         + 'toDataURL(image_file)aaaaaaaaaaaaaa' + '\r\n'
+         + boundary + '--';
+
+console.log(body);
+xhr.open("POST", "http://localhost:3000/api/photo", true);
+xhr.setRequestHeader(
+    "Content-type", "multipart/form-data; boundary="+boundary);
+xhr.onreadystatechange = function ()
+{
+    if (xhr.readyState == 4 && xhr.status == 200)
+        console.log("File uploaded!");
+    else
+        console.log("Failed with status = " + xhr.status);
+}
+xhr.send(body);
+
+
+var xhr = new XMLHttpRequest();
+xhr.onreadystatechange = function() {
+if (xhr.readyState === XMLHttpRequest.HEADERS_RECEIVED) {
+    console.log('HEADERS_RECEIVED');
+} else if(xhr.readyState === XMLHttpRequest.DONE) {
+    console.log('DONE');
+    }
+}
+var boundary = "----7MA4YWxkTrZu0gW";
+var body = '--' + boundary + '\r\nContent-Disposition: form-data; name="userPhoto";filename="IMG_00000025.jpg"\r\nContent-type: image/jpeg\r\n\r\n abcdefg###################\r\n+ boundary + '--';
+xhr.open("POST", "http://localhost:3000/api/photo");
+xhr.setRequestHeader(
+    "Content-type", "multipart/form-data; boundary="+boundary);
+xhr.send(body);

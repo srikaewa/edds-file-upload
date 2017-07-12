@@ -37,6 +37,6 @@ app.post('/api/photo',function(req,res){
 });
 
 app.listen(3009,function(){
-  console.log("Eucalyptus Disease Diagnosis System - Backend");
+  console.log("Eucalyptus Disease Diagnosis System - Backend Server");
   console.log("Server running on port 3009");
 });

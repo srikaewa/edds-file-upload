@@ -2,6 +2,7 @@
   "name": "file_upload",
   "version": "0.0.1",
   "dependencies": {
+    "body-parser": "^1.17.2",
     "express": "^4.13.3",
     "form-data": "^2.1.4",
     "gridfs-stream": "^1.1.1",

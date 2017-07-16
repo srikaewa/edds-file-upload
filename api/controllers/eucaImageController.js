@@ -34,6 +34,7 @@ exports.upload_file = function(req,res){
     var new_image_data = new EucaImage();
     new_image_data.imageId = new_image_data._id;
     new_image_data.filename = req.file.originalname;
+    new_image_data.uploaded = true;
     console.log('New image data: ' + new_image_data);
 
     /*** returning info about uploaded file ***/

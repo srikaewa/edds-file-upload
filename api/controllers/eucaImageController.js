@@ -7,7 +7,7 @@ var EucaImage = mongoose.model('EucaImages');
 var multer	=	require('multer');
 var storage	=	multer.diskStorage({
   destination: function (req, file, callback) {
-    callback(null, '../../uploads');
+    callback(null, '../EucaUploads');
   },
   filename: function (req, file, callback) {
     //callback(null, file.fieldname + '-' + Date.now());
@@ -15,7 +15,6 @@ var storage	=	multer.diskStorage({
   }
 });
 var upload = multer({ storage : storage}).single('userPhoto');
-
 
 exports.check_file_server = function(req,res){
         res.end("200");

@@ -131,11 +131,11 @@ exports.delete_a_image_data = function(req, res) {
 };
 
 exports.get_disease_type = function(req, res) {
-  console.log('GET disease_type for image [' + req.params.imageId + ']');
   EucaImage.findById(req.params.imageId, function(err, eucaImage) {
     if (err)
       res.send(err);
     //var res_end = '{"imageId":"' + eucaImage.imageId + '","diseasetype":"' + eucaImage.diseasetype + '", "stage":"' + eucaImage.stage + '","level":"' + eucaImage.level + '","lastedit":"' + eucaImage.lastedit + '","elapsetime":"'+ eucaImage.elapsetime + '"}';
+    console.log('GET disease_type=' + eucaImage.diseasetype + ' for image [' + eucaImage.imageId + ']');
     res.json(eucaImage);
   });
 };

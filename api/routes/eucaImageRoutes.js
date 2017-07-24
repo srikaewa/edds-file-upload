@@ -21,4 +21,10 @@ module.exports = function(app) {
   app.route('/api/photo')
     .post(eucaImageList.upload_file);
 
+  app.route('/runClassify/:imageId')
+    .get(eucaImageList.run_classify);
+
+  app.route('/getDiseaseType/:imageId')
+    .get(eucaImageList.get_disease_type);
+
 };

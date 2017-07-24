@@ -34,12 +34,52 @@ exports.upload_file = function(req,res){
     new_image_data.imageId = new_image_data._id;
     new_image_data.filename = req.file.originalname;
     new_image_data.uploaded = true;
+    new_image_data.save();
+
     console.log('New image data: ' + new_image_data);
 
     /*** returning info about uploaded file ***/
 		//res.end('{"status":"201","uploadedFilename":"' + req.file.originalname + '"}');
     res.json(new_image_data);
 	});
+};
+
+exports.run_classify = function(req, res) {
+  EucaImage.findById(req.params.imageId, function(err, eucaImage)
+  {
+    if(err)
+      res.send(err);
+    console.log('GET image [' + eucaImage.imageId + ']');
+
+    var exec = require('child_process').exec;
+    var result = '';
+    var child = exec("../../edds/run_classifyEuca.sh /usr/local/MATLAB/MATLAB_Runtime/v92/ ../EucaUploads/"+ eucaImage.filename + " " + eucaImage.imageId + " " + "http://localhost:3009/eucaImages/");
+    //var child = exec('ls -al');
+
+    child.stdout.on('data', function(data) {
+        result += data;
+    });
+
+    child.on('close', function() {
+        console.log('done');
+        console.log(result);
+    });
+  });
+  /*
+  var exec = require('child_process').exec;
+
+  var result = '';
+
+  var child = exec("/edds/run_classifyEuca.sh /usr/local/MATLAB/MATLAB_Runtime/v92/ ../EucaUploads/"+ filename + " " + imageId + "http://localhost:3009/runClassify/");
+
+  child.stdout.on('data', function(data) {
+      result += data;
+  });
+
+  child.on('close', function() {
+      console.log('done');
+      console.log(result);
+  }); */
 };
 
 exports.list_all_images = function(req, res) {
@@ -86,5 +126,15 @@ exports.delete_a_image_data = function(req, res) {
     if (err)
       res.send(err);
     res.json({ message: 'Eucalyptus image[' + req.params.imageId + '] successfully deleted' });
+  });
+};
+
+exports.get_disease_type = function(req, res) {
+  console.log('GET disease_type for image [' + req.params.imageId + ']');
+  EucaImage.findById(req.params.imageId, function(err, eucaImage) {
+    if (err)
+      res.send(err);
+    //var res_end = '{"imageId":"' + eucaImage.imageId + '","diseasetype":"' + eucaImage.diseasetype + '", "stage":"' + eucaImage.stage + '","level":"' + eucaImage.level + '","lastedit":"' + eucaImage.lastedit + '","elapsetime":"'+ eucaImage.elapsetime + '"}';
+    res.json(eucaImage);
   });
 };

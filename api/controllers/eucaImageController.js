@@ -53,7 +53,7 @@ exports.run_classify = function(req, res) {
 
     var exec = require('child_process').exec;
     var result = '';
-    var child = exec("../../edds/run_classifyEuca.sh /usr/local/MATLAB/MATLAB_Runtime/v92/ ../EucaUploads/"+ eucaImage.filename + " " + eucaImage.imageId + " " + "http://localhost:3009/eucaImages/");
+    var child = exec("../edds/run_classifyEuca.sh /usr/local/MATLAB/MATLAB_Runtime/v92/ ../EucaUploads/"+ eucaImage.filename + " " + eucaImage.imageId + " " + "http://localhost:3009/eucaImages/");
     //var child = exec('ls -al');
 
     child.stdout.on('data', function(data) {

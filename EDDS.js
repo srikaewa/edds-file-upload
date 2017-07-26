@@ -1,139 +1,53 @@
-var http = require("http");
-var url = require("url");
-var multipart = require("multipart");
-var sys = require("sys");
-var fs = require("fs");
+var express	=	require("express");
+var app	=	express();
 
-var server = http.createServer(function(req, res) {
-    // Simple path-based request dispatcher
-    switch (url.parse(req.url).pathname) {
-        case '/':
-            display_form(req, res);
-            break;
-        case '/upload':
-            upload_file(req, res);
-            break;
-        default:
-            show_404(req, res);
-            break;
-    }
-});
+/*****************
+ api
+ *****************/
+var mongoose = require('mongoose');
+var EucaImage = require('./api/models/eucaImageModel');
+var bodyParser = require('body-parser');
 
-// Server would listen on port 8000
-server.listen(3000, function(){
-  console.log("Eucalyptus Disease Diagnosis System - Backend");
-  console.log("Server running on port 3000");
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost/EucaImageDb');
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+var routes = require('./api/routes/eucaImageRoutes');
+routes(app);
+
+app.use(function(req, res) {
+  res.status(404).send({url: req.originalUrl + ' not found'})
 });
 
 /*
- * Display upload form
- */
-function display_form(req, res) {
-    res.setHeader(200, {"Content-Type": "text/html"});
-    res.write(
-        '<form action="/upload" method="post" enctype="multipart/form-data">'+
-        '<input type="file" name="upload-file">'+
-        '<input type="submit" value="Upload">'+
-        '</form>'
-    );
-    res.close();
-}
+app.get('/',function(req,res){
+      res.sendFile(__dirname + "/index.html");
+}); */
 
 /*
- * Create multipart parser to parse given request
- */
-function parse_multipart(req) {
-    var parser = multipart.parser();
+app.post('/api/photo',function(req,res){
+  console.log("Upload POSTing....");
+	upload(req,res,function(err) {
+		if(err) {
+      console.log("Error uploading file.");
+			return res.end("Error uploading file.");
+		}
+    console.log("File " + req.file.originalname + " upload successfully!");
+    console.log("Uploading at time " + new Date());
 
-    // Make parser use parsed request headers
-    parser.headers = req.headers;
+    var new_image_data = new EucaImage();S
+    new_image_data.imageId = new_image_data._id;
+    new_image_data.filename = req.file.originalname;
+    console.log('New image data: ' + new_image_data);
 
-    // Add listeners to request, transfering data to parser
+		res.end('{"status":"201","uploadedFilename":"' + req.file.originalname + '"}');
+	});
+});
+*/
 
-    req.addListener("data", function(chunk) {
-        parser.write(chunk);
-    });
-
-    req.addListener("end", function() {
-        parser.close();
-    });
-
-    return parser;
-}
-
-/*
- * Handle file upload
- */
-function upload_file(req, res) {
-    // Request body is binary
-    req.setBodyEncoding("binary");
-
-    // Handle request as multipart
-    var stream = parse_multipart(req);
-
-    var fileName = null;
-    var fileStream = null;
-
-    // Set handler for a request part received
-    stream.onPartBegin = function(part) {
-        sys.debug("Started part, name = " + part.name + ", filename = " + part.filename);
-
-        // Construct file name
-        fileName = "./uploads/" + stream.part.filename;
-
-        // Construct stream used to write to file
-        fileStream = fs.createWriteStream(fileName);
-
-        // Add error handler
-        fileStream.addListener("error", function(err) {
-            sys.debug("Got error while writing to file '" + fileName + "': ", err);
-        });
-
-        // Add drain (all queued data written) handler to resume receiving request data
-        fileStream.addListener("drain", function() {
-            req.resume();
-        });
-    };
-
-    // Set handler for a request part body chunk received
-    stream.onData = function(chunk) {
-        // Pause receiving request data (until current chunk is written)
-        req.pause();
-
-        // Write chunk to file
-        sys.debug("Writing chunk");
-        fileStream.write(chunk);
-    };
-
-    // Set handler for request completed
-    stream.onEnd = function() {
-        // As this is after request completed, all writes should have been queued by now
-        // So following callback will be executed after all the data is written out
-        fileStream.addListener("drain", function() {
-            // Close file stream
-            fileStream.end();
-            // Handle request completion, as all chunks were already written
-            upload_complete(res);
-        });
-    };
-}
-
-function upload_complete(res) {
-    sys.debug("Request complete");
-
-    // Render response
-    res.sendHeader(200, {"Content-Type": "text/plain"});
-    res.write("Thanks for playing!");
-    res.end();
-
-    sys.puts("\n=> Done");
-}
-
-/*
- * Handles page not found error
- */
-function show_404(req, res) {
-    res.sendHeader(404, {"Content-Type": "text/plain"});
-    res.write("You r doing it rong!");
-    res.end();
-}
+app.listen(3009,function(){
+  console.log("Eucalyptus Disease Diagnosis System - Backend Server");
+  console.log("Server running on port 3009 - " + new Date());
+});

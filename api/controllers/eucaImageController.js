@@ -1,6 +1,5 @@
 'use strict';
 
-
 var mongoose = require('mongoose');
 var EucaImage = mongoose.model('EucaImages');
 
@@ -29,10 +28,16 @@ exports.upload_file = function(req,res){
 		}
     console.log("File " + req.file.originalname + " upload successfully!");
     console.log("Uploading at time " + new Date());
+    console.log("req -> " + req.query.submitter);
 
     var new_image_data = new EucaImage();
     new_image_data.imageId = new_image_data._id;
     new_image_data.filename = req.file.originalname;
+    new_image_data.submit = new Date();
+    new_image_data.lastedit = new_image_data.submit;
+    new_image_data.submitter = req.query.submitter;
+    new_image_data.latitude = req.query.latitude;
+    new_image_data.longitude = req.query.longitude;
     new_image_data.uploaded = true;
     new_image_data.save();
 
@@ -112,10 +117,10 @@ exports.read_a_image_data = function(req, res) {
 };
 
 exports.update_a_image_data = function(req, res) {
-  console.log('PUT image [' + req.params.imageId + ']');
   EucaImage.findOneAndUpdate({_id: req.params.imageId}, req.body, {new: true}, function(err, task) {
     if (err)
       res.send(err);
+    console.log('PUT image with ' + task);
     res.json(task);
   });
 };
@@ -135,7 +140,7 @@ exports.get_disease_type = function(req, res) {
     if (err)
       res.send(err);
     //var res_end = '{"imageId":"' + eucaImage.imageId + '","diseasetype":"' + eucaImage.diseasetype + '", "stage":"' + eucaImage.stage + '","level":"' + eucaImage.level + '","lastedit":"' + eucaImage.lastedit + '","elapsetime":"'+ eucaImage.elapsetime + '"}';
-    console.log('GET disease_type=' + eucaImage.diseasetype + ' for image [' + eucaImage.imageId + ']');
+    console.log('GET disease_type=' + eucaImage.diseasetype + ' for image [' + eucaImage.imageId + '] submitted by ' + eucaImage.submitter);
     res.json(eucaImage);
   });
 };

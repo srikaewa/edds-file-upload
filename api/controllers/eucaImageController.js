@@ -117,6 +117,8 @@ exports.read_a_image_data = function(req, res) {
 };
 
 exports.update_a_image_data = function(req, res) {
+  //console.log('UPDATE image - ' + req.body.lastedit);
+  req.body.lastedit = new Date();
   EucaImage.findOneAndUpdate({_id: req.params.imageId}, req.body, {new: true}, function(err, task) {
     if (err)
       res.send(err);

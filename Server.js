@@ -1,5 +1,18 @@
 var express	=	require("express");
 var app	=	express();
+<<<<<<< HEAD
+=======
+var storage	=	multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null, '../uploads');
+  },
+  filename: function (req, file, callback) {
+    //callback(null, file.fieldname + '-' + Date.now());
+    callback(null, file.originalname);
+  }
+});
+var upload = multer({ storage : storage}).single('userPhoto');
+>>>>>>> ca0720ed40dbf4565190bccea0c1295bcd4b8032
 
 /*****************
  api

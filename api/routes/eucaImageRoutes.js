@@ -2,6 +2,8 @@
 module.exports = function(app) {
   var eucaImageList = require('../controllers/eucaImageController');
 
+  // admin Routes
+
 
   // todoList Routes
   app.route('/eucaImages')
@@ -27,4 +29,12 @@ module.exports = function(app) {
   app.route('/getDiseaseType/:imageId')
     .get(eucaImageList.get_disease_type);
 
+  app.route('/eutech/eucaImages')
+    .get(eucaImageList.eutech_list_all_images);
+
+  app.route('/eutech/eucaImages/:imageId')
+    .get(eucaImageList.eutech_read_a_image_data);
+
+  app.route('/eutech/eucaImages/:imageId/delete')
+    .post(eucaImageList.eutech_delete_a_image_data);
 };

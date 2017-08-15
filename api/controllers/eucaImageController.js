@@ -96,6 +96,14 @@ exports.list_all_images = function(req, res) {
   });
 };
 
+exports.eutech_list_all_images = function(req, res) {
+  EucaImage.find({}, function(err, eucaImage) {
+    if (err)
+      res.send(err);
+    res.render('index.ejs', {eucaImages: eucaImage});
+  });
+};
+
 exports.create_a_image_data = function(req, res) {
   var new_image_data = new EucaImage(req.body);
   new_image_data.imageId = new_image_data._id;
@@ -108,6 +116,15 @@ exports.create_a_image_data = function(req, res) {
 };
 
 exports.read_a_image_data = function(req, res) {
+  console.log('GET image [' + req.params.imageId + ']');
+  EucaImage.findById(req.params.imageId, function(err, eucaImage) {
+    if (err)
+      res.send(err);
+    res.json(eucaImage);
+  });
+};
+
+exports.eutech_read_a_image_data = function(req, res) {
   console.log('GET image [' + req.params.imageId + ']');
   EucaImage.findById(req.params.imageId, function(err, eucaImage) {
     if (err)
@@ -134,6 +151,18 @@ exports.delete_a_image_data = function(req, res) {
     if (err)
       res.send(err);
     res.json({ message: 'Eucalyptus image[' + req.params.imageId + '] successfully deleted' });
+  });
+};
+
+exports.eutech_delete_a_image_data = function(req, res) {
+  console.log("Removing " + req.params.imageId);
+  EucaImage.remove({
+    _id: req.params.imageId
+  }, function(err, eucaImage) {
+    if (err)
+      res.send(err);
+    //res.json({ message: 'Eucalyptus image[' + req.params.imageId + '] successfully deleted' });
+    res.redirect('/eutech/eucaImages')
   });
 };
 

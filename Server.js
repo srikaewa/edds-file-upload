@@ -1,18 +1,5 @@
 var express	=	require("express");
 var app	=	express();
-<<<<<<< HEAD
-=======
-var storage	=	multer.diskStorage({
-  destination: function (req, file, callback) {
-    callback(null, '../uploads');
-  },
-  filename: function (req, file, callback) {
-    //callback(null, file.fieldname + '-' + Date.now());
-    callback(null, file.originalname);
-  }
-});
-var upload = multer({ storage : storage}).single('userPhoto');
->>>>>>> ca0720ed40dbf4565190bccea0c1295bcd4b8032
 
 /*****************
  api
@@ -24,15 +11,27 @@ var bodyParser = require('body-parser');
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/EucaImageDb');
 
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 var routes = require('./api/routes/eucaImageRoutes');
 routes(app);
 
+var path = require('path');
+var dir = path.join(__dirname, '../EucaUploads');
+var dir2 = path.join(__dirname, 'public');
+
+console.log("Dir = " + dir2);
+
+app.use(express.static(dir));
+app.use(express.static(dir2));
+
 app.use(function(req, res) {
   res.status(404).send({url: req.originalUrl + ' not found'})
 });
+
+app.set('view engine', 'ejs');
 
 /*
 app.get('/',function(req,res){

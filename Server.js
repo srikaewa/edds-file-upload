@@ -17,6 +17,36 @@ app.use(bodyParser.json());
 var moment = require('moment');
 app.locals.moment = moment;
 
+/**** authentication ****/
+var passport = require('passport');
+var flash    = require('connect-flash');
+
+require('./config/passport')(passport); // pass passport for configuration
+
+var morgan       = require('morgan');
+var cookieParser = require('cookie-parser');
+var session      = require('express-session');
+
+//var configDB = require('./config/database.js');
+
+/***** authentication *****/
+app.use(morgan('dev')); // log every request to the console
+app.use(cookieParser()); // read cookies (needed for auth)
+
+// required for passport
+app.use(session({ secret: 'eutecheedds', resave: false, saveUninitialized: true })); // session secret
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+app.use(flash()); // use connect-flash for flash messages stored in session
+
+app.use(function (req, res, next) {
+  res.locals.user = req.user;
+  next();
+});
+
+require('./api/routes/authenRoutes')(app, passport);
+/**************************/
+
 var routes = require('./api/routes/eucaImageRoutes');
 routes(app);
 
@@ -36,28 +66,14 @@ app.use('/script',express.static(dir3));
 app.use('/css',express.static(dir4));
 //app.use(express.static(dir2));
 
+
+
 app.use(function(req, res) {
   res.status(404).send({url: req.originalUrl + ' not found'})
 });
 
 
 app.set('view engine', 'ejs');
-
-/*
-@param {string, required} staticFiles The directory where your album starts - can contain photos or images
-@param {string, required} urlRoot The root URL which you pass into the epxress router in app.use (no way of obtaining this otherwise)
-@param {string, optional} title Yup, you guessed it - the title to display on the root gallery
-@param {boolean, optional} render Default to true. If explicitly set to false, rendering is left to the next function in the chain - see below.
-@param {string, optional} thumbnail.width Thumbnail image width, defaults '200'
-@param {string, optional} thumbnail.height as above
-@param {string, optional} image.width Large images width defaults '100%'
-@param {string, optional} image.height as above
-*/
-app.use('/gallery', require('node-gallery')({
-  staticFiles : 'resources/photos',
-  urlRoot : 'gallery',
-  title : 'Example Gallery'
-}));
 
 /*
 app.get('/',function(req,res){

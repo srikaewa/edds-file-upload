@@ -21,38 +21,40 @@
 </head>
 <body>
 <div>
-  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-  <!-- Brand and toggle get grouped for better mobile display -->
-  <div class="navbar-header">
-    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-      <span class="sr-only">Toggle navigation</span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </button>
-    <a class="navbar-brand" href="#"><span>Eu-Tech</span></a>
-  </div>
+  <!-- Begin Nav bar -->
+  <div class="container">
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#"><span>Eu-Tech</span></a>
+    </div>
 
-  <!-- Collect the nav links, forms, and other content for toggling -->
-  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-    <ul class="nav navbar-nav">
-      <li class="active"><a href="/eutech/eucaImages">Home</a></li>
-      <li><a href="#">Link</a></li>
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-        <ul class="dropdown-menu">
-          <li><a href="#">Action</a></li>
-          <li><a href="#">Another action</a></li>
-          <li><a href="#">Something else here</a></li>
-          <li class="divider"></li>
-          <li><a href="#">Separated link</a></li>
-          <li class="divider"></li>
-          <li><a href="#">One more separated link</a></li>
-        </ul>
-      </li>
-    </ul>
-  </div><!-- /.navbar-collapse -->
-</nav>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="/eutech/eucaImages">Home</a></li>
+        <li><a href="/eutech/eucaImages">Console</a></li>
+        <li><p class="counter navbar-text"></li>
+      </ul>
+      <% if(user) {%>
+      <div>
+        <p class="navbar-text pull-right">
+          <a href='/profile'><%= user.local.email %></a><a href="/logout"> (Logout)</a></p>
+      </div>
+      <% } else { %>
+        <div>
+          <p class="navbar-text pull-right">
+            Go to <a href="/login"> log in</a></p>
+        </div>
+      <% } %>
+    </div>
+  </nav>
+  </div>
+    <!-- End Nav bar -->
 <div class="container" style="padding-left:0px;">
   <h3>Eucalyptus Leaf Disease Information</h3>
   <div class="btn-group btn-breadcrumb">
@@ -82,6 +84,16 @@
       <tbody>
       <tr>
         <td><img src="/img/ic_description_black_48dp.png" alt="<%= eucaImage.diseasetype %>" style="width:24px;height:24px;"></td><td><%= eucaImage.diseasetype %> - Stage: <%= eucaImage.stage %>, Level: <%= eucaImage.level %> </td>
+      </tr>
+      <tr>
+        <td><img src="/img/ic_check_circle_black_48dp.png" alt="<%= eucaImage.validated %>" style="width:24px;height:24px;"></td>
+        <td>
+          <% if(eucaImage.validated) { %>
+            Image is validated.
+          <% } else { %>
+            Image is not validated.
+          <% } %>
+        </td>
       </tr>
       <tr>
         <td><img src="/img/ic_today_black_48dp.png" alt="<%= eucaImage.submit %>" style="width:24px;height:24px;"></td><td><%= eucaImage.submit %></td>

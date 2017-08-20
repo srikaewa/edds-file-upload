@@ -4,6 +4,8 @@ $(document).ready(function()
     }
 );
 
+$("[data-toggle=confirmation]").confirmation({btnOkLabel: 'Yes', btnCancelLabel: 'No', title: 'Are you sure?',container:"body",btnOkClass:"btn btn-sm btn-success btn-xs",btnCancelClass:"btn btn-sm btn-danger btn-xs",onConfirm:function(event, element) { alert('confirm clicked'); }});
+
 function mainTableSearchFunction() {
   // Declare variables
   var input, filter, table, tr, td, i;
@@ -45,7 +47,7 @@ $(document).ready(function() {
   });
 
   var jobCount = $('.eucalist tbody tr[visible="true"]').length;
-    $('.counter').text(jobCount + ' item');
+    $('.counter').text('Found ' + jobCount + ' item');
 
   if(jobCount == '0') {$('.no-result').show();}
     else {$('.no-result').hide();}

@@ -9,6 +9,13 @@
 }
 
 .counter{
-  padding:8px;
+  padding:0px;
   color:#ccc;
+}
+
+.btn span.glyphicon {
+	opacity: 0;
+}
+.btn.active span.glyphicon {
+	opacity: 1;
 }

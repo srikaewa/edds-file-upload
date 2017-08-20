@@ -2,9 +2,6 @@
 module.exports = function(app) {
   var eucaImageList = require('../controllers/eucaImageController');
 
-  // admin Routes
-
-
   // todoList Routes
   app.route('/eucaImages')
     .get(eucaImageList.list_all_images)
@@ -44,4 +41,9 @@ module.exports = function(app) {
 
   app.route('/eutech/eucaImages/:imageId/update')
     .post(eucaImageList.eutech_update_a_image_data);
+
+  app.route('/eutech/eucaImages/:imageId/validate')
+    .post(eucaImageList.eutech_validate_a_image_data);
+
+
 };

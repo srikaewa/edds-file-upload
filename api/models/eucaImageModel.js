@@ -55,6 +55,10 @@ var EucaImageSchema = new Schema({
   elapsetime: {
     type: String,
     default: '-'
+  },
+  validated: {
+    type: Boolean,
+    default: false
   }
 });
 

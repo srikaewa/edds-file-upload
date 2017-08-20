@@ -155,10 +155,32 @@ exports.update_a_image_data = function(req, res) {
 
 exports.eutech_update_a_image_data = function(req, res) {
   console.log('UPDATE image [' + req.params.imageId + ']');
+  req.body.validated = false;
   EucaImage.findOneAndUpdate({_id: req.params.imageId}, req.body, {new: true}, function(err, task) {
     if (err)
       res.send(err);
     console.log('UPDATE image with ' + task);
+    res.render('details.ejs', {eucaImage: task});
+  });
+  /*req.body.lastedit = new Date();
+  EucaImage.findOneAndUpdate({_id: req.params.imageId}, req.body, {new: true}, function(err, task) {
+    if (err)
+      res.send(err);
+    console.log('PUT image with ' + task);
+    res.json(task);
+  });*/
+};
+
+exports.eutech_validate_a_image_data = function(req, res) {
+  console.log('VALIDATE image [' + req.body.validated + ']');
+  if (req.body.validated == true)
+    req.body.validated = false;
+  else
+    req.body.validated = true;
+  EucaImage.findOneAndUpdate({_id: req.params.imageId}, req.body, {new: true}, function(err, task) {
+    if (err)
+      res.send(err);
+    console.log('UPDATE image validation with ' + task.validated);
     res.render('details.ejs', {eucaImage: task});
   });
   /*req.body.lastedit = new Date();

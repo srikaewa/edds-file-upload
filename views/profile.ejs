@@ -13,50 +13,50 @@
 </head>
 <body>
   <!-- Begin Nav bar -->
-<div class="container">
-  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-  <div class="navbar-header">
-    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-      <span class="sr-only">Toggle navigation</span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </button>
-    <a class="navbar-brand" href="#"><span>Eu-Tech</span></a>
-  </div>
-
-  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-    <ul class="nav navbar-nav">
-      <li class="active"><a href="/eutech/eucaImages">Home</a></li>
-      <li><a href="#">Link</a></li>
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-        <ul class="dropdown-menu">
-          <li><a href="#">Action</a></li>
-          <li><a href="#">Another action</a></li>
-          <li><a href="#">Something else here</a></li>
-          <li class="divider"></li>
-          <li><a href="#">Separated link</a></li>
-          <li class="divider"></li>
-          <li><a href="#">One more separated link</a></li>
-        </ul>
-      </li>
-    </ul>
-    <% if(user) {%>
-    <div>
-      <p class="navbar-text pull-right">
-        <a href='/profile'><%= user.local.email %></a><a href="/logout"> (Logout)</a></p>
+  <div class="container">
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#"><span>Eu-Tech</span></a>
     </div>
-    <% } else { %>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="/eutech/eucaImages">Home</a></li>
+        <li><a href="/eutech/eucaImages">Console</a></li>
+        <li><a href="#">Training</a></li>
+        <li>
+              <form class="navbar-form" role="search">
+                <div class="form-group">
+                  <div class="input-group">
+                  <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                  <input type="text" class="search form-control" placeholder="Search 'xantho'">
+                </div>
+                </div>
+              </form>
+        </li>
+        <li><p class="counter navbar-text"></li>
+      </ul>
+      <% if(user) {%>
       <div>
         <p class="navbar-text pull-right">
-          Go to <a href="/login"> log in</a></p>
+          <a href='/profile'><%= user.local.email %></a><a href="/logout"> (Logout)</a></p>
       </div>
-    <% } %>
+      <% } else { %>
+        <div>
+          <p class="navbar-text pull-right">
+            Go to <a href="/login"> log in</a></p>
+        </div>
+      <% } %>
+    </div>
+  </nav>
   </div>
-</nav>
-</div>
-  <!-- End Nav bar -->
+    <!-- End Nav bar -->
 <div class="container">
 
     <div class="page-header text-center">

@@ -125,11 +125,20 @@ exports.read_a_image_data = function(req, res) {
 };
 
 exports.eutech_read_a_image_data = function(req, res) {
-  console.log('GET image [' + req.params.imageId + ']');
+  console.log('GET image details [' + req.params.imageId + ']');
   EucaImage.findById(req.params.imageId, function(err, eucaImage) {
     if (err)
       res.send(err);
-    res.json(eucaImage);
+    res.render('details.ejs', {eucaImage: eucaImage});
+  });
+};
+
+exports.eutech_edit_a_image_data = function(req, res) {
+  console.log('EDIT image details [' + req.params.imageId + ']');
+  EucaImage.findById(req.params.imageId, function(err, eucaImage) {
+    if (err)
+      res.send(err);
+    res.render('edit.ejs', {eucaImage: eucaImage});
   });
 };
 
@@ -142,6 +151,23 @@ exports.update_a_image_data = function(req, res) {
     console.log('PUT image with ' + task);
     res.json(task);
   });
+};
+
+exports.eutech_update_a_image_data = function(req, res) {
+  console.log('UPDATE image [' + req.params.imageId + ']');
+  EucaImage.findOneAndUpdate({_id: req.params.imageId}, req.body, {new: true}, function(err, task) {
+    if (err)
+      res.send(err);
+    console.log('UPDATE image with ' + task);
+    res.render('details.ejs', {eucaImage: task});
+  });
+  /*req.body.lastedit = new Date();
+  EucaImage.findOneAndUpdate({_id: req.params.imageId}, req.body, {new: true}, function(err, task) {
+    if (err)
+      res.send(err);
+    console.log('PUT image with ' + task);
+    res.json(task);
+  });*/
 };
 
 exports.delete_a_image_data = function(req, res) {

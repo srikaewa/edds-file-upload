@@ -1,0 +1,14 @@
+
+.eucalist tr[visible='false'],
+.no-result{
+  display:none;
+}
+
+.eucalist tr[visible='true']{
+  display:table-row;
+}
+
+.counter{
+  padding:8px;
+  color:#ccc;
+}

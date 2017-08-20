@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Eucalyptus Disease Diagnosis System - Image List</title>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.3/angular-route.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+<style>
+       #map {
+        height: 400px;
+        width: 100%;
+       }
+    </style>
+
+<!--<script src="../main.js"></script> -->
+<link rel="stylesheet" href="/css/nav.css">
+
+</head>
+<body>
+<div>
+  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <!-- Brand and toggle get grouped for better mobile display -->
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="#"><span>Eu-Tech</span></a>
+  </div>
+
+  <!-- Collect the nav links, forms, and other content for toggling -->
+  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="/eutech/eucaImages">Home</a></li>
+      <li><a href="#">Link</a></li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li><a href="#">Action</a></li>
+          <li><a href="#">Another action</a></li>
+          <li><a href="#">Something else here</a></li>
+          <li class="divider"></li>
+          <li><a href="#">Separated link</a></li>
+          <li class="divider"></li>
+          <li><a href="#">One more separated link</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div><!-- /.navbar-collapse -->
+</nav>
+<div class="container" style="padding-left:0px;">
+  <h3>Eucalyptus Leaf Disease Information</h3>
+  <ul class="breadcrumb">
+    <li><a href="/eutech/eucaImages">Home</a></li>
+    <li class="active">Info</li>
+  </ul>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Images</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+        <td colspan="2"><a href="/EucaPhoto/<%= eucaImage.filename %>" alt="<%= eucaImage.filename %>"><img src="/EucaPhoto/<%= eucaImage.filename %>" alt="<%= eucaImage.filename %>" style="width:160px;"></a>
+        </td>
+      </tr>
+      </tbody>
+      <thead>
+        <tr>
+          <th>Details</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td><img src="/img/ic_description_black_48dp.png" alt="<%= eucaImage.diseasetype %>" style="width:24px;height:24px;"></td><td><%= eucaImage.diseasetype %> - Stage: <%= eucaImage.stage %>, Level: <%= eucaImage.level %> </td>
+      </tr>
+      <tr>
+        <td><img src="/img/ic_today_black_48dp.png" alt="<%= eucaImage.submit %>" style="width:24px;height:24px;"></td><td><%= eucaImage.submit %></td>
+      </tr>
+      <tr>
+        <td><img src="/img/ic_image_black_48dp.png" alt="<%= eucaImage.filename %>" style="width:24px;height:24px;"></td><td><%= eucaImage.filename %></td>
+      </tr>
+      <tr>
+        <td><img src="/img/ic_satellite_black_48dp.png" alt="<%= eucaImage.imageId %>" style="width:24px;height:24px;"></td><td><%= eucaImage.imageId %></td>
+      </tr>
+      <tr>
+        <td><img src="/img/ic_update_black_48dp.png" alt="<%= eucaImage.elapsetime %>" style="width:24px;height:24px;"></td><td><%= eucaImage.elapsetime %> s</td>
+      </tr>
+      <tr>
+        <td><img src="/img/ic_place_black_48dp.png" alt="<%= eucaImage.latitude %>,<%= eucaImage.longitude %>" style="width:24px;height:24px;"></td><td><%= eucaImage.latitude %>, <%= eucaImage.longitude%></td>
+      </tr>
+      </tbody>
+    </table>
+</div>
+</div>
+<div id="map"></div>
+    <script>
+      function initMap() {
+        var uluru = {lat: <%= eucaImage.latitude %>, lng: <%= eucaImage.longitude %>};
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 14,
+          center: uluru,
+          mapTypeId: google.maps.MapTypeId.HYBRID
+        });
+        var marker = new google.maps.Marker({
+          position: uluru,
+          map: map
+        });
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBZMl1Skv6erYMgU987giM5GZ24f2OpkGU&callback=initMap">
+    </script>
+</body>
+</html>

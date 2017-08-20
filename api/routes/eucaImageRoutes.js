@@ -33,8 +33,15 @@ module.exports = function(app) {
     .get(eucaImageList.eutech_list_all_images);
 
   app.route('/eutech/eucaImages/:imageId')
-    .get(eucaImageList.eutech_read_a_image_data);
+    .get(eucaImageList.eutech_read_a_image_data)
+    .put(eucaImageList.eutech_update_a_image_data);
 
   app.route('/eutech/eucaImages/:imageId/delete')
     .post(eucaImageList.eutech_delete_a_image_data);
+
+  app.route('/eutech/eucaImages/:imageId/edit')
+    .get(eucaImageList.eutech_edit_a_image_data);
+
+  app.route('/eutech/eucaImages/:imageId/update')
+    .post(eucaImageList.eutech_update_a_image_data);
 };

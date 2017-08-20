@@ -20,7 +20,7 @@ var EucaImageSchema = new Schema({
   diseasetype: {
     type: [{
       type: String,
-      enum: ['cerco', 'cryptos', 'cylindro', 'xantho','x','none']
+      enum: ['Cerco', 'Cryptos', 'Cylindro', 'Xantho','x','none']
     }],
     default: ['x']
   },

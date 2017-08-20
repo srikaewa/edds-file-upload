@@ -9,46 +9,121 @@
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 
-<!--<script src="../main.js"></script> -->
+<script src="../script/main.js"></script>
+<script type="text/javascript" src="../script/jquery-latest.js"></script>
+<script type="text/javascript" src="../script/jquery.tablesorter.js"></script>
+<link rel="stylesheet" href="/css/eucalist.css">
+<link rel="stylesheet" href="/css/nav.css">
 
 </head>
 <body>
-<div>
-  <div>
-  <nav class="navbar navbar-inverse" role="navigation" style="padding-left:130px;">
-         <ul class="nav navbar-nav">
-        <li class="active"><a href="/">Home<span class="sr-only">(current)</span></a></li>
-        <li><a href="/about">About us</a></li>
-        <li><a href="/contact">Contact us</a></li>
-      </ul>
-  </nav>
+  <!-- Begin Nav bar -->
+
+  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <!-- Brand and toggle get grouped for better mobile display -->
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="#"><span>Eu-Tech</span></a>
   </div>
-  <br/>
-  May Node and Express be with you.
 
-
-<ul class="eucaImages">
-  <% for(var i=0; i<eucaImages.length; i++) {%>
-    <li class="eucaImage">
-      <span>Image ID: <%= eucaImages[i].imageId %></span>
-      <ul class="euca">
-        <span><img src="<%= 'http://localhost:3009/'+ eucaImages[i].filename %>" alt="<%= eucaImages[i].diseasetype %>" style="width:120px;height:120px;"> <a href="eucaImages/<%= eucaImages[i].imageId %>">Details</a></span><br>
-        <span><%= eucaImages[i].filename %></span><br>
-        <span>Disease Type: <%= eucaImages[i].diseasetype %></span><br>
-        <span>Stage: <%= eucaImages[i].stage %></span><br>
-        <span>Level: <%= eucaImages[i].level %></span><br>
-        <span>Submitter: <%= eucaImages[i].submitter %></span><br>
-        <span>Submitted Date: <%= eucaImages[i].submit %></span><br>
-        <span>Location: <%= eucaImages[i].latitude %>,<%= eucaImages[i].longitude %></span><br>
-        <form method="post" action="eucaImages/<%= eucaImages[i].imageId %>/delete">
-          <input type="submit" value="Delete">
+  <!-- Collect the nav links, forms, and other content for toggling -->
+  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="/eutech/eucaImages">Home</a></li>
+      <li><a href="#">Link</a></li>
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li><a href="#">Action</a></li>
+          <li><a href="#">Another action</a></li>
+          <li><a href="#">Something else here</a></li>
+          <li class="divider"></li>
+          <li><a href="#">Separated link</a></li>
+          <li class="divider"></li>
+          <li><a href="#">One more separated link</a></li>
+        </ul>
+      </li>
+    </ul>
+    <div class="col-lg-4 col-lg-5 pull-right">
+        <form class="navbar-form" role="search">
+          <span class="counter"></span>
+          <div class="form-group">
+            <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+            <input type="text" class="search form-control" placeholder="Search 'xantho'">
+          </div>
+          </div>
         </form>
+    </div>
 
-      </ul>
-    </li>
+  </div><!-- /.navbar-collapse -->
+</nav>
+
+  <!-- End Nav bar -->
+<div>
+<div class="container" style="padding-left:0px;">
+  <h3>Eucalyptus Leaf Disease Admin Console</h3>
+
+    <table class="table table-responsive table-striped table-hover table-condensed eucalist" class="tablesorter" id="mainTable">
+    <thead class="thead-inverse">
+      <tr>
+        <th class="text-center" rowspan="2" style="vertical-align:top;">ID</th>
+        <th class="text-center" rowspan="2" style="vertical-align:top;">Image</th>
+        <th class="text-center" colspan="3">Disease Info</th>
+        <th class="text-center" rowspan="2" style="vertical-align:top;">Edit</th>
+        <th class="text-center" rowspan="2" style="vertical-align:top;">Confirm</th>
+        <th class="text-center" rowspan="2" style="vertical-align:top;"   >Submitter</th>
+        <th class="text-center" rowspan="2" style="vertical-align:top;">Date</th>
+        <th class="text-center" rowspan="2" style="vertical-align:top;">Delete</th>
+      </tr>
+      <tr>
+        <th class="text-center">Type</th>
+        <th class="text-center">Stage</th>
+        <th class="text-center">Level</th>
+      </tr>
+    </thead>
+    <tbody>
+  <% for(var i=0; i<eucaImages.length; i++) {%>
+    <tr>
+      <td class="text-center" style="vertical-align:middle;"><%= eucaImages[i].imageId %></td>
+      <td class="text-center" ><a href="eucaImages/<%= eucaImages[i].imageId %>"><img src="/EucaPhoto/<%= eucaImages[i].filename %>" alt="<%= eucaImages[i].diseasetype %>" style="width:80px;"> <a href="eucaImages/<%= eucaImages[i].imageId %>"></a></td>
+      <td class="text-center" style="vertical-align:middle;">
+        <%= eucaImages[i].diseasetype %>
+      </td>
+      <td class="text-center" style="vertical-align:middle;">
+        <%= eucaImages[i].stage %>
+      </td>
+      <td class="text-center" style="vertical-align:middle;">
+        <%= eucaImages[i].level %>
+      </td>
+      <td class="text-center" style="vertical-align:middle;">
+        <form method="get" action="eucaImages/<%= eucaImages[i].imageId %>/edit">
+          <button class="btn btn-warning" type="submit">Edit</button>
+        </form>
+      </td>
+      <td class="text-center" style="vertical-align:middle;">
+        <form method="get" action="eucaImages/<%= eucaImages[i].imageId %>/edit">
+          <button class="btn btn-success" type="submit">Confirm</button>
+        </form>
+      </td>
+      <td class="text-center" style="vertical-align:middle;"><%= eucaImages[i].submitter %></td>
+      <td class="text-center" style="vertical-align:middle;"><%= eucaImages[i].submit %></td>
+
+      <td  class="text-center" style="vertical-align:middle;">
+        <form method="post" action="eucaImages/<%= eucaImages[i].imageId %>/delete">
+          <button class="btn btn-danger" type="submit">Delete</button>
+        </form>
+      </td>
+    </tr>
   <% } %>
-</ul>
-
+</tbody>
+</table>
+</div>
 </div>
 </body>
 </html>

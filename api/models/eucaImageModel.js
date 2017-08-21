@@ -36,6 +36,10 @@ var EucaImageSchema = new Schema({
     type: String,
     default: '-'
   },
+  validator: {
+    type: String,
+    default: '-'
+  },
   submit: {
     type: String,
     default: new Date()

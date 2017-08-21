@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Eucalyptus Disease Diagnosis System - Image List</title>
+  <script src="https://use.fontawesome.com/9108cecf62.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.3/angular-route.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -105,14 +106,11 @@
         </form>
       </td>
       <td class="text-center" style="vertical-align:middle;">
-        <form method="get" action="eucaImages/<%= eucaImages[i].imageId %>/edit">
-          <div class="btn-group" data-toggle="buttons">
-			         <label class="btn btn-success <% if (eucaImages[i].validated)  {%>active<% } %>">
-				       <input id="chk<%= eucaImages[i].imageId %>" type="checkbox" autocomplete="off" checked>
-				       <span class="glyphicon glyphicon-ok"></span>
-			         </label>
-             </div>
-        </form>
+        <% if(eucaImages[i].validated) { %>
+          <i class="fa fa-check" aria-hidden="true"></i>
+        <% } else { %>
+          <i class="fa fa-times" aria-hidden="true"></i>
+        <% } %>
       </td>
       <td class="text-center" style="vertical-align:middle;"><%= eucaImages[i].submitter %></td>
       <td class="text-center" style="vertical-align:middle;"><%= eucaImages[i].submit %></td>

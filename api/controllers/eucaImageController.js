@@ -173,10 +173,8 @@ exports.eutech_update_a_image_data = function(req, res) {
 
 exports.eutech_validate_a_image_data = function(req, res) {
   console.log('VALIDATE image [' + req.body.validated + ']');
-  if (req.body.validated == true)
-    req.body.validated = false;
-  else
-    req.body.validated = true;
+  req.body.validated = true;
+  //req.body.validator = user.local.email;
   EucaImage.findOneAndUpdate({_id: req.params.imageId}, req.body, {new: true}, function(err, task) {
     if (err)
       res.send(err);

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Eucalyptus Disease Diagnosis System - Image List</title>
+  <script src="https://use.fontawesome.com/9108cecf62.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.3/angular.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.3/angular-route.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+
+<script src="/script/main.js"></script>
+<script src="/script/bootstrap-confirmation.js"></script>
+<script type="text/javascript" src="../script/jquery-latest.js"></script>
+<script type="text/javascript" src="/script/jquery.tablesorter.js"></script>
+<link rel="stylesheet" href="/css/eucalist.css">
+<link rel="stylesheet" href="/css/nav.css">
+</head>
+<body>
+<!-- Begin Nav bar -->
+<div class="container">
+  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="#"><span>Eu-Tech</span></a>
+  </div>
+
+  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav">
+      <li class="active"><a href="/">Home</a></li>
+      <li><a href="/eutech/eucaImages">Console</a></li>
+      <li><a href="#">Training</a></li>
+      <li>
+            <form class="navbar-form" role="search">
+              <div class="form-group">
+                <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
+                <input type="text" class="search form-control" placeholder="Search 'xantho'">
+              </div>
+              </div>
+            </form>
+      </li>
+      <li><p class="counter navbar-text"></li>
+    </ul>
+    <% if(user) {%>
+    <div>
+      <p class="navbar-text pull-right">
+        <a href='/profile'><%= user.local.email %></a><a href="/logout"> (Logout)</a></p>
+    </div>
+    <% } else { %>
+      <div>
+        <p class="navbar-text pull-right">
+          Go to <a href="/login"> log in</a></p>
+      </div>
+    <% } %>
+  </div>
+</nav>
+</div>
+  <!-- End Nav bar -->
+<div>
+  <% if (user) { %>
+<div class="container" style="padding-left:0px;">
+  <h3>Eucalyptus Leaf Disease Admin Console</h3>
+    <table class="table table-responsive table-striped table-hover table-condensed eucalist" class="tablesorter" id="mainTable">
+    <thead class="thead-inverse">
+      <tr>
+        <th class="text-center" rowspan="2" style="vertical-align:top;">ID</th>
+        <th class="text-center" rowspan="2" style="vertical-align:top;">Image</th>
+        <th class="text-center" colspan="3">Disease Info</th>
+        <th class="text-center" rowspan="2" style="vertical-align:top;">Edit</th>
+        <th class="text-center" rowspan="2" style="vertical-align:top;">Validation</th>
+        <th class="text-center" rowspan="2" style="vertical-align:top;"   >Submitter</th>
+        <th class="text-center" rowspan="2" style="vertical-align:top;">Date</th>
+        <th class="text-center" rowspan="2" style="vertical-align:top;">Delete</th>
+      </tr>
+      <tr>
+        <th class="text-center">Type</th>
+        <th class="text-center">Stage</th>
+        <th class="text-center">Level</th>
+      </tr>
+    </thead>
+    <tbody>
+  <% for(var i=0; i<eucaImages.length; i++) {%>
+    <tr>html
+      <td class="text-center" style="vertical-align:middle;"><%= eucaImages[i].imageId %></td>
+      <td class="text-center" ><a href="eucaImages/<%= eucaImages[i].imageId %>"><img src="/EucaPhoto/<%= eucaImages[i].displayfilename %>" alt="<%= eucaImages[i].diseasetype %>" style="width:80px;"> <a href="eucaImages/<%= eucaImages[i].imageId %>"></a></td>
+      <td class="text-center" style="vertical-align:middle;">
+        <%= eucaImages[i].diseasetype %>
+      </td>
+      <td class="text-center" style="vertical-align:middle;">
+        <%= eucaImages[i].stage %>
+      </td>
+      <td class="text-center" style="vertical-align:middle;">
+        <%= eucaImages[i].level %>
+      </td>
+      <td class="text-center" style="vertical-align:middle;">
+        <form method="get" action="eucaImages/<%= eucaImages[i].imageId %>/edit">
+          <button class="btn btn-warning" type="submit">Edit</button>
+        </form>
+      </td>
+      <td class="text-center" style="vertical-align:middle;">
+        <% if(eucaImages[i].validated) { %>
+          <i class="fa fa-check" aria-hidden="true"></i>
+        <% } else { %>
+          <i class="fa fa-times" aria-hidden="true"></i>
+        <% } %>
+      </td>
+      <td class="text-center" style="vertical-align:middle;"><%= eucaImages[i].submitter %></td>
+      <td class="text-center" style="vertical-align:middle;"><%= eucaImages[i].submit %></td>
+
+      <td  class="text-center" style="vertical-align:middle;">
+        <!--<form method="post" action="eucaImages/<%= eucaImages[i].imageId %>/delete"> -->
+          <button class="btn btn-danger" data-toggle="confirmation" data-placement="top">Delete</button>
+        <!--</form>-->
+      </td>
+    </tr>
+  <% } %>
+</tbody>
+</table>
+</div>
+</div>
+<% } else { %>
+  <div class="alert alert-danger">
+  <strong>Warning!</strong> for authorized user only.
+</div>
+<% } %>
+</body>
+</html>

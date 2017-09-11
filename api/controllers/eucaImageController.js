@@ -13,7 +13,7 @@ var storage	=	multer.diskStorage({
     callback(null, file.originalname);
   }
 });
-var upload = multer({ storage : storage}).single('userPhoto');
+var upload = multer({ storage : storage}).array('userPhoto', 3);
 
 exports.check_file_server = function(req,res){
         res.end("200");
@@ -26,22 +26,27 @@ exports.upload_file = function(req,res){
       console.log("Error uploading file.");
 			return res.end("Error uploading file.");
 		}
-    console.log("File " + req.file.originalname + " upload successfully!");
+    //console.log("File " + req.files[2].originalname + " upload successfully!");
+    console.log("Files were uploaded successfully!");
     console.log("Uploading at time " + new Date());
     console.log("req -> " + req.query.submitter);
 
     var new_image_data = new EucaImage();
     new_image_data.imageId = new_image_data._id;
-    new_image_data.filename = req.file.originalname;
-    new_image_data.submit = new Date();
+    new_image_data.filename = req.files[0].originalname;
+    new_image_data.originalfilename = req.files[1].originalname;
+    new_image_data.displayfilename = req.files[2].originalname;
+    var d2 = new Date(new Date().getTime() - new Date().getTimezoneOffset()*60*1000).toISOString().substr(0,19).replace('T', ' ');
+    new_image_data.submit = d2;
     new_image_data.lastedit = new_image_data.submit;
     new_image_data.submitter = req.query.submitter;
     new_image_data.latitude = req.query.latitude;
     new_image_data.longitude = req.query.longitude;
+    new_image_data.jobId = req.query.jobId;
     new_image_data.uploaded = true;
     new_image_data.save();
 
-    console.log('New image data: ' + new_image_data);
+    console.log('New image data[' +new_image_data.submitter+ '] ' + new_image_data);
 
     /*** returning info about uploaded file ***/
 		//res.end('{"status":"201","uploadedFilename":"' + req.file.originalname + '"}');
@@ -100,14 +105,18 @@ exports.eutech_list_all_images = function(req, res) {
   EucaImage.find({}, function(err, eucaImage) {
     if (err)
       res.send(err);
-    res.render('index.ejs', {eucaImages: eucaImage});
+    res.render('list.ejs', {eucaImages: eucaImage});
   });
 };
 
 exports.create_a_image_data = function(req, res) {
   var new_image_data = new EucaImage(req.body);
   new_image_data.imageId = new_image_data._id;
-  console.log('New image data: ' + new_image_data);
+  var d = new Date();
+  var m = d.getMonth() + 1;
+  new_image_data.submit = d.getFullYear() + "-" + m + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+  new_image_data.lastedit = d.getFullYear() + "-" + m + "-" + d.getDate() + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+  console.log('Newly created image data: ' + new_image_data);
   new_image_data.save(function(err, eucaImage) {
     if (err)
       res.send(err);
@@ -144,7 +153,8 @@ exports.eutech_edit_a_image_data = function(req, res) {
 
 exports.update_a_image_data = function(req, res) {
   //console.log('UPDATE image - ' + req.body.lastedit);
-  req.body.lastedit = new Date();
+  var d2 = new Date(new Date().getTime() - new Date().getTimezoneOffset()*60*1000).toISOString().substr(0,19).replace('T', ' ');
+  req.body.lastedit = d2;
   EucaImage.findOneAndUpdate({_id: req.params.imageId}, req.body, {new: true}, function(err, task) {
     if (err)
       res.send(err);
@@ -220,4 +230,8 @@ exports.get_disease_type = function(req, res) {
     console.log('GET disease_type=' + eucaImage.diseasetype + ' for image [' + eucaImage.imageId + '] submitted by ' + eucaImage.submitter);
     res.json(eucaImage);
   });
+};
+
+exports.table_summarize = function(req, res) {
+  res.render('tables.ejs');
 };

@@ -6,12 +6,17 @@ var app	=	express();
  *****************/
 var mongoose = require('mongoose');
 var EucaImage = require('./api/models/eucaImageModel');
+var BreedingJob = require('./api/models/breedingJobModel');
+
+
 var bodyParser = require('body-parser');
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/EucaImageDb');
+var connection = mongoose.connect('mongodb://localhost/EucaImageDb', {useMongoClient: true});
 
-app.use(bodyParser.urlencoded({ extended: true }));
+
+
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 var moment = require('moment');
@@ -46,24 +51,20 @@ app.use(function (req, res, next) {
 
 require('./api/routes/authenRoutes')(app, passport);
 /**************************/
-
-var routes = require('./api/routes/eucaImageRoutes');
-routes(app);
+require('./api/routes/eucaImageRoutes')(app);
+require('./api/routes/breedingJobRoutes')(app);
 
 var path = require('path');
-var dir = path.join(__dirname, '../EucaUploads');
-var dir2 = path.join(__dirname, 'public/images');
-var dir3 = path.join(__dirname, 'public');
-var dir4 = path.join(__dirname, 'public/css');
-
-console.log("Dir = " + dir);
-console.log("Dir2 = " + dir2);
-
 //app.use(express.static(dir));
-app.use('/EucaPhoto',express.static(dir));
-app.use('/img',express.static(dir2));
-app.use('/script',express.static(dir3));
-app.use('/css',express.static(dir4));
+app.use('/EucaPhoto',express.static(path.join(__dirname, '../EucaUploads')));
+app.use('/img',express.static(path.join(__dirname, 'public/images')));
+app.use('/script',express.static(path.join(__dirname, 'public')));
+app.use('/css',express.static(path.join(__dirname, 'public/css')));
+app.use('/vendors',express.static(path.join(__dirname, 'public/vendors')));
+app.use('/build',express.static(path.join(__dirname, 'public/build')));
+app.use('/js',express.static(path.join(__dirname, 'public/js')));
+app.use('/gent',express.static(path.join(__dirname, 'public/gent')));
+
 //app.use(express.static(dir2));
 
 

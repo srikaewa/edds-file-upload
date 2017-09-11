@@ -2,6 +2,9 @@
 module.exports = function(app) {
   var eucaImageList = require('../controllers/eucaImageController');
 
+  app.route('/table')
+  .get(eucaImageList.table_summarize);
+
   // todoList Routes
   app.route('/eucaImages')
     .get(eucaImageList.list_all_images)

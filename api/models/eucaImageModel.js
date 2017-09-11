@@ -13,6 +13,16 @@ var EucaImageSchema = new Schema({
     Required: 'Kindly enter the name of the eucalyptus image file',
     default: '-'
   },
+  originalfilename: {
+    type: String,
+    Required: 'Kindly enter the name of the original eucalyptus image file',
+    default: '-'
+  },
+  displayfilename: {
+    type: String,
+    Required: 'Kindly enter the name of the display eucalyptus image file',
+    default: '-'
+  },
   uploaded: {
     type: Boolean,
     default: false
@@ -29,6 +39,10 @@ var EucaImageSchema = new Schema({
     default: '-'
   },
   level: {
+    type: String,
+    default: '-'
+  },
+  area: {
     type: String,
     default: '-'
   },
@@ -63,6 +77,10 @@ var EucaImageSchema = new Schema({
   validated: {
     type: Boolean,
     default: false
+  },
+  jobId: {
+    type: String,
+    default: '-'
   }
 });
 

@@ -1,4 +1,5 @@
 var express	=	require("express");
+var bodyParser = require('body-parser');
 var app	=	express();
 
 /*****************
@@ -7,9 +8,8 @@ var app	=	express();
 var mongoose = require('mongoose');
 var EucaImage = require('./api/models/eucaImageModel');
 var BreedingJob = require('./api/models/breedingJobModel');
-
-
-var bodyParser = require('body-parser');
+var Disease = require('./api/models/diseaseModel');
+var EDDS = require('./api/models/eddsModel');
 
 mongoose.Promise = global.Promise;
 var connection = mongoose.connect('mongodb://localhost/EucaImageDb', {useMongoClient: true});
@@ -53,9 +53,12 @@ require('./api/routes/authenRoutes')(app, passport);
 /**************************/
 require('./api/routes/eucaImageRoutes')(app);
 require('./api/routes/breedingJobRoutes')(app);
+require('./api/routes/diseaseRoutes')(app);
+require('./api/routes/eddsRoutes')(app);
 
 var path = require('path');
 //app.use(express.static(dir));
+app.use('/modules',express.static(path.join(__dirname, './modules')));
 app.use('/EucaPhoto',express.static(path.join(__dirname, '../EucaUploads')));
 app.use('/img',express.static(path.join(__dirname, 'public/images')));
 app.use('/script',express.static(path.join(__dirname, 'public')));
@@ -64,9 +67,11 @@ app.use('/vendors',express.static(path.join(__dirname, 'public/vendors')));
 app.use('/build',express.static(path.join(__dirname, 'public/build')));
 app.use('/js',express.static(path.join(__dirname, 'public/js')));
 app.use('/gent',express.static(path.join(__dirname, 'public/gent')));
+app.use('/lib',express.static(path.join(__dirname, 'public/lib')));
 
 //app.use(express.static(dir2));
 
+//var gentelella = require('gentelella');
 
 
 app.use(function(req, res) {

@@ -4,8 +4,8 @@ module.exports = function(app, passport) {
     // =====================================
     // HOME PAGE (with login links) ========
     // =====================================
-    app.get('/', function(req, res) {
-        res.render('index.ejs'); // load the index.ejs file
+    app.get('/', isLoggedIn, function(req, res) {
+        res.redirect('/eutech/edds'); // redirect to edds/index.ejs file
     });
 
     // =====================================
@@ -82,5 +82,5 @@ function isLoggedIn(req, res, next) {
       }
 
     // if they aren't redirect them to the home page
-    res.redirect('/');
+    res.redirect('/login');
 }

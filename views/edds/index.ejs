@@ -28,10 +28,10 @@
     <% if(user) {%>
     <div class="container body">
       <div class="main_container">
-        <div class="col-md-3 left_col">
+        <div class="col-md-3 left_col menu_fixed">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><img src="/img/eutech_white_bw_trans.png" style="width:32pt"> <span>Eu-Tech EDDS</span></a>
+              <a href="/" class="site_title"><img src="/img/eutech_white_bw_trans.png" style="width:32pt"> <span>Eu-Tech EDDS</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -59,6 +59,7 @@
                     <ul class="nav child_menu">
                       <li><a href="/">EDDS Dashboard</a></li>
                       <li><a href="/eutech/eucaImages">Image Dashboard</a></li>
+                      <li><a href="/eutech/diseases">System Setup</a></li>
                       <!--<li><a href="index3.html">Dashboard3</a></li>-->
                     </ul>
                   </li>
@@ -87,13 +88,13 @@
                   </li>-->
                   <li><a><i class="fa fa-table"></i> Job Summary <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="/table">Breeding Job Summary</a></li>
+                      <li><a href="/table">Screening Job Summary</a></li>
                       <!--<li><a href="tables_dynamic.html">Table Dynamic</a></li>-->
                     </ul>
                   </li>
                   <li><a><i class="fa fa-bar-chart-o"></i> Data Presentation <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="chartjs.html">Chart JS</a></li>
+                      <li><a href="edds/chart">Chart JS</a></li>
                       <li><a href="chartjs2.html">Chart JS2</a></li>
                       <li><a href="morisjs.html">Moris JS</a></li>
                       <li><a href="echarts.html">ECharts</a></li>
@@ -275,16 +276,26 @@
           <!-- top tiles -->
           <div class="row tile_count">
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-              <span class="count_top"><i class="fa fa-file-image-o"></i> Total Images This Month</span>
-              <div class="count">2,534</div>
-              <span class="count_bottom"><i class="green">4% </i> From last Week</span>
+              <span class="count_top"><i class="fa fa-file-image-o"></i> Total Images</span>
+              <div class="count"><%= edds[edds.length - 1].total_images %></div>
+              <span class="count_bottom"><i class="green">+<%= edds[edds.length -1].total_images_today %> </i> for Today</span>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+              <span class="count_top"><i class="fa fa-file-image-o"></i> Validated Images</span>
+              <div class="count"><%= edds[edds.length - 1].total_validated_images %></div>
+              <span class="count_bottom"><i class="green">+<%= edds[edds.length -1].total_validated_images_today %> </i> for Today</span>
+            </div>
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+              <span class="count_top"><i class="fa fa-file-image-o"></i> Invalidated Images</span>
+              <div class="count"><%= edds[edds.length - 1].total_invalidated_images %></div>
+              <!--<span class="count_bottom"><i class="green">+<%= edds[edds.length -1].total_invalidated_images_today %> </i> for Today</span>-->
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
               <span class="count_top"><i class="fa fa-check-circle-o"></i> Average Accuracy</span>
               <div class="count">78.5%</div>
-              <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>3% </i> From last Week</span>
+              <!--<span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>3% </i> From last Week</span> -->
             </div>
-            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+            <!--<div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
               <span class="count_top"><i class="fa fa-file-image-o"></i> Total Xantho</span>
               <div class="count green">1,290</div>
               <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span>
@@ -293,19 +304,41 @@
               <span class="count_top"><i class="fa fa-file-image-o"></i> Total Cylindro</span>
               <div class="count">327</div>
               <span class="count_bottom"><i class="red"><i class="fa fa-sort-desc"></i>12% </i> From last Week</span>
-            </div>
-            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+            </div> -->
+            <!--<div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
               <span class="count_top"><i class="fa fa-file-image-o"></i> Total Crypto</span>
               <div class="count">1,104</div>
               <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span>
-            </div>
-            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+            </div>-->
+            <!--<div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
               <span class="count_top"><i class="fa fa-file-image-o"></i> Total Images</span>
               <div class="count">7,325</div>
               <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>24% </i> From last Week</span>
-            </div>
+            </div>-->
           </div>
+
           <!-- /top tiles -->
+          <!-- /second-row tiles -->
+          <div class="row tile_count">
+            <% for(var i=0;i< diseaseList.length; i++) { %>
+            <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+              <span class="count_top"><i class="fa fa-file-image-o"></i> Total <%= diseaseList[i].disease_label %></span>
+              <div class="count"><%= edds[edds.length - 1].total_images %></div>
+              <span class="count_bottom"><i class="green">+<%= edds[edds.length -1].total_images_today %> </i> for Today</span>
+            </div>
+            <% } %>
+            <!--<div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+              <span class="count_top"><i class="fa fa-file-image-o"></i> Total Crypto</span>
+              <div class="count">1,104</div>
+              <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span>
+            </div>-->
+            <!--<div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+              <span class="count_top"><i class="fa fa-file-image-o"></i> Total Images</span>
+              <div class="count">7,325</div>
+              <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>24% </i> From last Week</span>
+            </div>-->
+          </div>
+          <!-- second row tiles -->
 
           <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
@@ -1002,15 +1035,15 @@
     <script src="/vendors/Flot/jquery.flot.stack.js"></script>
     <script src="/vendors/Flot/jquery.flot.resize.js"></script>
     <!-- Flot plugins -->
-    <script src="js/flot/jquery.flot.orderBars.js"></script>
-    <script src="js/flot/date.js"></script>
-    <script src="js/flot/jquery.flot.spline.js"></script>
-    <script src="js/flot/curvedLines.js"></script>
+    <script src="/js/flot/jquery.flot.orderBars.js"></script>
+    <script src="/js/flot/date.js"></script>
+    <script src="/js/flot/jquery.flot.spline.js"></script>
+    <script src="/js/flot/curvedLines.js"></script>
     <!-- jVectorMap -->
-    <script src="./js/maps/jquery-jvectormap-2.0.3.min.js"></script>
+    <script src="/js/maps/jquery-jvectormap-2.0.3.min.js"></script>
     <!-- bootstrap-daterangepicker -->
-    <script src="./js/moment/moment.min.js"></script>
-    <script src="./js/datepicker/daterangepicker.js"></script>
+    <script src="/js/moment/moment.min.js"></script>
+    <script src="/js/datepicker/daterangepicker.js"></script>
 
     <!-- Custom Theme Scripts -->
     <script src="/build/js/custom.min.js"></script>
@@ -1092,9 +1125,9 @@
     <!-- /Flot -->
 
     <!-- jVectorMap -->
-    <script src="js/maps/jquery-jvectormap-world-mill-en.js"></script>
-    <script src="js/maps/jquery-jvectormap-us-aea-en.js"></script>
-    <script src="js/maps/gdp-data.js"></script>
+    <script src="/js/maps/jquery-jvectormap-world-mill-en.js"></script>
+    <script src="/js/maps/jquery-jvectormap-us-aea-en.js"></script>
+    <script src="/js/maps/gdp-data.js"></script>
     <script>
       $(document).ready(function(){
         $('#world-map-gdp').vectorMap({

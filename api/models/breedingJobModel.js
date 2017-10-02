@@ -12,6 +12,10 @@ var BreedingJobSchema = new Schema({
     type: String,
     default: 'eutech-jb-001-xxxxxxx'
   },
+  culture: {
+    type: String,
+    default: ''
+  },
   round: {
     type: Number,
     integer: true,
@@ -49,6 +53,9 @@ var BreedingJobSchema = new Schema({
     type: String
   },
   lastedited: {
+    type: String
+  },
+  note: {
     type: String
   }
 });

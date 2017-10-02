@@ -28,11 +28,12 @@ var EucaImageSchema = new Schema({
     default: false
   },
   diseasetype: {
-    type: [{
-      type: String,
-      enum: ['Cerco', 'Cryptos', 'Cylindro', 'Xantho','x','none']
-    }],
-    default: ['x']
+    type: String,
+    default: 'x'
+  },
+  diseaselabel: {
+    type: String,
+    default: 'x'
   },
   stage: {
     type: String,
@@ -78,10 +79,44 @@ var EucaImageSchema = new Schema({
     type: Boolean,
     default: false
   },
+  lastvalidated: {
+    type: Date
+  },
   jobId: {
     type: String,
     default: '-'
+  },
+  retrain_needed: {
+    type: Boolean,
+    default: false
   }
 });
 
 module.exports = mongoose.model('EucaImages', EucaImageSchema);
+
+// Disease Schema
+var EucaDiseaseSchema = new Schema({
+  diseaseId: {
+    type: String
+  },
+  label: {
+    type: String,
+    default: '-'
+  },
+  totalimage: {
+    type: Number,
+    integer: true,
+    default: 0
+  },
+  accuracy: {
+    type: Number,
+    double: true,
+    default: 0.0
+  },
+  lastedited: {
+    type: String,
+    default: new Date()
+  }
+});
+
+module.exports = mongoose.model('EucaDiseases', EucaDiseaseSchema);

@@ -71,12 +71,15 @@ exports.update_a_image_data = function(req, res) {
 };
 
 exports.eutech_update_a_breeding_job_data = function(req, res) {
-  console.log('UPDATE breeding job [' + req.params.jobId + ']');
+  console.log('UPDATE breeding job [' + req.params.jobId + '] -> ' + req.body.culture);
   //req.body.validated = false;
-  BreedingJob.findOneAndUpdate({_id: req.params.jobId}, req.body, {new: true}, function(err, breedingJob) {
+  var d2 = new Date(new Date().getTime() - new Date().getTimezoneOffset()*60*1000).toISOString().substr(0,19).replace('T', ' ');
+  req.body.lastedited = d2;
+  BreedingJob.findOneAndUpdate({jobId: req.params.jobId}, req.body, {new: true}, function(err, breedingJob) {
     if (err)
       res.send(err);
-    console.log('UPDATE breeding job with ' + breedingJob);
+    console.log('UPDATE breeding job [' + breedingJob.jobId + '] -> ' + breedingJob.lastedited +
+                          ',' + breedingJob.culture + ',' + breedingJob.clone + ',' + breedingJob.note);
     //res.render('breedingJob/details.ejs', {breedingJob: breedingJob});
     res.json(breedingJob);
   });

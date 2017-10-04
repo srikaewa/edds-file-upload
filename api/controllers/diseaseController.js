@@ -24,6 +24,7 @@ exports.eutech_get_disease_list = function(req, res) {
 exports.eutech_create_a_disease_data = function(req, res) {
     //console.log("Created disease with -> " + req.body);
     var new_disease_label = new Disease(req.body);
+    new_disease_label.disease_color = "#"+Math.random().toString(16).slice(2, 8).toUpperCase();
     //console.log('Newly created disease data: ' + new_disease_data);
     new_disease_label.save(function(err, disease) {
       if (err)
@@ -55,6 +56,7 @@ exports.eutech_edit_a_disease_data = function(req, res) {
 exports.eutech_update_a_disease_data = function(req, res) {
   console.log('UPDATE disease [' + req.params.diseaseId + ']');
   //req.body.validated = false;
+  req.body.lastedited = new Date(new Date().getTime() - new Date().getTimezoneOffset()*60*1000).toISOString();
   Disease.findOneAndUpdate({_id: req.params.diseaseId}, req.body, {new: true}, function(err, disease) {
     if (err)
       res.send(err);

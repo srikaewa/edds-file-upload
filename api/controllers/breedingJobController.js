@@ -2,13 +2,14 @@
 
 var mongoose = require('mongoose');
 var BreedingJob = mongoose.model('BreedingJobs');
+var edds_mod = require('../../modules/edds.js');
 
 exports.eutech_list_all_breeding_jobs = function(req, res) {
-  BreedingJob.find({}, function(err, breedingJobs) {
+  BreedingJob.find({}, function(err, screeningJobs) {
     if (err)
       res.send(err);
-    //res.render('breedingJob/list.ejs', {breedingJobs: breedingJob});
-    res.json(breedingJobs);
+    res.render('breedingJob/summary.ejs', {screeningJobs: screeningJobs});
+    //res.json(breedingJobs);
   });
 };
 
@@ -23,6 +24,10 @@ exports.eutech_get_next_breeding_job_id = function(req, res) {
 
 exports.eutech_create_a_breeding_job_data = function(req, res) {
     console.log("Created breeding job with -> " + req.body);
+    req.body.created = new Date();
+    req.body.lastedited = new Date();
+    req.body.breedingdate = new Date(req.body.breedingdate).toDateString();
+    req.body.collectingdate = new Date(req.body.collectingdate).toDateString();
     var new_bj_data = new BreedingJob(req.body);
     //console.log("New job id -> " + new_bj_data._id);
     //new_bj_data.jobId = "eutech-jb-001-" + ("000000" + new_bj_data._id).slice(-6);
@@ -41,11 +46,14 @@ exports.eutech_create_a_breeding_job_data = function(req, res) {
 };
 
 exports.eutech_read_a_breeding_job_data = function(req, res) {
-  console.log('GET breeding job details [' + req.params.jobId + ']');
-  BreedingJob.findById(req.params.jobId, function(err, breedingJob) {
+  var moment = require('moment');
+  BreedingJob.findById(req.params.jobId, function(err, screeningJob) {
     if (err)
       res.send(err);
-    res.render('breedingJob/details.ejs', {breedingJob: breedingJob});
+    //console.log('GET breeding job details [' + req.params.jobId + '] with ' + screeningJob);
+    edds_mod.get_screening_job_image_list(screeningJob.jobId, function(eucaImages){
+      res.render('breedingJob/details.ejs', {screeningJob: screeningJob, eucaImages: eucaImages, moment: moment});
+    })
   });
 };
 
@@ -60,8 +68,7 @@ exports.eutech_edit_a_breeding_job_data = function(req, res) {
 
 exports.update_a_image_data = function(req, res) {
   //console.log('UPDATE image - ' + req.body.lastedit);
-  var d2 = new Date(new Date().getTime() - new Date().getTimezoneOffset()*60*1000).toISOString().substr(0,19).replace('T', ' ');
-  req.body.lastedit = d2;
+  req.body.lastedited = new Date(new Date().getTime() - new Date().getTimezoneOffset()*60*1000).toISOString();
   EucaImage.findOneAndUpdate({_id: req.params.imageId}, req.body, {new: true}, function(err, task) {
     if (err)
       res.send(err);
@@ -73,8 +80,7 @@ exports.update_a_image_data = function(req, res) {
 exports.eutech_update_a_breeding_job_data = function(req, res) {
   console.log('UPDATE breeding job [' + req.params.jobId + '] -> ' + req.body.culture);
   //req.body.validated = false;
-  var d2 = new Date(new Date().getTime() - new Date().getTimezoneOffset()*60*1000).toISOString().substr(0,19).replace('T', ' ');
-  req.body.lastedited = d2;
+  req.body.lastedited = new Date(new Date().getTime() - new Date().getTimezoneOffset()*60*1000).toISOString();
   BreedingJob.findOneAndUpdate({jobId: req.params.jobId}, req.body, {new: true}, function(err, breedingJob) {
     if (err)
       res.send(err);

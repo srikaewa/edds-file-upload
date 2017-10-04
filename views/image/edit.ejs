@@ -90,7 +90,7 @@
                   </li> -->
                   <li><a><i class="fa fa-table"></i> Job Summary <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="/table">Screening Job Summary</a></li>
+                      <li><a href="/eutech/breedingJobs">Screening Job Summary</a></li>
                       <!--<li><a href="tables_dynamic.html">Table Dynamic</a></li>-->
                     </ul>
                   </li>
@@ -187,7 +187,7 @@
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="/gent/images/img.jpg" alt="">John Doe
+                    <img src="/gent/images/img.jpg" alt=""><%= user.local.email %>
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -277,22 +277,6 @@
 
         <div class="right_col" role="main">
           <div class="">
-            <div class="page-title">
-              <div class="title_left">
-                <h3>EDDS Image  <small>Console</small></h3>
-              </div>
-
-              <div class="title_right">
-                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                  <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search for...">
-                    <span class="input-group-btn">
-                      <button class="btn btn-default" type="button">Go!</button>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
 
             <div class="clearfix"></div>
 
@@ -300,7 +284,7 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
           <div class="x_panel">
             <div class="x_title">
-              <h2>Eucalyptus Disease Label Setup <small>admin</small></h2>
+              <h2>Edit Eucalyptus Disease Details <a href="/eutech/eucaImages/<%= eucaImage.imageId %>"><i class="fa fa-arrow-circle-o-left"></i></a></h2>
               <ul class="nav navbar-right panel_toolbox">
                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                 </li>
@@ -351,7 +335,7 @@
                         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
                         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
                         <select class="selectpicker show-tick">
-                          <% for(var i=0; i<diseaseLabel.length; i++) { %>                            
+                          <% for(var i=0; i<diseaseLabel.length; i++) { %>
                             <option data-subtext="<%= diseaseLabel[i].disease_label %>"><%= diseaseLabel[i].disease_number %></option>
                             <%}%>
                         </select>
@@ -492,7 +476,7 @@
                                       //console.log('This was logged in the callback: ' + result);
                                       if(result)
                                       {
-                                        $.post("/eutech/eucaImages/"+imageId + "/validate/true", function (data) {
+                                        $.post("/eutech/eucaImages/"+imageId + "/validate/true/<%= user.local.email %>", function (data) {
                                           location.reload();
                                         });
                                     }
@@ -516,7 +500,7 @@
                                     //console.log('This was logged in the callback: ' + result);
                                     if(result)
                                     {
-                                      $.post("/eutech/eucaImages/"+imageId + "/validate/false", function (data) {
+                                      $.post("/eutech/eucaImages/"+imageId + "/validate/false/<%= user.local.email %>", function (data) {
                                         location.reload();
                                       });
                                   }

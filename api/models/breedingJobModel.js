@@ -50,10 +50,12 @@ var BreedingJobSchema = new Schema({
     default: 0
   },
   created: {
-    type: String
+    type: Date,
+    default: new Date(new Date().getTime() - new Date().getTimezoneOffset()*60*1000).toISOString()
   },
   lastedited: {
-    type: String
+    type: Date,
+    default: new Date(new Date().getTime() - new Date().getTimezoneOffset()*60*1000).toISOString()
   },
   note: {
     type: String

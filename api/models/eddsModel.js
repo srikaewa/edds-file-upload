@@ -6,6 +6,10 @@ var Schema = mongoose.Schema;
 var connection = mongoose.createConnection("mongodb://localhost/EucaImageDb");
 
 var DiseaseSchema = new Schema({
+  created: {
+    type: Date,
+    default: new Date(new Date().getTime() - new Date().getTimezoneOffset()*60*1000).toISOString()
+  },
   disease_number: {
     type: String
   },
@@ -22,9 +26,19 @@ var DiseaseSchema = new Schema({
     integer: true,
     default: 0
   },
+  total_validated_images: {
+    type: Number,
+    integer: true,
+    default: 0
+  },
+  total_accuracy:{
+    type: Number,
+    double: true,
+    default: 0
+  },
   lastedited: {
     type: Date,
-    default: new Date()
+    default: new Date(new Date().getTime() - new Date().getTimezoneOffset()*60*1000).toISOString()
   }
 });
 
@@ -88,3 +102,4 @@ var EDDSSchema = new Schema({
 });
 
 module.exports = mongoose.model('EDDSs', EDDSSchema);
+module.exports = mongoose.model('DiseaseInfo', DiseaseSchema);

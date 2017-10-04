@@ -23,7 +23,6 @@ module.exports = function(app) {
   app.route('/eutech/jobCount/:photographer')
     .get(breedingJobList.get_breeding_job_count);
 
-
   app.route('/eutech/breedingJobs')
     .get(breedingJobList.eutech_list_all_breeding_jobs);
 

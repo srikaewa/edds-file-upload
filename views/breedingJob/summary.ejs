@@ -7,27 +7,32 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Gentallela Alela! | </title>
+    <title>Eutech Disease Diagnosis Console</title>
 
     <!-- Bootstrap -->
-    <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
-    <link href="../vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <!-- FullCalendar -->
-    <link href="../vendors/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet">
-    <link href="../vendors/fullcalendar/dist/fullcalendar.print.css" rel="stylesheet" media="print">
+    <link href="/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+    <!-- Datatables -->
+    <link href="/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
 
-    <!-- Custom styling plus plugins -->
-    <link href="../build/css/custom.min.css" rel="stylesheet">
+    <!-- Custom Theme Style -->
+    <link href="/build/css/custom.min.css" rel="stylesheet">
   </head>
 
   <body class="nav-md">
     <div class="container body">
       <div class="main_container">
-        <div class="col-md-3 left_col">
+        <div class="col-md-3 left_col menu_fixed">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Gentellela Alela!</span></a>
+              <a href="/" class="site_title"><img src="/img/eutech_white_bw_trans.png" style="width:32pt"> <span>Eu-Tech EDDS</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -35,7 +40,7 @@
             <!-- menu profile quick info -->
             <div class="profile">
               <div class="profile_pic">
-                <img src="images/img.jpg" alt="..." class="img-circle profile_img">
+                <img src="/gent/images/img.jpg" alt="..." class="img-circle profile_img">
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>
@@ -53,12 +58,12 @@
                 <ul class="nav side-menu">
                   <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="index.html">Dashboard</a></li>
-                      <li><a href="index2.html">Dashboard2</a></li>
-                      <li><a href="index3.html">Dashboard3</a></li>
+                      <li><a href="/">EDDS Dashboard</a></li>
+                      <li><a href="/eutech/eucaImages">Image Dashboard</a></li>
+                      <li><a href="/eutech/diseases">System Setup</a></li>
                     </ul>
                   </li>
-                  <li><a><i class="fa fa-edit"></i> Forms <span class="fa fa-chevron-down"></span></a>
+                  <!--<li><a><i class="fa fa-edit"></i> Forms <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="form.html">General Form</a></li>
                       <li><a href="form_advanced.html">Advanced Components</a></li>
@@ -80,11 +85,11 @@
                       <li><a href="inbox.html">Inbox</a></li>
                       <li><a href="calendar.html">Calendar</a></li>
                     </ul>
-                  </li>
-                  <li><a><i class="fa fa-table"></i> Tables <span class="fa fa-chevron-down"></span></a>
+                  </li> -->
+                  <li><a><i class="fa fa-table"></i> Job Summary <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="tables.html">Tables</a></li>
-                      <li><a href="tables_dynamic.html">Table Dynamic</a></li>
+                      <li><a href="/eutech/breedingJobs">Screening Job Summary</a></li>
+                      <!--<li><a href="tables_dynamic.html">Table Dynamic</a></li>-->
                     </ul>
                   </li>
                   <li><a><i class="fa fa-bar-chart-o"></i> Data Presentation <span class="fa fa-chevron-down"></span></a>
@@ -96,15 +101,15 @@
                       <li><a href="other_charts.html">Other Charts</a></li>
                     </ul>
                   </li>
-                  <li><a><i class="fa fa-clone"></i>Layouts <span class="fa fa-chevron-down"></span></a>
+                  <!--<li><a><i class="fa fa-clone"></i>Layouts <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="fixed_sidebar.html">Fixed Sidebar</a></li>
                       <li><a href="fixed_footer.html">Fixed Footer</a></li>
                     </ul>
-                  </li>
+                  </li> -->
                 </ul>
               </div>
-              <div class="menu_section">
+              <!--<div class="menu_section">
                 <h3>Live On</h3>
                 <ul class="nav side-menu">
                   <li><a><i class="fa fa-bug"></i> Additional Pages <span class="fa fa-chevron-down"></span></a>
@@ -142,10 +147,10 @@
                         <li><a href="#level1_2">Level One</a>
                         </li>
                     </ul>
-                  </li>                  
+                  </li>
                   <li><a href="javascript:void(0)"><i class="fa fa-laptop"></i> Landing Page <span class="label label-success pull-right">Coming Soon</span></a></li>
                 </ul>
-              </div>
+              </div>-->
 
             </div>
             <!-- /sidebar menu -->
@@ -180,7 +185,7 @@
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="images/img.jpg" alt=""><%= user.local.email %>
+                    <img src="/gent/images/img.jpg" alt=""><%= user.local.email %>
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -204,7 +209,7 @@
                   <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
                     <li>
                       <a>
-                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
+                        <span class="image"><img src="/gent/images/img.jpg" alt="Profile Image" /></span>
                         <span>
                           <span>John Smith</span>
                           <span class="time">3 mins ago</span>
@@ -216,7 +221,7 @@
                     </li>
                     <li>
                       <a>
-                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
+                        <span class="image"><img src="/gent/images/img.jpg" alt="Profile Image" /></span>
                         <span>
                           <span>John Smith</span>
                           <span class="time">3 mins ago</span>
@@ -228,7 +233,7 @@
                     </li>
                     <li>
                       <a>
-                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
+                        <span class="image"><img src="/gent/images/img.jpg" alt="Profile Image" /></span>
                         <span>
                           <span>John Smith</span>
                           <span class="time">3 mins ago</span>
@@ -240,7 +245,7 @@
                     </li>
                     <li>
                       <a>
-                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
+                        <span class="image"><img src="/gent/images/img.jpg" alt="Profile Image" /></span>
                         <span>
                           <span>John Smith</span>
                           <span class="time">3 mins ago</span>
@@ -269,57 +274,105 @@
         <!-- page content -->
         <div class="right_col" role="main">
           <div class="">
-            <div class="page-title">
-              <div class="title_left">
-                <h3>Calendar <small>Click to add/edit events</small></h3>
-              </div>
-
-              <div class="title_right">
-                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                  <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search for...">
-                    <span class="input-group-btn">
-                      <button class="btn btn-default" type="button">Go!</button>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
             <div class="clearfix"></div>
 
             <div class="row">
-              <div class="col-md-12">
-                <div class="x_panel">
-                  <div class="x_title">
-                    <h2>Calendar Events <small>Sessions</small></h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                      </li>
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                          <li><a href="#">Settings 1</a>
-                          </li>
-                          <li><a href="#">Settings 2</a>
-                          </li>
-                        </ul>
-                      </li>
-                      <li><a class="close-link"><i class="fa fa-close"></i></a>
-                      </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                  </div>
-                  <div class="x_content">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <div class="x_panel">
+            <div class="x_title">
+              <h2>Eucalyptus Disease Label Setup <small>admin</small></h2>
+              <ul class="nav navbar-right panel_toolbox">
+                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Settings 1</a>
+                    </li>
+                    <li><a href="#">Settings 2</a>
+                    </li>
+                  </ul>
+                </li>
+                <li><a class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+              </ul>
+              <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+              <!-- begin table -->
+              <!-- bootstrap-daterangepicker -->
+              <script src="/js/moment/moment.min.js"></script>
+              <table id="datatable-buttons" class="table table-striped table-bordered">
+                <thead class="thead-inverse">
+                  <tr>
+                    <th class="text-center" style="vertical-align:top;">Job Id</th>
+                    <th class="text-center" style="vertical-align:top;">Owner</th>
+                    <th class="text-center" style="vertical-align:top;">Culture</th>
+                    <th class="text-center" style="vertical-align:top;">Culturing date</th>
+                    <th class="text-center" style="vertical-align:top;">Collecting date</th>
+                    <th class="text-center" style="vertical-align:top;">Clone</th>
+                    <th class="text-center" style="vertical-align:top;">Rep #</th>
+                    <th class="text-center" style="vertical-align:top;">Round #</th>
+                    <th class="text-center" style="vertical-align:top;"># of Euca</th>
+                    <th class="text-center" style="vertical-align:top;">Note</th>
+                    <th class="text-center" style="vertical-align:top;">Created</th>
+                    <th class="text-center" style="vertical-align:top;">Last edited</th>
+                    <th class="text-center" style="vertical-align:top;">View</th>
+                  </tr>
+                </thead>
+                <tbody>
+              <% for(var i=0; i<screeningJobs.length; i++) {%>
+                <tr>
+                  <td class="text-center" style="vertical-align:middle;"><%= screeningJobs[i].jobId %></td>
+                  <td class="text-center" style="vertical-align:middle;"><%= screeningJobs[i].photographer %></td>
+                  <td class="text-center" style="vertical-align:middle;">
+                    <%= screeningJobs[i].culture %>
+                  </td>
+                  <td class="text-center" style="vertical-align:middle;">
+                    <%= moment(screeningJobs[i].breedingdate).format('Do MMM, YYYY') %>
+                  </td>
+                  <td class="text-center" style="vertical-align:middle;">
+                    <%= moment(screeningJobs[i].collectingdate).format('Do MMM, YYYY') %>
+                  </td>
+                  <td class="text-center" style="vertical-align:middle;">
+                    <%= screeningJobs[i].clone %>
+                  </td>
+                  <td class="text-center" style="vertical-align:middle;">
+                    <%= screeningJobs[i].rep %>
+                  </td>
+                  <td class="text-center" style="vertical-align:middle;">
+                    <%= screeningJobs[i].round %>
+                  </td>
+                  <td class="text-center" style="vertical-align:middle;">
+                    <%= screeningJobs[i].number %>
+                  </td>
+                  <td class="text-center" style="vertical-align:middle;">
+                    <%= screeningJobs[i].note %>
+                  </td>
+                  <td class="text-center" style="vertical-align:middle;">
+                    <%= moment(screeningJobs[i].created).format('Do MMM, YYYY - HH:mm:ss') %>
+                  </td>
+                  <td class="text-center" style="vertical-align:middle;">
+                    <%= moment(screeningJobs[i].lastedited).format('Do MMM, YYYY - HH:mm:ss') %>
+                  </td>
+                  <td  class="text-center" style="vertical-align:middle;">
+                    <form class="form-inline" action="/eutech/breedingJob/<%= screeningJobs[i]._id %>" method="get">
+                        <button type="submit" class="btn btn-info"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp &nbsp View </button>
+                    </form>
+                    <!--</form>-->
+                  </td>
+                </tr>
+              <% } %>
+            </tbody>
+              </table>
 
-                    <div id='calendar'></div>
-
-                  </div>
-                </div>
-              </div>
+              <!-- end table -->
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
         <!-- /page content -->
 
         <!-- footer content -->
@@ -330,196 +383,101 @@
           <div class="clearfix"></div>
         </footer>
         <!-- /footer content -->
-      </div>
-    </div>
 
-    <!-- calendar modal -->
-    <div id="CalenderModalNew" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
 
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h4 class="modal-title" id="myModalLabel">New Calendar Entry</h4>
-          </div>
-          <div class="modal-body">
-            <div id="testmodal" style="padding: 5px 20px;">
-              <form id="antoform" class="form-horizontal calender" role="form">
-                <div class="form-group">
-                  <label class="col-sm-3 control-label">Title</label>
-                  <div class="col-sm-9">
-                    <input type="text" class="form-control" id="title" name="title">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-sm-3 control-label">Description</label>
-                  <div class="col-sm-9">
-                    <textarea class="form-control" style="height:55px;" id="descr" name="descr"></textarea>
-                  </div>
-                </div>
-              </form>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default antoclose" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary antosubmit">Save changes</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div id="CalenderModalEdit" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h4 class="modal-title" id="myModalLabel2">Edit Calendar Entry</h4>
-          </div>
-          <div class="modal-body">
-
-            <div id="testmodal2" style="padding: 5px 20px;">
-              <form id="antoform2" class="form-horizontal calender" role="form">
-                <div class="form-group">
-                  <label class="col-sm-3 control-label">Title</label>
-                  <div class="col-sm-9">
-                    <input type="text" class="form-control" id="title2" name="title2">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-sm-3 control-label">Description</label>
-                  <div class="col-sm-9">
-                    <textarea class="form-control" style="height:55px;" id="descr2" name="descr"></textarea>
-                  </div>
-                </div>
-
-              </form>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default antoclose2" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary antosubmit2">Save changes</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div id="fc_create" data-toggle="modal" data-target="#CalenderModalNew"></div>
-    <div id="fc_edit" data-toggle="modal" data-target="#CalenderModalEdit"></div>
-    <!-- /calendar modal -->
-        
     <!-- jQuery -->
-    <script src="../vendors/jquery/dist/jquery.min.js"></script>
+    <script src="/vendors/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap -->
-    <script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- FastClick -->
-    <script src="../vendors/fastclick/lib/fastclick.js"></script>
+    <script src="/vendors/fastclick/lib/fastclick.js"></script>
     <!-- NProgress -->
-    <script src="../vendors/nprogress/nprogress.js"></script>
-    <!-- FullCalendar -->
-    <script src="../vendors/moment/min/moment.min.js"></script>
-    <script src="../vendors/fullcalendar/dist/fullcalendar.min.js"></script>
+    <script src="/vendors/nprogress/nprogress.js"></script>
+    <!-- Datatables -->
+    <script src="/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+    <script src="/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="/vendors/datatables.net-scroller/js/datatables.scroller.min.js"></script>
+    <script src="/vendors/jszip/dist/jszip.min.js"></script>
+    <script src="/vendors/pdfmake/build/pdfmake.min.js"></script>
+    <script src="/vendors/pdfmake/build/vfs_fonts.js"></script>
 
     <!-- Custom Theme Scripts -->
-    <script src="../build/js/custom.min.js"></script>
+    <script src="/build/js/custom.min.js"></script>
 
-    <!-- FullCalendar -->
+    <!-- Datatables -->
     <script>
-      $(window).load(function() {
-        var date = new Date(),
-            d = date.getDate(),
-            m = date.getMonth(),
-            y = date.getFullYear(),
-            started,
-            categoryClass;
-
-        var calendar = $('#calendar').fullCalendar({
-          header: {
-            left: 'prev,next today',
-            center: 'title',
-            right: 'month,agendaWeek,agendaDay'
-          },
-          selectable: true,
-          selectHelper: true,
-          select: function(start, end, allDay) {
-            $('#fc_create').click();
-
-            started = start;
-            ended = end;
-
-            $(".antosubmit").on("click", function() {
-              var title = $("#title").val();
-              if (end) {
-                ended = end;
-              }
-
-              categoryClass = $("#event_type").val();
-
-              if (title) {
-                calendar.fullCalendar('renderEvent', {
-                    title: title,
-                    start: started,
-                    end: end,
-                    allDay: allDay
-                  },
-                  true // make the event "stick"
-                );
-              }
-
-              $('#title').val('');
-
-              calendar.fullCalendar('unselect');
-
-              $('.antoclose').click();
-
-              return false;
+      $(document).ready(function() {
+        var handleDataTableButtons = function() {
+          if ($("#datatable-buttons").length) {
+            $("#datatable-buttons").DataTable({
+              dom: "Bfrtip",
+              buttons: [
+                {
+                  extend: "copy",
+                  className: "btn-sm"
+                },
+                {
+                  extend: "csv",
+                  className: "btn-sm"
+                },
+                {
+                  extend: "excel",
+                  className: "btn-sm"
+                },
+                {
+                  extend: "pdfHtml5",
+                  className: "btn-sm"
+                },
+                {
+                  extend: "print",
+                  className: "btn-sm"
+                },
+              ],
+              responsive: true
             });
-          },
-          eventClick: function(calEvent, jsEvent, view) {
-            $('#fc_edit').click();
-            $('#title2').val(calEvent.title);
+          }
+        };
 
-            categoryClass = $("#event_type").val();
+        TableManageButtons = function() {
+          "use strict";
+          return {
+            init: function() {
+              handleDataTableButtons();
+            }
+          };
+        }();
 
-            $(".antosubmit2").on("click", function() {
-              calEvent.title = $("#title2").val();
-
-              calendar.fullCalendar('updateEvent', calEvent);
-              $('.antoclose2').click();
-            });
-
-            calendar.fullCalendar('unselect');
-          },
-          editable: true,
-          events: [{
-            title: 'All Day Event',
-            start: new Date(y, m, 1)
-          }, {
-            title: 'Long Event',
-            start: new Date(y, m, d - 5),
-            end: new Date(y, m, d - 2)
-          }, {
-            title: 'Meeting',
-            start: new Date(y, m, d, 10, 30),
-            allDay: false
-          }, {
-            title: 'Lunch',
-            start: new Date(y, m, d + 14, 12, 0),
-            end: new Date(y, m, d, 14, 0),
-            allDay: false
-          }, {
-            title: 'Birthday Party',
-            start: new Date(y, m, d + 1, 19, 0),
-            end: new Date(y, m, d + 1, 22, 30),
-            allDay: false
-          }, {
-            title: 'Click for Google',
-            start: new Date(y, m, 28),
-            end: new Date(y, m, 29),
-            url: 'http://google.com/'
-          }]
+        $('#datatable').dataTable();
+        $('#datatable-keytable').DataTable({
+          keys: true
         });
+
+        $('#datatable-responsive').DataTable();
+
+        $('#datatable-scroller').DataTable({
+          ajax: "/js/datatables/json/scroller-demo.json",
+          deferRender: true,
+          scrollY: 380,
+          scrollCollapse: true,
+          scroller: true
+        });
+
+        var table = $('#datatable-fixed-header').DataTable({
+          fixedHeader: true
+        });
+
+        TableManageButtons.init();
       });
     </script>
-    <!-- /FullCalendar -->
+    <!-- /Datatables -->
   </body>
 </html>

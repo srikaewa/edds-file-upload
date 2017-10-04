@@ -282,7 +282,7 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
           <div class="x_panel">
             <div class="x_title">
-              <h2>Eucalyptus Leaf Disease Details <a href="/eutech/eucaImages/<%= eucaImage.imageId %>/edit"><i class="fa fa-edit"></i></a></h2>
+              <h2>Disease Screening Job Details <small>admin</small></h2>
               <ul class="nav navbar-right panel_toolbox">
                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                 </li>
@@ -301,82 +301,109 @@
               <div class="clearfix"></div>
             </div>
             <div class="x_content">
+              <p class="text-muted font-13 m-b-30">
+                The disease screening job details page provides information about screening job and list of eucalyptus images that are added to the screening job below.
+              </p>
               <div class="table-responsive">
                 <table class="table">
-                  <thead>
-                    <tr>
-                      <th>Images</th>
-                      <th></th>
-                    </tr>
-                  </thead>
                   <tbody>
                     <tr>
-                    <td colspan="2"><a href="/EucaPhoto/<%= eucaImage.displayfilename %>" alt="<%= eucaImage.displayfilename %>"><img src="/EucaPhoto/<%= eucaImage.displayfilename %>" alt="<%= eucaImage.displayfilename %>" style="width:160px;"></a> <a href="/EucaPhoto/<%= eucaImage.originalfilename %>" alt="<%= eucaImage.originalfilename %>"><img src="/EucaPhoto/<%= eucaImage.originalfilename %>" alt="<%= eucaImage.originalfilename %>" style="width:160px;"></a>
-                    </td>
-                  </tr>
-                  </tbody>
-                  <thead>
-                    <tr>
-                      <th>Details</th>
-                      <th></th>
+                      <td>Job Id</td><td><%= screeningJob.jobId %></td>
                     </tr>
-                  </thead>
-                  <tbody>
-                  <tr>
-                    <td><img src="/img/ic_description_black_48dp.png" alt="<%= eucaImage.diseasetype %>" style="width:24px;height:24px;"></td><td><%= eucaImage.diseasetype %> - Stage: <%= eucaImage.stage %>, Level: <%= eucaImage.level %> (<%= eucaImage.area %>%) </td>
-                  </tr>
-                  <tr>
-                    <td><img src="/img/ic_check_circle_black_48dp.png" alt="<%= eucaImage.validated %>" style="width:24px;height:24px;"></td>
-                    <td>
-                      <% if(eucaImage.validated) { %>
-                        Image is validated.
-                      <% } else { %>
-                        Image is not validated.
-                      <% } %>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><img src="/img/ic_today_black_48dp.png" alt="<%= eucaImage.submit %>" style="width:24px;height:24px;"></td><td><%= eucaImage.submit %></td>
-                  </tr>
-                  <tr>
-                    <td><img src="/img/ic_image_black_48dp.png" alt="<%= eucaImage.filename %>" style="width:24px;height:24px;"></td><td><%= eucaImage.filename %></td>
-                  </tr>
-                  <tr>
-                    <td><img src="/img/ic_satellite_black_48dp.png" alt="<%= eucaImage.imageId %>" style="width:24px;height:24px;"></td><td><%= eucaImage.imageId %></td>
-                  </tr>
-                  <tr>
-                    <td><img src="/img/ic_speaker_notes_black_48dp.png" alt="<%= eucaImage.jobId %>" style="width:24px;height:24px;"></td><td><%= eucaImage.jobId %></td>
-                  </tr>
-                  <tr>
-                    <td><img src="/img/ic_update_black_48dp.png" alt="<%= eucaImage.elapsetime %>" style="width:24px;height:24px;"></td><td><%= eucaImage.elapsetime %> s</td>
-                  </tr>
-                  <tr>
-                    <td><img src="/img/ic_cloud_done_black_48dp.png" alt="<%= eucaImage.elapsetime %>" style="width:24px;height:24px;"></td><td><%= eucaImage.lastedit %></td>
-                  </tr>
-                  <tr>
-                    <td><img src="/img/ic_place_black_48dp.png" alt="<%= eucaImage.latitude %>,<%= eucaImage.longitude %>" style="width:24px;height:24px;"></td><td><%= eucaImage.latitude %>, <%= eucaImage.longitude%></td>
+                    <tr>
+                      <td>Culture</td><td><%= screeningJob.culture %></td>
+                    </tr>
+                    <tr>
+                      <td>Culturing date</td><td><%= moment(screeningJob.breedingdate).format('dddd, Do MMMM, YYYY') %></td>
+                    </tr>
+                    <tr>
+                      <td>Collecting date</td><td><%= moment(screeningJob.collectingdate).format('dddd, Do MMMM, YYYY') %></td>
+                    </tr>
+                    <tr>
+                      <td>Round #</td><td><%= screeningJob.round %></td>
+                    </tr>
+                    <tr>
+                      <td>Rep #</td><td><%= screeningJob.rep %></td>
+                    </tr>
+                    <tr>
+                      <td>Clone</td><td><%= screeningJob.clone %></td>
+                    </tr>
+                    <tr>
+                      <td># of Euca</td><td><%= screeningJob.number %></td>
+                    </tr>
+                    <tr>
+                      <td>Note</td><td><%= screeningJob.note %></td>
+                    </tr>
+                    <tr>
+                      <td>Created</td><td><%= moment(screeningJob.created).format('dddd, Do MMMM, YYYY - HH:mm:ss') %></td>
+                    </tr>
+                    <td>Created</td><td><%= moment(screeningJob.lastedited).format('dddd, Do MMMM, YYYY - HH:mm:ss') %></td>
                   </tr>
                   </tbody>
                 </table>
+                <div class="clearfix"></div>
+
+                <!-- eucaimage list -->
+
+                  <h2>Screening Job Images List <small>admin</small></h2>
+                <div class="x_content">
+                  <table id="datatable-buttons" class="table table-striped table-bordered">
+                    <thead class="thead-inverse">
+                      <tr>
+                        <th class="text-center" style="vertical-align:top;">Job ID</th>
+                        <th class="text-center" style="vertical-align:top;">Submit</th>
+                        <th class="text-center" style="vertical-align:top;">Filename</th>
+                        <th class="text-center" style="vertical-align:top;">Type</th>
+                        <th class="text-center" style="vertical-align:top;">Stage</th>
+                        <th class="text-center" style="vertical-align:top;">Level</th>
+                        <th class="text-center" style="vertical-align:top;">Area (%)</th>
+                        <th class="text-center" style="vertical-align:top;">Validation</th>
+                        <th class="text-center" style="vertical-align:top;">View</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                  <% for(var i=0; i<eucaImages.length; i++) {%>
+                    <tr>
+                      <td class="text-center" style="vertical-align:middle;"><%= eucaImages[i].jobId %></td>
+                      <td class="text-center" style="vertical-align:middle;"><%= eucaImages[i].submit %></td>
+                      <td class="text-center" style="vertical-align:middle;">
+                        <%= eucaImages[i].filename %>
+                      </td>
+                      <td class="text-center" style="vertical-align:middle;">
+                        <%= eucaImages[i].diseasetype %>
+                      </td>
+                      <td class="text-center" style="vertical-align:middle;">
+                        <%= eucaImages[i].stag %>
+                      </td>
+                      <td class="text-center" style="vertical-align:middle;">
+                        <%= eucaImages[i].level %>
+                      </td>
+                      <td class="text-center" style="vertical-align:middle;">
+                        <%= eucaImages[i].area %>
+                      </td>
+                      <td class="text-center" style="vertical-align:middle;">
+                        <% if(eucaImages[i].validated) { %>
+                          <i class="fa fa-check" aria-hidden="true"></i>
+                        <% } else { %>
+                          <i class="fa fa-times" aria-hidden="true"></i>
+                        <% } %>
+                      </td>
+                      <td  class="text-center" style="vertical-align:middle;">
+                        <form class="form-inline" action="/eutech/eucaImages/<%= eucaImages[i].imageId %>" method="get">
+                            <button type="submit" class="btn btn-info"><i class="fa fa-eye" aria-hidden="true"></i>&nbsp &nbsp View </button>
+                        </form>
+                        <!--</form>-->
+                      </td>
+                    </tr>
+                  <% } %>
+                </tbody>
+                  </table>
+
+
+                </div>
+                <!-- eucaimage list -->
+
             </div>
-            <div id="map" class="col-md-12 col-sm-12 col-xs-12" style="height:480px;"></div>
-                <script>
-                  function initMap() {
-                    var uluru = {lat: <%= eucaImage.latitude %>, lng: <%= eucaImage.longitude %>};
-                    var map = new google.maps.Map(document.getElementById('map'), {
-                      zoom: 14,
-                      center: uluru,
-                      mapTypeId: google.maps.MapTypeId.HYBRID
-                    });
-                    var marker = new google.maps.Marker({
-                      position: uluru,
-                      map: map
-                    });
-                  }
-                </script>
-                <script async defer
-                src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBZMl1Skv6erYMgU987giM5GZ24f2OpkGU&callback=initMap">
-                </script>
             </div>
 
           </div>

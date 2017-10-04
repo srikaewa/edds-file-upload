@@ -45,11 +45,15 @@ module.exports = function(app) {
   app.route('/eutech/eucaImages/:imageId/update')
     .post(eucaImageList.eutech_update_a_image_data);
 
+  app.route('/eutech/eucaImages/:imageId/diseaselabel/:diseaselabel')
+    .put(eucaImageList.eutech_update_a_disease_label);
+
+
   app.route('/eutech/eucaImages/:imageId/update_disease/:type')
       .post(eucaImageList.eutech_update_a_disease_data);
 
 
-  app.route('/eutech/eucaImages/:imageId/validate/:validated')
+  app.route('/eutech/eucaImages/:imageId/validate/:validated/:validator')
     .post(eucaImageList.eutech_validate_a_image_data);
 
 

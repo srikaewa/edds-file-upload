@@ -4,12 +4,13 @@ var mongoose = require('mongoose');
 var EDDS = mongoose.model('EDDSs');
 var Disease = mongoose.model('Diseases');
 var EucaImage = mongoose.model('EucaImages');
+var ScreeningJob = mongoose.model('BreedingJobs');
 var edds_mod = require('../../modules/edds.js');
 var async = require('async');
 var moment = require('moment');
 
 exports.eutech_edds_dashboard = function(req, res){
-  EDDS.find({}).sort({_id : -1}).limit(1).exec(function(err, edds){
+  /*EDDS.find({}).sort({_id : -1}).limit(1).exec(function(err, edds){
     if (err)
       res.send(err);
     //console.log("EDDS data -> " + edds);
@@ -18,12 +19,46 @@ exports.eutech_edds_dashboard = function(req, res){
       //console.log("DiseaseList data -> " + diseaseList);
       res.render('edds/index.ejs', {edds: edds, diseaseList: diseaseList});
     });
+  }); */
+
+  async.parallel([
+    function(callback){
+      EDDS.find({}).sort({_id : -1}).limit(1).exec(function(err, edds){
+        if (err)
+          res.send(err);
+      callback(null, edds);
+      });
+    },
+    function(callback){
+      var dl = edds_mod.diseaselist(function(diseaseList){
+        callback(null, diseaseList);
+      });
+    },
+    function(callback){
+      EucaImage.find({}).sort({_id : -1}).limit(20).exec(function(err, eucaImages){
+        if(err)
+          res.send(err);
+        callback(null, eucaImages);
+      });
+    },
+    function(callback){
+      ScreeningJob.find({}).sort({_id : -1}).limit(20).exec(function(err, screeningJobs){
+        if(err)
+          res.send(err);
+        callback(null, screeningJobs);
+      });
+    }
+  ], function(err, results){
+      if(err)
+        res.send(err)
+      //console.log("Render => " + results[0] + results[1] + results[2]);
+      res.render('edds/index.ejs', {edds: results[0], diseaseList: results[1], eucaImages: results[2], screeningJobs: results[3]});
   });
+
 };
 
 exports.eutech_edds_chart = function(req, res){
-  //console.log("Try display table!!!");
-  res.render('image/test.ejs');
+  console.log("Try display -> " + edds_mod.get_color(0));
 };
 
 exports.eutech_list_all_edds = function(req, res) {
@@ -81,8 +116,8 @@ exports.eutech_update_today_edds_data = function(req, res) {
     //  if(err)
     //    res.send(err);
 
-    var eu = edds_mod.update(function(edds){
-      //console.log("Update EDDS => " + edds);
+    var eu = edds_mod.update(function(err, edds){
+      //console.log("Update EDDS for today => " + edds);
       res.json(edds);
     });
       //console.log("Number of euca image => " + numbOfEucaImage);

@@ -16,7 +16,7 @@ var connection = mongoose.connect('mongodb://localhost/EucaImageDb', {useMongoCl
 
 
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 var moment = require('moment');

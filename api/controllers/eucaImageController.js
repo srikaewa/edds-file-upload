@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 var EucaImage = mongoose.model('EucaImages');
 var DiseaseLabel = mongoose.model('Diseases');
 
-var edds = require('../../modules/edds.js');
+var edds_mod = require('../../modules/edds.js');
 
 var multer	=	require('multer');
 var storage	=	multer.diskStorage({
@@ -77,11 +77,17 @@ exports.run_classify = function(req, res) {
     child.on('close', function() {
         console.log('Classifying done...');
         console.log(result);
-        var eu = edds.update(function(edds){
-          //console.log("Update EDDS => " + edds);
-          res.json(edds);
-          //res.redirect('/eutech/eucaImages')
-        });
+        //edds_mod.get_disease_label(function(diseaseLabel){
+          //console.log("Update disease label " + diseaseLabel + " to " + )
+          console.log("Update disease[" + eucaImage.diseasetype + "] to image " + eucaImage.imageId);
+          var eu = edds_mod.update(function(err, edds){
+            if(err)
+              res.send(err);
+            //console.log("Update EDDS => " + edds);
+            res.json(edds);
+            //res.redirect('/eutech/eucaImages')
+          });
+        //});
     });
   });
 };
@@ -95,7 +101,7 @@ exports.list_all_images = function(req, res) {
 };
 
 exports.eutech_list_all_images = function(req, res) {
-  EucaImage.find({}, function(err, eucaImage) {
+  EucaImage.find({}).sort({$natural: -1}).exec(function(err, eucaImage) {
     if (err)
       res.send(err);
     res.render('image/list.ejs', {eucaImages: eucaImage});
@@ -180,6 +186,24 @@ exports.eutech_update_a_image_data = function(req, res) {
   });*/
 };
 
+exports.eutech_update_a_disease_label = function(req, res) {
+  console.log('UPDATE image [' + req.params.imageId + ']');
+  EucaImage.findOneAndUpdate({_id: req.params.imageId}, {diseaselabel: req.params.diseaselabel}, {new: true}, function(err, task) {
+    if (err)
+      res.send(err);
+    console.log('UPDATE image with ' + task.imageId + ' & ' + task.diseaselabel);
+    res.json({imageId: task.imageId, diseaselabel: task.diseaselabel});
+  });
+  /*req.body.lastedit = new Date();
+  EucaImage.findOneAndUpdate({_id: req.params.imageId}, req.body, {new: true}, function(err, task) {
+    if (err)
+      res.send(err);
+    console.log('PUT image with ' + task);
+    res.json(task);
+  });*/
+};
+
+
 exports.eutech_update_a_disease_data = function(req, res) {
   console.log('UPDATE image [' + req.params.imageId + ']');
   DiseaseLabel.find({}, function(err, diseaseLabel){
@@ -189,9 +213,11 @@ exports.eutech_update_a_disease_data = function(req, res) {
       if (err)
         res.send(err);
       console.log('UPDATE image with ' + eucaImage);
-      
+
       //res.json(eucaImage);
-      var eu = edds.update(function(edds){
+      var eu = edds_mod.update(function(err, edds){
+        if(err)
+          res.send(err);
         console.log("Update EDDS dashboard...");
         res.render('image/edit.ejs', {eucaImage: eucaImage, diseaseLabel: diseaseLabel});
       });
@@ -211,13 +237,13 @@ exports.eutech_validate_a_image_data = function(req, res) {
   var today = new Date(new Date().getTime() - new Date().getTimezoneOffset()*60*1000).toISOString();
   //req.body.validated = true;
   //req.body.validator = user.local.email;
-  EucaImage.findOneAndUpdate({_id: req.params.imageId}, {validated: req.params.validated, lastvalidated: today}, {new: true}, function(err, eucaImage) {
+  EucaImage.findOneAndUpdate({_id: req.params.imageId}, {validated: req.params.validated, validator:req.params.validator, lastvalidated: today}, {new: true}, function(err, eucaImage) {
     if (err)
       res.send(err);
     console.log('UPDATE image validation with ' + eucaImage.validated + ' @' + eucaImage.lastvalidated);
     //res.render('image/edit.ejs', {eucaImage: eucaImage});
     res.json(eucaImage);
-    var eu = edds.update(function(edds, eucaImage){
+    var eu = edds_mod.update(function(err, edds){
       console.log("After update EDDS => " + edds);
       //res.json(edds);
       //res.redirect('/eutech/eucaImages')
@@ -252,7 +278,7 @@ exports.eutech_delete_a_image_data = function(req, res) {
       res.send(err);
     //res.json({ message: 'Eucalyptus image[' + req.params.imageId + '] successfully deleted' });
     // update edds dashboard
-    var eu = edds.update(function(edds){
+    var eu = edds_mod.update(function(err, edds){
       //console.log("Update EDDS => " + edds);
       //res.json(edds);
       res.redirect('/eutech/eucaImages')

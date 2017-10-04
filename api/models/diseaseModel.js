@@ -12,6 +12,13 @@ var DiseaseSchema = new Schema({
   disease_label: {
     type: String
   },
+  disease_color:{
+    type: String
+  },
+  created: {
+    type: Date,
+    default: new Date(new Date().getTime() - new Date().getTimezoneOffset()*60*1000).toISOString()
+  },
   lastedited: {
     type: Date,
     default: new Date(new Date().getTime() - new Date().getTimezoneOffset()*60*1000).toISOString()

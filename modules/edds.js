@@ -13,9 +13,10 @@ var update = function (callback){
       var yesterday = moment().subtract(1, 'days').format();
       var today = moment().format();
       console.log("Yesterday date => " + yesterday);
+      console.log("Today date => " + today);
       async.parallel([
               function(callback){
-                EucaImage.count({submit: {"$gte": today}}, function(err, numbOfEucaImageToday){
+                EucaImage.count({submit: {"$gte": yesterday}}, function(err, numbOfEucaImageToday){
                   if(err)
                     callback(err);
                   console.log("Number of euca image added today => " + numbOfEucaImageToday);

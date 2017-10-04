@@ -24,10 +24,10 @@ exports.eutech_get_next_breeding_job_id = function(req, res) {
 
 exports.eutech_create_a_breeding_job_data = function(req, res) {
     console.log("Created breeding job with -> " + req.body);
-    req.body.created = new Date();
-    req.body.lastedited = new Date();
-    req.body.breedingdate = new Date(req.body.breedingdate).toDateString();
-    req.body.collectingdate = new Date(req.body.collectingdate).toDateString();
+    req.body.created = new Date().toISOString();
+    req.body.lastedited = new Date().toISOString();
+    req.body.breedingdate = new Date().toISOString();
+    req.body.collectingdate = new Date().toISOString();
     var new_bj_data = new BreedingJob(req.body);
     //console.log("New job id -> " + new_bj_data._id);
     //new_bj_data.jobId = "eutech-jb-001-" + ("000000" + new_bj_data._id).slice(-6);

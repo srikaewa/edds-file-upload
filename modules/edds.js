@@ -64,7 +64,7 @@ var update = function (callback){
               //console.log("Result[1] => " + results[1]);
               //new_edds_data.lastedited = moment().format();
 
-              EDDS.findOne({created: {$gte: today}}, function(err, edds){
+              EDDS.findOne({created: {$gte: yesterday}}, function(err, edds){
 
 
                 /*{total_images: results[2], total_validated_images: results[3], total_invalidated_images: results[2]-results[3],

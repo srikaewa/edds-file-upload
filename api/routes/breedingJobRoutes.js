@@ -25,6 +25,8 @@ module.exports = function(app) {
 
   app.route('/eutech/breedingJobs')
     .get(breedingJobList.eutech_list_all_breeding_jobs);
+  app.route('/eutech/breedingJobs/:photographer')
+    .get(breedingJobList.eutech_list_photographer_breeding_jobs);
 
   app.route('/eutech/breedingJob/:jobId')
     .get(breedingJobList.eutech_read_a_breeding_job_data)

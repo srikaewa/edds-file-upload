@@ -108,6 +108,20 @@ exports.eutech_list_all_images = function(req, res) {
   });
 };
 
+exports.eutech_list_invalidated_images = function(req, res) {
+  if(req.user.local.validator)
+  {
+    EucaImage.find({validated: false}).sort({$natural: -1}).exec(function(err, eucaImage) {
+      if (err)
+        res.send(err);
+      res.render('image/list.ejs', {eucaImages: eucaImage});
+    });
+  }
+  else {
+    res.render('misc/warning.ejs');
+  }
+};
+
 exports.create_a_image_data = function(req, res) {
   var new_image_data = new EucaImage(req.body);
   new_image_data.imageId = new_image_data._id;

@@ -10,7 +10,6 @@ module.exports = function(app) {
     .get(eucaImageList.list_all_images)
     .post(eucaImageList.create_a_image_data);
 
-
   app.route('/eucaImages/:imageId')
     .get(eucaImageList.read_a_image_data)
     .put(eucaImageList.update_a_image_data)
@@ -31,6 +30,9 @@ module.exports = function(app) {
 
   app.route('/eutech/eucaImages')
     .get(eucaImageList.eutech_list_all_images);
+
+    app.route('/eutech/eucaImages/invalidated')
+      .get(eucaImageList.eutech_list_invalidated_images);
 
   app.route('/eutech/eucaImages/:imageId')
     .get(eucaImageList.eutech_read_a_image_data)

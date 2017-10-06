@@ -13,6 +13,21 @@ exports.eutech_list_all_breeding_jobs = function(req, res) {
   });
 };
 
+exports.eutech_list_photographer_breeding_jobs = function(req, res) {
+  console.log("Screening jobs list for photographer => " + req.params.photographer + " by " + req.user.local.email);
+  if(req.params.photographer == req.user.local.email){
+    BreedingJob.find({photographer: req.params.photographer}, function(err, screeningJobs) {
+      if (err)
+        res.send(err);
+      res.render('breedingJob/summary.ejs', {screeningJobs: screeningJobs});
+      //res.json(breedingJobs);
+    });
+  }
+  else{
+    res.render('misc/warning.ejs');
+  };
+};
+
 exports.eutech_get_next_breeding_job_id = function(req, res) {
   BreedingJob.nextCount(function(err, count) {
       if(err)
@@ -50,7 +65,6 @@ exports.eutech_read_a_breeding_job_data = function(req, res) {
   BreedingJob.findById(req.params.jobId, function(err, screeningJob) {
     if (err)
       res.send(err);
-    //console.log('GET breeding job details [' + req.params.jobId + '] with ' + screeningJob);
     edds_mod.get_screening_job_image_list(screeningJob.jobId, function(eucaImages){
       res.render('breedingJob/details.ejs', {screeningJob: screeningJob, eucaImages: eucaImages, moment: moment});
     })

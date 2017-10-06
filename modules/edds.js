@@ -10,7 +10,7 @@ var async = require('async');
 var moment = require('moment');
 
 var update = function (callback){
-      var yesterday = moment().subtract(1, 'days').format();
+      var yesterday = moment().subtract(1, 'days').startOf('day').format();    
       var today = moment().format();
       console.log("Yesterday date => " + yesterday);
       console.log("Today date => " + today);

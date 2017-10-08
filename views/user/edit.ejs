@@ -125,8 +125,8 @@
 
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
-                  <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="/gent/images/img.jpg" alt=""><%= user.local.firstname %>
+                  <a href="/profile" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <img src="/gent/images/img.jpg" alt=""><%= user.local.firstname %> <%= user.local.lastname %>
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -222,7 +222,7 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
           <div class="x_panel">
             <div class="x_title">
-              <h2><a href="/users"><i class="fa fa-arrow-circle-o-left"></i></a> Edit User Information <small> </small></h2>
+              <h2><a href="/users"><i class="fa fa-arrow-circle-o-left"></i></a> Edit User Information <small> <%= userProfile._id %> </small></h2>
               <ul class="nav navbar-right panel_toolbox">
                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                 </li>
@@ -242,26 +242,26 @@
             </div>
             <div class="x_content">
 
-              <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" action="/users/update/<%= user._id %>" method="post">
+              <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" action="/users/update/<%= userProfile._id %>" method="post">
                 <div class="form-group">
                   <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">First Name <span class="required">*</span>
                   </label>
                   <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input type="text" id="firstname" name="firstname" required="required" class="form-control col-md-7 col-xs-12" value="<%= user.local.firstname %>">
+                    <input type="text" id="firstname" name="firstname" required="required" class="form-control col-md-7 col-xs-12" value="<%= userProfile.local.firstname %>">
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Last Name <span class="required">*</span>
                   </label>
                   <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input type="text" id="lastname" name="lastname" required="required" class="form-control col-md-7 col-xs-12" value="<%= user.local.lastname %>">
+                    <input type="text" id="lastname" name="lastname" required="required" class="form-control col-md-7 col-xs-12" value="<%= userProfile.local.lastname %>">
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Email <span class="required">*</span>
                   </label>
                   <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input type="text" id="email" name="email" required="required" class="form-control col-md-7 col-xs-12" value="<%= user.local.email %>" disabled>
+                    <input type="text" id="email" name="email" required="required" class="form-control col-md-7 col-xs-12" value="<%= userProfile.local.email %>" disabled>
                   </div>
                 </div>
                 <!--<div class="form-group">
@@ -275,28 +275,28 @@
                   <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">admin
                   </label>
                   <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input type="checkbox" id="admin" name="admin" value="true" <% if(user.local.admin) {%>checked<%}%> >
+                    <input type="checkbox" id="admin" name="admin" value="true" <% if(userProfile.local.admin) {%>checked<%}%> >
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">staff
                   </label>
                   <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input type="checkbox" id="staff" name= "staff" value="true" <% if(user.local.staff) {%>checked<%}%> >
+                    <input type="checkbox" id="staff" name= "staff" value="true" <% if(userProfile.local.staff) {%>checked<%}%> >
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">validator
                   </label>
                   <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input type="checkbox" id="validator" name="validator" value="true" <% if(user.local.validator) {%>checked<%}%> >
+                    <input type="checkbox" id="validator" name="validator" value="true" <% if(userProfile.local.validator) {%>checked<%}%> >
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">user
                   </label>
                   <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input type="checkbox" id="user" name="user" value="true" <% if(user.local.user) {%>checked<%}%>>
+                    <input type="checkbox" id="user" name="user" value="true" <% if(userProfile.local.user) {%>checked<%}%>>
                   </div>
                 </div>
 

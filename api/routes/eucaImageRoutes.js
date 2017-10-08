@@ -31,7 +31,7 @@ module.exports = function(app) {
   app.route('/eutech/eucaImages')
     .get(eucaImageList.eutech_list_all_images);
 
-    app.route('/eutech/eucaImages/invalidated')
+    app.route('/eutech/invalidatedImages')
       .get(eucaImageList.eutech_list_invalidated_images);
 
   app.route('/eutech/eucaImages/:imageId')

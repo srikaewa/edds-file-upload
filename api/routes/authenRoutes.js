@@ -105,38 +105,77 @@ module.exports = function(app, passport) {
         res.redirect('/users');
       });
     });
-    app.get('/users/edit/:userId', function(req, res){
-      User.findOne({_id: req.params.userId}, function(err, user){
+    app.get('/users/editProfile/:userId', function(req, res){
+      User.findOne({_id: req.params.userId}, function(err, userProfile){
         //res.render('user/list.ejs', { message: req.flash('deleteUserMessage') })
-        res.render('user/edit.ejs', {user: user});
+        res.render('user/editProfile.ejs', {userProfile: userProfile});
+      });
+    });
+    app.get('/users/edit/:userId', function(req, res){
+      User.findOne({_id: req.params.userId}, function(err, userProfile){
+        //res.render('user/list.ejs', { message: req.flash('deleteUserMessage') })
+        res.render('user/edit.ejs', {userProfile: userProfile});
       });
     });
     app.post('/users/update/:userId', function(req, res){
       console.log("Update user => " + req.params.userId);
-      User.findOne({_id: req.params.userId}, function(err, user){
+      User.findOne({_id: req.params.userId}, function(err, userProfile){
         //res.render('user/list.ejs', { message: req.flash('deleteUserMessage') })
         //console.log("Update current user => " + user.local.firstname + ", " +  user.local.lastname + ", " + user.local.password);
         //console.log("with user => " + req.body.firstname + ", " +  req.body.lastname + ", " + req.body.password + ", " + req.body._admin + ", " + req.body.staff + ", " + req.body.validator + ", " + req.body.user);
-        if(user.local.firstname != req.body.firstname)
+        if(userProfile.local.firstname != req.body.firstname)
         {
-          console.log("User's firstname changed!");
-          user.local.firstname = req.body.firstname;
+          console.log("User's firstname changed from " + userProfile.local.firstname + " to " + req.body.firstname);
+          userProfile.local.firstname = req.body.firstname;
         }
-        if(user.local.lastname != req.body.lastname)
+        if(userProfile.local.lastname != req.body.lastname)
         {
-          console.log("User's lastname changed!");
-          user.local.lastname = req.body.lastname;
+          console.log("User's lastname changed from " + userProfile.local.lastname + " to " + req.body.lastname);
+          userProfile.local.lastname = req.body.lastname;
         }
         /*if(!user.validPassword(req.body.password))
         {
           console.log("User's password changed!");
           user.local.password = user.generateHash(req.body.password);
         }*/
-        user.local.admin = (req.body.admin) ? true : false;
-        user.local.staff = (req.body.staff) ? true : false;
-        user.local.validator = (req.body.validator) ? true : false;
-        user.local.user = (req.body.user) ? true : false;
-        user.save(function(err){
+        userProfile.local.admin = (req.body.admin) ? true : false;
+        userProfile.local.staff = (req.body.staff) ? true : false;
+        userProfile.local.validator = (req.body.validator) ? true : false;
+        userProfile.local.user = (req.body.user) ? true : false;
+        userProfile.save(function(err){
+          if(err)
+            throw err;
+          res.redirect('/users');
+        });
+      });
+    });
+    app.post('/users/updateProfile/:userId', function(req, res){
+      console.log("Update user => " + req.params.userId);
+      User.findOne({_id: req.params.userId}, function(err, userProfile){
+        //res.render('user/list.ejs', { message: req.flash('deleteUserMessage') })
+        //console.log("Update current user => " + user.local.firstname + ", " +  user.local.lastname + ", " + user.local.password);
+        //console.log("with user => " + req.body.firstname + ", " +  req.body.lastname + ", " + req.body.password + ", " + req.body._admin + ", " + req.body.staff + ", " + req.body.validator + ", " + req.body.user);
+        if(userProfile.local.firstname != req.body.firstname)
+        {
+          console.log("User's firstname changed from " + userProfile.local.firstname + " to " + req.body.firstname);
+          userProfile.local.firstname = req.body.firstname;
+        }
+        if(userProfile.local.lastname != req.body.lastname)
+        {
+          console.log("User's lastname changed from " + userProfile.local.lastname + " to " + req.body.lastname);
+          userProfile.local.lastname = req.body.lastname;
+        }
+        /*if(!user.validPassword(req.body.password))
+        {
+          console.log("User's password changed!");
+          user.local.password = user.generateHash(req.body.password);
+        }*/
+        userProfile.local.admin = (req.body.admin) ? true : false;
+        userProfile.local.staff = (req.body.staff) ? true : false;
+        userProfile.local.validator = (req.body.validator) ? true : false;
+        userProfile.local.user = (req.body.user) ? true : false;
+        //userProfile.validPassword()
+        userProfile.save(function(err){
           if(err)
             throw err;
           res.redirect('/users');

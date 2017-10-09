@@ -10,7 +10,7 @@ var async = require('async');
 var moment = require('moment');
 
 var update = function (callback){
-      var yesterday = moment().subtract(1, 'days').startOf('day').format();    
+      var yesterday = moment().subtract(1, 'days').startOf('day').format();
       var today = moment().format();
       console.log("Yesterday date => " + yesterday);
       console.log("Today date => " + today);
@@ -293,10 +293,10 @@ var diseaselist = function (callback)
 
 var get_disease_label = function(type, callback)
 {
-  DiseaseLabel.find({disease_type:type}, function(err, diseaseLabel){
+  DiseaseLabel.find({disease_number:type}, function(err, diseaseLabel){
         if(err)
           return err;
-        //console.log("GET Disease label => " + diseaseLabel);
+        console.log("GET_Disease_label => " + diseaseLabel);
         return callback(diseaseLabel);
     });
 }
@@ -315,8 +315,19 @@ var get_color = function(index)
   return "#"+Math.random().toString(16).slice(2, 8).toUpperCase();
 }
 
+var update_retrain_status = function(id, status, callback)
+{
+  EucaImage.findOneAndUpdate({imageId: id}, {retrain_status: status}, {new: true}, function(err, eucaImage){
+    if(err)
+      return err;
+    return callback(eucaImage)
+  });
+}
+
 module.exports.update = update;
 module.exports.diseaselist = diseaselist;
 module.exports.disease_count = disease_count;
 module.exports.get_screening_job_image_list = get_screening_job_image_list;
 module.exports.get_color = get_color;
+module.exports.get_disease_label = get_disease_label;
+module.exports.update_retrain_status = update_retrain_status;

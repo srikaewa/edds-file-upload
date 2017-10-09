@@ -8,7 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Eutech Disease Diagnosis Console</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
+
     <!-- Bootstrap -->
     <link href="/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -22,10 +25,14 @@
     <link href="/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
     <link href="/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
 
+    <!-- PNotify -->
+    <link href="/vendors/pnotify/dist/pnotify.css" rel="stylesheet">
+    <link href="/vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
+    <link href="/vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
+
     <!-- Custom Theme Style -->
     <link href="/build/css/custom.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
-
   </head>
 
   <body class="nav-md">
@@ -225,7 +232,7 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
           <div class="x_panel">
             <div class="x_title">
-              <h2><a href="/eutech/eucaImages/"><i class="fa fa-arrow-circle-o-left"></i></a> Edit Eucalyptus Disease Details </h2>
+              <h2>Edit Eucalyptus Disease Details </h2>
               <ul class="nav navbar-right panel_toolbox">
                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                 </li>
@@ -272,9 +279,6 @@
                     <td>
                       <!--<form method="post" action="update"> -->
                         <label for="diseasetype">Disease type:</label>
-                        <!-- bootstrap select -->
-                        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
-                        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
                         <select class="selectpicker show-tick">
                           <% for(var i=0; i<diseaseLabel.length; i++) { %>
                             <option data-subtext="<%= diseaseLabel[i].disease_label %>"><%= diseaseLabel[i].disease_number %></option>
@@ -293,9 +297,18 @@
                             });
                             $('.selectpicker').selectpicker('val','<%= eucaImage.diseasetype %>');
                             $('.selectpicker').on('changed.bs.select', function (e) {
-                              console.log("Select picker changed! -> " + e.target.value);
+                              console.log("Select diseasetype changed! -> " + e.target.value);
+                              if(e.target.value == '100')
+                                new PNotify({
+                                              title: 'Stage required!',
+                                              text: 'This phaeo disease type must be trained with stage. Please select the corresponding stage from drop-down list before click update...',
+                                              type: 'info',
+                                              styling: 'bootstrap3'
+                                          });
+                                //toggleStageAlert();
                             });
                         </script>
+
 
                           <!--<label for="stage">Disease Type:</label>
                           <input type="hidden" class="form-control" id="diseasetype" name="diseasetype" value="<%=eucaImage.diseasetype %>">
@@ -316,7 +329,31 @@
                             });
                             </script>
                           </div> -->
-                          <label for="stage">Stage: <%=eucaImage.stage%></label>
+                          <label for="stage">Stage: </label> <select class="stagepicker show-tick">
+                              <option data-subtext=""> - </option>
+                              <option data-subtext=""> 1 </option>
+                              <option data-subtext=""> 2 </option>
+                              <option data-subtext=""> 3 </option>
+                              <option data-subtext=""> 4 </option>
+                          </select>
+                          <script>
+                          $(document).ready(function () {
+                              $('.stagepicker').selectpicker('refresh');
+                          })
+                          </script>
+                          <script>
+                              $('.stagepicker').selectpicker({
+                                style: 'btn',
+                                liveSearch: true,
+                                showSubtext: true
+                              });
+                              $('.stagepicker').selectpicker('val','<%= eucaImage.stage %>');
+                              $('.stagepicker').on('changed.bs.select', function (e) {
+                                console.log("Select stage changed! -> " + e.target.value);
+                                //toggleStageAlert();
+                              });
+                          </script>
+
                           <!--<input type="hidden" class="form-control" id="stage" name="stage" value="<%=eucaImage.stage %>">
                           <div class="btn-group">
                             <i class="dropdown-arrow dropdown-arrow-inverse"></i>
@@ -360,28 +397,32 @@
                             </script>
                           </div>-->
                           (Disease area: <%= eucaImage.area %>%)
-                          <button id="button-update" class="btn btn-info" type="submit">Update</button>
+                          <button id="button-update" class="btn btn-info" type="submit">Update</button> <% if(eucaImage.retrain_needed && (eucaImage.retrain_status != "done")) {%>
+                            <button id="button-retrain" class="btn btn-warning" onclick="javascript:callRetrain()"><%= eucaImage.retrain_status %></button> <% } %>
                         </div>
                         <script>
                         $('#button-update').on('click', function (e) {
                           var val =  $('.selectpicker option:selected').val();
-                          $.post("/eutech/eucaImages/<%= eucaImage.imageId %>/update_disease/"+val, function (data) {
+                          var stageVal = $('.stagepicker option:selected').val();
+                          console.log("Stage val => " + stageVal);
+                          $.post("/eutech/eucaImages/<%= eucaImage.imageId %>/update_disease/"+val+"/"+stageVal, function (data) {
                             location.reload();
                           });
 
                           })
                         </script>
+                        <script>
+                        function callRetrain(){
+                          document.getElementById("button-retrain").disabled = true;
+                          document.getElementById("button-retrain").innerText = "training";
+                          var url = "/runRetrain/<%= eucaImage.imageId %>/" + $('.selectpicker option:selected').val() + "/" + $('.stagepicker option:selected').val();
+                          $.get(url, function (data) {
+                            console.log("Retrain status recieved -> " + data);
+                            location.reload();
+                          });
+                        }
+                        </script>
                       <!--</form>-->
-                      <% if(eucaImage.retrain_needed) {%>
-                        <div class="">
-
-                        <div class="alert alert-warning alert-dismissible fade in" role="alert">
-                          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
-                          </button>
-                          <strong><i class="fa fa-info-circle"></i> Retrain needed!</strong> This image has been updated its disease type, that means the previous classified result was overwritten. Click <a href="#">here</a> to retrain this image with the latest update...
-                        </div>
-                      </div>
-                      <% } %>
                     </td>
                   </tr>
                   <tr>
@@ -544,8 +585,45 @@
     <script src="/vendors/pdfmake/build/pdfmake.min.js"></script>
     <script src="/vendors/pdfmake/build/vfs_fonts.js"></script>
 
+    <!-- PNotify -->
+    <script src="/vendors/pnotify/dist/pnotify.js"></script>
+    <script src="/vendors/pnotify/dist/pnotify.buttons.js"></script>
+    <script src="/vendors/pnotify/dist/pnotify.nonblock.js"></script>
+
     <!-- Custom Theme Scripts -->
     <script src="/build/js/custom.min.js"></script>
+
+    <!-- PNotify -->
+    <script>
+      $(document).ready(function() {
+        //console.log("Trying PNotify...");
+        if(<%= eucaImage.retrain_needed && (eucaImage.retrain_status != 'done') %>)
+        {
+          new PNotify({
+            title: "Retrain needed!",
+            type: "warning",
+            text: "This image's disease type has been updated, this means the previous classified result will be overwritten. Click retrain button to retrain this image with the latest update...",
+            nonblock: {
+                nonblock: true
+            },
+            //addclass: 'dark',
+            styling: 'bootstrap3',
+            hide: false,
+            before_close: function(PNotify) {
+              PNotify.update({
+                title: PNotify.options.title + " - Enjoy your Stay",
+                before_close: null
+              });
+
+              PNotify.queueRemove();
+
+              return false;
+            }
+          });
+        }
+      });
+    </script>
+    <!-- /PNotify -->
 
     <!-- Datatables -->
     <script>

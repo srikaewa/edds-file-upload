@@ -257,9 +257,10 @@
                           <th class="text-center" style="vertical-align:middle;">Area (%)</th>
                           <th class="text-center" style="vertical-align:middle;">Edit</th>
                           <th class="text-center" style="vertical-align:middle;">Validation</th>
-                          <th class="text-center" style="vertical-align:middle;">Retrain</th>
+                          <th class="text-center" style="vertical-align:middle;">Retrain Needed</th>
+                          <th class="text-center" style="vertical-align:middle;">Retrain Status</th>
                           <th class="text-center" style="vertical-align:middle;">Submitter</th>
-                          <th class="text-center" style="vertical-align:middle;">Last Edit</th>
+                          <th class="text-center" style="vertical-align:middle;">Last Edited</th>
                           <th class="text-center" style="vertical-align:middle;">Delete</th>
                         </tr>
                       </thead>
@@ -301,8 +302,11 @@
                                 <i class="fa fa-times" aria-hidden="true"></i>
                               <% } %>
                             </td>
+                            <td class="text-center" style="vertical-align:middle;">
+                              <%= eucaImages[i].retrain_status %>
+                            </td>
                             <td class="text-center" style="vertical-align:middle;"><%= eucaImages[i].submitter %></td>
-                            <td class="text-center" style="vertical-align:middle;"><%= eucaImages[i].submit %></td>
+                            <td class="text-center" style="vertical-align:middle;"><%= moment(eucaImages[i].lastedit).format('do, MMM YYYY HH:mm:ss') %></td>
 
                             <td  class="text-center" style="vertical-align:middle;">
                               <!--<form method="post" action="eucaImages/<%= eucaImages[i].imageId %>/delete"> -->

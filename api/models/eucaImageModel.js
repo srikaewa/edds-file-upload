@@ -56,12 +56,12 @@ var EucaImageSchema = new Schema({
     default: '-'
   },
   submit: {
-    type: String,
-    default: new Date()
+    type: Date,
+    default: new Date(new Date().getTime() - new Date().getTimezoneOffset()*60*1000).toISOString()
   },
   lastedit: {
-    type: String,
-    default: '-'
+    type: Date,
+    default: new Date(new Date().getTime() - new Date().getTimezoneOffset()*60*1000).toISOString()
   },
   latitude: {
     type: String,
@@ -89,6 +89,14 @@ var EucaImageSchema = new Schema({
   retrain_needed: {
     type: Boolean,
     default: false
+  },
+  retrain_status: {
+    type: String,
+    default: 'retrain'
+  },
+  retrain_elapsetime: {
+    type: String,
+    default: '-'
   }
 });
 

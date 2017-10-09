@@ -24,7 +24,7 @@ module.exports = function(app) {
 
   app.route('/runClassify/:imageId')
     .get(eucaImageList.run_classify);
-  app.route('/runRetrain/:imageId')
+  app.route('/runRetrain/:imageId/:diseasetype/:stage')
     .get(eucaImageList.run_retrain);
 
   app.route('/getDiseaseType/:imageId')
@@ -53,7 +53,7 @@ module.exports = function(app) {
     .put(eucaImageList.eutech_update_a_disease_label);
 
 
-  app.route('/eutech/eucaImages/:imageId/update_disease/:type')
+  app.route('/eutech/eucaImages/:imageId/update_disease/:type/:stage')
       .post(eucaImageList.eutech_update_a_disease_data);
 
 

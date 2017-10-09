@@ -2,6 +2,8 @@
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 
+var gravatar = require('gravatar');
+
 module.exports = function(app, passport) {
 
     // =====================================
@@ -122,11 +124,9 @@ module.exports = function(app, passport) {
           console.log("User's lastname changed from " + userProfile.local.lastname + " to " + req.body.lastname);
           userProfile.local.lastname = req.body.lastname;
         }
-        if(userProfile.local.gravatar.substr(26, 32) != req.body.gravatar)
-        {
-          console.log("User's gravatar email hash => " + req.body.gravatar);
-          userProfile.local.gravatar = "//www.gravatar.com/avatar/" + req.body.gravatar;
-        }
+
+        userProfile.local.gravatar = gravatar.url(userProfile.local.email);
+
         /*if(!user.validPassword(req.body.password))
         {
           console.log("User's password changed!");
@@ -160,11 +160,12 @@ module.exports = function(app, passport) {
           console.log("User's lastname changed from " + userProfile.local.lastname + " to " + req.body.lastname);
           userProfile.local.lastname = req.body.lastname;
         }
-        if(req.body.gravatar)
+        /*if(req.body.gravatar)
         {
           console.log("User's gravatar email hash => " + req.body.gravatar);
           userProfile.local.gravatar = "//www.gravatar.com/avatar/" + req.body.gravatar;
-        }
+        }*/
+        userProfile.local.gravatar = gravatar.url(userProfile.local.email);
         /*if(!user.validPassword(req.body.password))
         {
           console.log("User's password changed!");

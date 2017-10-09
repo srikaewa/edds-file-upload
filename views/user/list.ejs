@@ -246,6 +246,7 @@
                 <thead class="thead-inverse">
                   <tr>
                     <th class="text-center" style="vertical-align:top;">ID</th>
+                    <th class="text-center" style="vertical-align:top;">Gravatar</th>
                     <th class="text-center" style="vertical-align:top;">Firstname</th>
                     <th class="text-center" style="vertical-align:top;">Lastname</th>
                     <th class="text-center" style="vertical-align:top;">Email</th>
@@ -261,6 +262,7 @@
               <% for(var i=0; i<users.length; i++) {%>
                 <tr>
                   <td class="text-center" style="vertical-align:middle;"><%= users[i]._id %></td>
+                  <td class="text-center" style="vertical-align:middle;"><img src="<%= users[i].local.gravatar %>"></td>
                   <td class="text-center" style="vertical-align:middle;">
                     <%= users[i].local.firstname %>
                   </td>

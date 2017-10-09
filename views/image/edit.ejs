@@ -43,11 +43,11 @@
             <!-- menu profile quick info -->
             <div class="profile">
               <div class="profile_pic">
-                <img src="/gent/images/img.jpg" alt="..." class="img-circle profile_img">
+                <img src="<%= user.local.gravatar %>" alt="..." class="img-circle profile_img">
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>
-                <h2><%= user.local.email %></h2>
+                <h2><%= user.local.firstname %></h2>
               </div>
             </div>
             <!-- /menu profile quick info -->
@@ -79,7 +79,7 @@
                       <li><a href="/eutech/breedingJobs/<%= user.local.email %>">Screening Job (staff)</a></li>
                       <% } %>
                       <% if(user.local.validator) { %>
-                      <li><a href="/eutech/eucaimages/invalidated">Invalidated Image Summary</a></li>
+                      <li><a href="/eutech/invalidatedImages">Invalidated Image Summary</a></li>
                       <% } %>
                       <!--<li><a href="tables_dynamic.html">Table Dynamic</a></li>-->
                     </ul>
@@ -128,7 +128,7 @@
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="/gent/images/img.jpg" alt=""><%= user.local.email %>
+                    <img src="<%= user.local.gravatar %>" alt=""><%= user.local.firstname %> <%= user.local.lastname %>
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -152,7 +152,7 @@
                   <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
                     <li>
                       <a>
-                        <span class="image"><img src="/gent/images/img.jpg" alt="Profile Image" /></span>
+                        <span class="image"><img src="<%= user.local.gravatar %>" alt="Profile Image" /></span>
                         <span>
                           <span>John Smith</span>
                           <span class="time">3 mins ago</span>
@@ -164,7 +164,7 @@
                     </li>
                     <li>
                       <a>
-                        <span class="image"><img src="/gent/images/img.jpg" alt="Profile Image" /></span>
+                        <span class="image"><img src="<%= user.local.gravatar %>" alt="Profile Image" /></span>
                         <span>
                           <span>John Smith</span>
                           <span class="time">3 mins ago</span>
@@ -176,7 +176,7 @@
                     </li>
                     <li>
                       <a>
-                        <span class="image"><img src="/gent/images/img.jpg" alt="Profile Image" /></span>
+                        <span class="image"><img src="<%= user.local.gravatar %>" alt="Profile Image" /></span>
                         <span>
                           <span>John Smith</span>
                           <span class="time">3 mins ago</span>
@@ -188,7 +188,7 @@
                     </li>
                     <li>
                       <a>
-                        <span class="image"><img src="/gent/images/img.jpg" alt="Profile Image" /></span>
+                        <span class="image"><img src="<%= user.local.gravatar %>" alt="Profile Image" /></span>
                         <span>
                           <span>John Smith</span>
                           <span class="time">3 mins ago</span>
@@ -225,7 +225,7 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
           <div class="x_panel">
             <div class="x_title">
-              <h2>Edit Eucalyptus Disease Details <a href="/eutech/eucaImages/<%= eucaImage.imageId %>"><i class="fa fa-arrow-circle-o-left"></i></a></h2>
+              <h2><a href="/eutech/eucaImages/"><i class="fa fa-arrow-circle-o-left"></i></a> Edit Eucalyptus Disease Details </h2>
               <ul class="nav navbar-right panel_toolbox">
                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                 </li>
@@ -373,12 +373,12 @@
                         </script>
                       <!--</form>-->
                       <% if(eucaImage.retrain_needed) {%>
-                        <div>
+                        <div class="">
 
                         <div class="alert alert-warning alert-dismissible fade in" role="alert">
                           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
                           </button>
-                          <strong>Retrain needed!</strong> This image has been updated its disease type, that means the previous classified result was overwritten.
+                          <strong><i class="fa fa-info-circle"></i> Retrain needed!</strong> This image has been updated its disease type, that means the previous classified result was overwritten. Click <a href="#">here</a> to retrain this image with the latest update...
                         </div>
                       </div>
                       <% } %>

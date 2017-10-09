@@ -38,6 +38,9 @@ var userSchema = mongoose.Schema({
         },
         lastname     : {
           type: String
+        },
+        gravatar: {
+          type: String
         }
     },
     facebook         : {

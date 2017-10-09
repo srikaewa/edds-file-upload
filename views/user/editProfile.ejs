@@ -41,7 +41,7 @@
             <!-- menu profile quick info -->
             <div class="profile">
               <div class="profile_pic">
-                <img src="/gent/images/img.jpg" alt="..." class="img-circle profile_img">
+                <img src="<%= user.local.gravatar %>" alt="..." class="img-circle profile_img">
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>
@@ -77,7 +77,7 @@
                       <li><a href="/eutech/breedingJobs/<%= user.local.email %>">Screening Job (staff)</a></li>
                       <% } %>
                       <% if(user.local.validator) { %>
-                      <li><a href="/eutech/eucaimages/invalidated">Invalidated Image Summary</a></li>
+                      <li><a href="/eutech/invalidatedImages">Invalidated Image Summary</a></li>
                       <% } %>
                       <!--<li><a href="tables_dynamic.html">Table Dynamic</a></li>-->
                     </ul>
@@ -126,7 +126,7 @@
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
                   <a href="/profile" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="/gent/images/img.jpg" alt=""><%= user.local.firstname %> <%= user.local.lastname %>
+                    <img src="<%= user.local.gravatar %>" alt=""><%= user.local.firstname %> <%= user.local.lastname %>
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -150,7 +150,7 @@
                   <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
                     <li>
                       <a>
-                        <span class="image"><img src="/gent/images/img.jpg" alt="Profile Image" /></span>
+                        <span class="image"><img src="<%= user.local.gravatar %>" alt="Profile Image" /></span>
                         <span>
                           <span>John Smith</span>
                           <span class="time">3 mins ago</span>
@@ -162,7 +162,7 @@
                     </li>
                     <li>
                       <a>
-                        <span class="image"><img src="/gent/images/img.jpg" alt="Profile Image" /></span>
+                        <span class="image"><img src="<%= user.local.gravatar %>" alt="Profile Image" /></span>
                         <span>
                           <span>John Smith</span>
                           <span class="time">3 mins ago</span>
@@ -174,7 +174,7 @@
                     </li>
                     <li>
                       <a>
-                        <span class="image"><img src="/gent/images/img.jpg" alt="Profile Image" /></span>
+                        <span class="image"><img src="<%= user.local.gravatar %>" alt="Profile Image" /></span>
                         <span>
                           <span>John Smith</span>
                           <span class="time">3 mins ago</span>
@@ -186,7 +186,7 @@
                     </li>
                     <li>
                       <a>
-                        <span class="image"><img src="/gent/images/img.jpg" alt="Profile Image" /></span>
+                        <span class="image"><img src="<%= user.local.gravatar %>" alt="Profile Image" /></span>
                         <span>
                           <span>John Smith</span>
                           <span class="time">3 mins ago</span>
@@ -241,8 +241,21 @@
               <div class="clearfix"></div>
             </div>
             <div class="x_content">
-
-              <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" action="/users/update/<%= userProfile._id %>" method="post">
+              <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" action="/users/updateProfile/<%= userProfile._id %>" method="post">
+                <div class="form-group">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Gravatar Image</span>
+                  </label>
+                  <div class="col-md-6 col-sm-6 col-xs-12">
+                    <img src="//www.gravatar.com/avatar/<%= userProfile.local.gravatar %>">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Gravatar Email Hash</span>
+                  </label>
+                  <div class="col-md-6 col-sm-6 col-xs-12">
+                    <input type="text" id="gravatar" name="gravatar" class="form-control col-md-7 col-xs-12" value="<%= userProfile.local.gravatar %>">
+                  </div>
+                </div>
                 <div class="form-group">
                   <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">First Name <span class="required">*</span>
                   </label>
@@ -268,35 +281,35 @@
                   <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Password <span class="required">*</span>
                   </label>
                   <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input type="password" id="password" name="password" required="required" class="form-control col-md-7 col-xs-12" value="<%= user.local.password %>">
+                    <input type="password" id="password" name="password" required="required" class="form-control col-md-7 col-xs-12" value="<%= user.local.password %>" disabled>
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">admin
                   </label>
                   <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input type="checkbox" id="admin" name="admin" value="true" <% if(userProfile.local.admin) {%>checked<%}%> >
+                    <input type="checkbox" id="admin" name="admin" value="true" <% if(userProfile.local.admin) {%>checked<%}%> disabled>
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">staff
                   </label>
                   <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input type="checkbox" id="staff" name= "staff" value="true" <% if(userProfile.local.staff) {%>checked<%}%> >
+                    <input type="checkbox" id="staff" name= "staff" value="true" <% if(userProfile.local.staff) {%>checked<%}%> disabled>
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">validator
                   </label>
                   <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input type="checkbox" id="validator" name="validator" value="true" <% if(userProfile.local.validator) {%>checked<%}%> >
+                    <input type="checkbox" id="validator" name="validator" value="true" <% if(userProfile.local.validator) {%>checked<%}%> disabled>
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">user
                   </label>
                   <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input type="checkbox" id="user" name="user" value="true" <% if(userProfile.local.user) {%>checked<%}%>>
+                    <input type="checkbox" id="user" name="user" value="true" <% if(userProfile.local.user) {%>checked<%}%> disabled>
                   </div>
                 </div>
 

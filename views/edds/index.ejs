@@ -47,7 +47,7 @@
             <!-- menu profile quick info -->
             <div class="profile">
               <div class="profile_pic">
-                <img src="/gent/images/img.jpg" alt="..." class="img-circle profile_img">
+                <img src="<%= user.local.gravatar %>" alt="..." class="img-circle profile_img">
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>
@@ -132,7 +132,7 @@
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="/gent/images/img.jpg" alt=""><%= user.local.firstname %> <%= user.local.lastname %>
+                    <img src="<%= user.local.gravatar %>" alt=""><%= user.local.firstname %> <%= user.local.lastname %>
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -156,7 +156,7 @@
                   <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
                     <li>
                       <a>
-                        <span class="image"><img src="/gent/images/img.jpg" alt="Profile Image" /></span>
+                        <span class="image"><img src="<%= user.local.gravatar %>" alt="Profile Image" /></span>
                         <span>
                           <span>John Smith</span>
                           <span class="time">3 mins ago</span>
@@ -168,7 +168,7 @@
                     </li>
                     <li>
                       <a>
-                        <span class="image"><img src="/gent/images/img.jpg" alt="Profile Image" /></span>
+                        <span class="image"><img src="<%= user.local.gravatar %>" alt="Profile Image" /></span>
                         <span>
                           <span>John Smith</span>
                           <span class="time">3 mins ago</span>
@@ -180,7 +180,7 @@
                     </li>
                     <li>
                       <a>
-                        <span class="image"><img src="/gent/images/img.jpg" alt="Profile Image" /></span>
+                        <span class="image"><img src="<%= user.local.gravatar %>" alt="Profile Image" /></span>
                         <span>
                           <span>John Smith</span>
                           <span class="time">3 mins ago</span>
@@ -192,7 +192,7 @@
                     </li>
                     <li>
                       <a>
-                        <span class="image"><img src="/gent/images/img.jpg" alt="Profile Image" /></span>
+                        <span class="image"><img src="<%= user.local.gravatar %>" alt="Profile Image" /></span>
                         <span>
                           <span>John Smith</span>
                           <span class="time">3 mins ago</span>
@@ -234,7 +234,7 @@
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
               <span class="count_top"><i class="fa fa-file-image-o"></i> Invalidated Images</span>
-              <div class="count"><a href="/eutech/eucaimages/invalidated"><%= edds[edds.length - 1].total_invalidated_images %></a></div>
+              <div class="count"><a href="/eutech/invalidatedImages"><%= edds[edds.length - 1].total_invalidated_images %></a></div>
               <!--<span class="count_bottom"><i class="green">+<%= edds[edds.length -1].total_invalidated_images_today %> </i> for Today</span>-->
             </div>
             <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">

@@ -24,6 +24,8 @@ module.exports = function(app) {
 
   app.route('/runClassify/:imageId')
     .get(eucaImageList.run_classify);
+  app.route('/runRetrain/:imageId')
+    .get(eucaImageList.run_retrain);
 
   app.route('/getDiseaseType/:imageId')
     .get(eucaImageList.get_disease_type);

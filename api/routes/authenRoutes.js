@@ -2,21 +2,6 @@
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 
-var ConnectRoles = require('connect-roles');
-var user = new ConnectRoles({
-  failureHandler: function (req, res, action) {
-    // optional function to customise code that runs when
-    // user fails authorisation
-    var accept = req.headers.accept || '';
-    res.status(403);
-    if (~accept.indexOf('html')) {
-      res.render('access-denied', {action: action});
-    } else {
-      res.send('Access Denied - You don\'t have permission to: ' + action);
-    }
-  }
-});
-
 module.exports = function(app, passport) {
 
     // =====================================
@@ -72,7 +57,7 @@ module.exports = function(app, passport) {
         //res.render('profile.ejs', {
         //    user : req.user // get the user out of session and pass to template
         //});
-        res.render('user/profile.ejs');
+        res.render('user/profile.ejs',{user: req.user});
     });
 
     // =====================================
@@ -108,12 +93,16 @@ module.exports = function(app, passport) {
     app.get('/users/editProfile/:userId', function(req, res){
       User.findOne({_id: req.params.userId}, function(err, userProfile){
         //res.render('user/list.ejs', { message: req.flash('deleteUserMessage') })
+        if(userProfile.local.gravatar)
+          userProfile.local.gravatar = userProfile.local.gravatar.substr(26, 32);
         res.render('user/editProfile.ejs', {userProfile: userProfile});
       });
     });
     app.get('/users/edit/:userId', function(req, res){
       User.findOne({_id: req.params.userId}, function(err, userProfile){
         //res.render('user/list.ejs', { message: req.flash('deleteUserMessage') })
+        if(userProfile.local.gravatar)
+          userProfile.local.gravatar = userProfile.local.gravatar.substr(26, 32);
         res.render('user/edit.ejs', {userProfile: userProfile});
       });
     });
@@ -133,6 +122,11 @@ module.exports = function(app, passport) {
           console.log("User's lastname changed from " + userProfile.local.lastname + " to " + req.body.lastname);
           userProfile.local.lastname = req.body.lastname;
         }
+        if(userProfile.local.gravatar.substr(26, 32) != req.body.gravatar)
+        {
+          console.log("User's gravatar email hash => " + req.body.gravatar);
+          userProfile.local.gravatar = "//www.gravatar.com/avatar/" + req.body.gravatar;
+        }
         /*if(!user.validPassword(req.body.password))
         {
           console.log("User's password changed!");
@@ -149,6 +143,7 @@ module.exports = function(app, passport) {
         });
       });
     });
+
     app.post('/users/updateProfile/:userId', function(req, res){
       console.log("Update user => " + req.params.userId);
       User.findOne({_id: req.params.userId}, function(err, userProfile){
@@ -165,20 +160,25 @@ module.exports = function(app, passport) {
           console.log("User's lastname changed from " + userProfile.local.lastname + " to " + req.body.lastname);
           userProfile.local.lastname = req.body.lastname;
         }
+        if(req.body.gravatar)
+        {
+          console.log("User's gravatar email hash => " + req.body.gravatar);
+          userProfile.local.gravatar = "//www.gravatar.com/avatar/" + req.body.gravatar;
+        }
         /*if(!user.validPassword(req.body.password))
         {
           console.log("User's password changed!");
           user.local.password = user.generateHash(req.body.password);
         }*/
-        userProfile.local.admin = (req.body.admin) ? true : false;
-        userProfile.local.staff = (req.body.staff) ? true : false;
-        userProfile.local.validator = (req.body.validator) ? true : false;
-        userProfile.local.user = (req.body.user) ? true : false;
+        //userProfile.local.admin = (req.body.admin) ? true : false;
+        //userProfile.local.staff = (req.body.staff) ? true : false;
+        //userProfile.local.validator = (req.body.validator) ? true : false;
+        //userProfile.local.user = (req.body.user) ? true : false;
         //userProfile.validPassword()
         userProfile.save(function(err){
           if(err)
             throw err;
-          res.redirect('/users');
+          res.redirect('/profile');
         });
       });
     });

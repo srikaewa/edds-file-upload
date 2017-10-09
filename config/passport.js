@@ -1,5 +1,7 @@
 // config/passport.js
 
+var gravatar = require('gravatar');
+
 // load all the things we need
 var LocalStrategy   = require('passport-local').Strategy;
 
@@ -66,6 +68,7 @@ module.exports = function(passport) {
                 newUser.local.password = newUser.generateHash(password);
                 newUser.local.firstname = req.body.firstname;
                 newUser.local.lastname = req.body.lastname;
+                newUser.local.gravatar = gravatar.url(email);
 
                 // save the user
                 newUser.save(function(err) {
@@ -81,7 +84,7 @@ module.exports = function(passport) {
 
     }));
 
-    
+
 
     // =========================================================================
         // LOCAL LOGIN =============================================================

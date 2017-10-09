@@ -92,6 +92,41 @@ exports.run_classify = function(req, res) {
   });
 };
 
+exports.run_retrain = function(req, res) {
+  EucaImage.findById(req.params.imageId, function(err, eucaImage)
+  {
+    if(err)
+      res.send(err);
+    console.log('GET image [' + eucaImage.imageId + ']');
+
+    var exec = require('child_process').exec;
+    var result = '';
+    //console.log('EXEC command -> ' + "../edds/run_classifyEuca.sh /usr/local/MATLAB/MATLAB_Runtime/v92/ ../EucaUploads/"+ eucaImage.filename + " " + eucaImage.imageId + " " + "http://localhost:3009/eucaImages/");
+    var child = exec("../edds/run_classifyEuca.sh /usr/local/MATLAB/MATLAB_Runtime/v92/ ../EucaUploads/"+ eucaImage.filename + " " + eucaImage.imageId + " " + "http://localhost:3009/eucaImages/");
+    //var child = exec('ls -al');
+
+    child.stdout.on('data', function(data) {
+        result += data;
+    });
+
+    child.on('close', function() {
+        console.log('Classifying done...');
+        console.log(result);
+        //edds_mod.get_disease_label(function(diseaseLabel){
+          //console.log("Update disease label " + diseaseLabel + " to " + )
+          console.log("Update disease[" + eucaImage.diseasetype + "] to image " + eucaImage.imageId);
+          var eu = edds_mod.update(function(err, edds){
+            if(err)
+              res.send(err);
+            //console.log("Update EDDS => " + edds);
+            res.json(edds);
+            //res.redirect('/eutech/eucaImages')
+          });
+        //});
+    });
+  });
+};
+
 exports.list_all_images = function(req, res) {
   EucaImage.find({}, function(err, eucaImage) {
     if (err)
@@ -185,11 +220,11 @@ exports.update_a_image_data = function(req, res) {
 exports.eutech_update_a_image_data = function(req, res) {
   console.log('UPDATE image [' + req.params.imageId + ']');
   req.body.validated = false;
-  EucaImage.findOneAndUpdate({_id: req.params.imageId}, req.body, {new: true}, function(err, task) {
+  EucaImage.findOneAndUpdate({_id: req.params.imageId}, req.body, {new: true}, function(err, eucaImage) {
     if (err)
       res.send(err);
-    console.log('UPDATE image with ' + task);
-    res.render('details.ejs', {eucaImage: task});
+    console.log('UPDATE image with ' + eucaImage);
+    res.render('details.ejs', {eucaImage: eucaImage});
   });
   /*req.body.lastedit = new Date();
   EucaImage.findOneAndUpdate({_id: req.params.imageId}, req.body, {new: true}, function(err, task) {
@@ -202,11 +237,11 @@ exports.eutech_update_a_image_data = function(req, res) {
 
 exports.eutech_update_a_disease_label = function(req, res) {
   console.log('UPDATE image [' + req.params.imageId + ']');
-  EucaImage.findOneAndUpdate({_id: req.params.imageId}, {diseaselabel: req.params.diseaselabel}, {new: true}, function(err, task) {
+  EucaImage.findOneAndUpdate({_id: req.params.imageId}, {diseaselabel: req.params.diseaselabel}, {new: true}, function(err, eucaImage) {
     if (err)
       res.send(err);
-    console.log('UPDATE image with ' + task.imageId + ' & ' + task.diseaselabel);
-    res.json({imageId: task.imageId, diseaselabel: task.diseaselabel});
+    console.log('UPDATE image with ' + eucaImage.imageId + ' & ' + eucaImage.diseaselabel);
+    res.json({imageId: eucaImage.imageId, diseaselabel: eucaImage.diseaselabel});
   });
   /*req.body.lastedit = new Date();
   EucaImage.findOneAndUpdate({_id: req.params.imageId}, req.body, {new: true}, function(err, task) {

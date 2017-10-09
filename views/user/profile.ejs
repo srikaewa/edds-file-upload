@@ -32,11 +32,11 @@
             <!-- menu profile quick info -->
             <div class="profile">
               <div class="profile_pic">
-                <img src="/gent/images/img.jpg" alt="..." class="img-circle profile_img">
+                <img src="<%= user.local.gravatar %>" alt="..." class="img-circle profile_img">
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>
-                <h2><%= user.local.email %></h2>
+                <h2><%= user.local.firstname %></h2>
               </div>
             </div>
             <!-- /menu profile quick info -->
@@ -68,7 +68,7 @@
                       <li><a href="/eutech/breedingJobs/<%= user.local.email %>">Screening Job (staff)</a></li>
                       <% } %>
                       <% if(user.local.validator) { %>
-                      <li><a href="/eutech/eucaimages/invalidated">Invalidated Image Summary</a></li>
+                      <li><a href="/eutech/invalidatedImages">Invalidated Image Summary</a></li>
                       <% } %>
                       <!--<li><a href="tables_dynamic.html">Table Dynamic</a></li>-->
                     </ul>
@@ -117,7 +117,7 @@
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="/gent/images/img.jpg" alt=""><%= user.local.email %>
+                    <img src="<%= user.local.gravatar %>" alt=""><%= user.local.firstname %> <%= user.local.lastname %>
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -141,7 +141,7 @@
                   <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
                     <li>
                       <a>
-                        <span class="image"><img src="/gent/images/img.jpg" alt="Profile Image" /></span>
+                        <span class="image"><img src="<%= user.local.gravatar %>" alt="Profile Image" /></span>
                         <span>
                           <span>John Smith</span>
                           <span class="time">3 mins ago</span>
@@ -153,7 +153,7 @@
                     </li>
                     <li>
                       <a>
-                        <span class="image"><img src="/gent/images/img.jpg" alt="Profile Image" /></span>
+                        <span class="image"><img src="<%= user.local.gravatar %>" alt="Profile Image" /></span>
                         <span>
                           <span>John Smith</span>
                           <span class="time">3 mins ago</span>
@@ -165,7 +165,7 @@
                     </li>
                     <li>
                       <a>
-                        <span class="image"><img src="/gent/images/img.jpg" alt="Profile Image" /></span>
+                        <span class="image"><img src="<%= user.local.gravatar %>" alt="Profile Image" /></span>
                         <span>
                           <span>John Smith</span>
                           <span class="time">3 mins ago</span>
@@ -177,7 +177,7 @@
                     </li>
                     <li>
                       <a>
-                        <span class="image"><img src="/gent/images/img.jpg" alt="Profile Image" /></span>
+                        <span class="image"><img src="<%= user.local.gravatar %>" alt="Profile Image" /></span>
                         <span>
                           <span>John Smith</span>
                           <span class="time">3 mins ago</span>
@@ -256,7 +256,7 @@
                         <!-- end of image cropping -->
                         <div id="crop-avatar">
                           <!-- Current avatar -->
-                          <img class="img-responsive avatar-view" src="images/picture.jpg" alt="Avatar" title="Change the avatar">
+                          <img class="img-responsive avatar-view" src="<%= user.local.gravatar %>" alt="Avatar" title="Change the avatar">
 
                           <!-- Cropping modal -->
                           <div class="modal fade" id="avatar-modal" aria-hidden="true" aria-labelledby="avatar-modal-label" role="dialog" tabindex="-1">
@@ -326,11 +326,13 @@
                         <!-- end of image cropping -->
 
                       </div>
-                      <h3><%= user.local.email %></h3>
+                      <h3><%= user.local.firstname %> <%= user.local.lastname %></h3>
 
                       <ul class="list-unstyled user_data">
+                        <li><i class="fa fa-envelope user-profile-icon"></i> <%= user.local.email %>
+                        </li>
                         <li>
-                          <i class="fa fa-user"></i> Role: <%= user.local.role %>
+                          <i class="fa fa-user"></i> Role: <% if(user.local.admin) { %> admin <% } %>  <% if(user.local.staff) { %> staff <% } %>  <% if(user.local.validator) { %> validator <% } %>  <% if(user.local.user) { %> user <% } %>
                         </li>
                         <li><i class="fa fa-map-marker user-profile-icon"></i> Eu-TECH, Thailand
                         </li>
@@ -411,7 +413,7 @@
                             <!-- start recent activity -->
                             <!--<ul class="messages">
                               <li>
-                                <img src="/gent/images/img.jpg" class="avatar" alt="Avatar">
+                                <img src="<%= user.local.gravatar %>" class="avatar" alt="Avatar">
                                 <div class="message_date">
                                   <h3 class="date text-info">24</h3>
                                   <p class="month">May</p>
@@ -427,7 +429,7 @@
                                 </div>
                               </li>
                               <li>
-                                <img src="/gent/images/img.jpg" class="avatar" alt="Avatar">
+                                <img src="<%= user.local.gravatar %>" class="avatar" alt="Avatar">
                                 <div class="message_date">
                                   <h3 class="date text-error">21</h3>
                                   <p class="month">May</p>
@@ -443,7 +445,7 @@
                                 </div>
                               </li>
                               <li>
-                                <img src="/gent/images/img.jpg" class="avatar" alt="Avatar">
+                                <img src="<%= user.local.gravatar %>" class="avatar" alt="Avatar">
                                 <div class="message_date">
                                   <h3 class="date text-info">24</h3>
                                   <p class="month">May</p>
@@ -459,7 +461,7 @@
                                 </div>
                               </li>
                               <li>
-                                <img src="/gent/images/img.jpg" class="avatar" alt="Avatar">
+                                <img src="<%= user.local.gravatar %>" class="avatar" alt="Avatar">
                                 <div class="message_date">
                                   <h3 class="date text-error">21</h3>
                                   <p class="month">May</p>

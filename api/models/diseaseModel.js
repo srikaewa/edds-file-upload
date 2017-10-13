@@ -17,11 +17,11 @@ var DiseaseSchema = new Schema({
   },
   created: {
     type: Date,
-    default: new Date(new Date().getTime() - new Date().getTimezoneOffset()*60*1000).toISOString()
+    default: new Date()
   },
   lastedited: {
     type: Date,
-    default: new Date(new Date().getTime() - new Date().getTimezoneOffset()*60*1000).toISOString()
+    default: new Date()
   }
 });
 

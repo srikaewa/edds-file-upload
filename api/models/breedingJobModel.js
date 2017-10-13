@@ -22,10 +22,10 @@ var BreedingJobSchema = new Schema({
     default: 1
   },
   breedingdate: {
-    type: String
+    type: Date
   },
   collectingdate: {
-    type: String
+    type: Date
   },
   photographer: {
     type: String
@@ -51,11 +51,11 @@ var BreedingJobSchema = new Schema({
   },
   created: {
     type: Date,
-    default: new Date(new Date().getTime() - new Date().getTimezoneOffset()*60*1000).toISOString()
+    default: new Date()
   },
   lastedited: {
     type: Date,
-    default: new Date(new Date().getTime() - new Date().getTimezoneOffset()*60*1000).toISOString()
+    default: new Date()
   },
   note: {
     type: String

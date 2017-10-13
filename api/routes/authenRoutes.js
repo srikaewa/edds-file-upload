@@ -34,6 +34,26 @@ module.exports = function(app, passport) {
         res.render('user/login.ejs', { message: req.flash('loginMessage') });
     });
 
+    app.get('/users/getUserInfo/:email', function(req, res) {
+        User.findOne({'local.email': req.params.email}, function(err, _user){
+          if(err)
+            res.send(err);
+          var duser = {
+            "firstname": _user.local.firstname,
+            "lastname": _user.local.lastname,
+            "email": _user.local.email,
+            "admin": _user.local.admin,
+            "staff": _user.local.staff,
+            "validator": _user.local.validator,
+            "user": _user.local.user
+          }
+          res.json(duser);
+        });
+
+        // render the page and pass in any flash data if it exists
+        //res.render('user/login.ejs', { message: req.flash('loginMessage') });
+    });
+
     // process the login form
     // app.post('/login', do all our passport stuff here);
 

@@ -57,11 +57,11 @@ var EucaImageSchema = new Schema({
   },
   submit: {
     type: Date,
-    default: new Date(new Date().getTime() - new Date().getTimezoneOffset()*60*1000).toISOString()
+    default: new Date()
   },
   lastedit: {
     type: Date,
-    default: new Date(new Date().getTime() - new Date().getTimezoneOffset()*60*1000).toISOString()
+    default: new Date()
   },
   latitude: {
     type: String,

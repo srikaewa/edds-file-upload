@@ -41,6 +41,10 @@ var userSchema = mongoose.Schema({
         },
         gravatar: {
           type: String
+        },
+        created: {
+          type: Date,
+          default: Date.now
         }
     },
     facebook         : {

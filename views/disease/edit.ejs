@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>EDDS User Management Console</title>
+    <title>EDDS System Management Console</title>
 
     <!-- Bootstrap -->
     <link href="/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -222,7 +222,7 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
           <div class="x_panel">
             <div class="x_title">
-              <h2><a href="/users"><i class="fa fa-arrow-circle-o-left"></i></a> Edit User Information <small> <%= userProfile._id %> </small></h2>
+              <h2><a href="/eutech/diseases"><i class="fa fa-arrow-circle-o-left"></i></a> Edit Disease Label <small> </small></h2>
               <ul class="nav navbar-right panel_toolbox">
                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                 </li>
@@ -241,84 +241,38 @@
               <div class="clearfix"></div>
             </div>
             <div class="x_content">
-              <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" action="/users/updateProfile/<%= userProfile._id %>" method="post">
+
+              <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" action="/eutech/disease/<%= disease._id %>/update" method="post">
                 <div class="form-group">
-                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Gravatar Image</span>
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="number">Number</span>
                   </label>
                   <div class="col-md-6 col-sm-6 col-xs-12">
-                    <img src="//www.gravatar.com/avatar/<%= userProfile.local.gravatar %>">
+                    <input type="text" id="number" name="number" class="form-control col-md-7 col-xs-12" value="<%= disease.disease_number %>" disabled>
                   </div>
                 </div>
+
                 <div class="form-group">
-                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Gravatar Email Hash</span>
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="label">Label <span class="required">*</span>
                   </label>
                   <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input type="text" id="gravatar" name="gravatar" class="form-control col-md-7 col-xs-12" value="<%= userProfile.local.gravatar %>" disabled>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">First Name <span class="required">*</span>
-                  </label>
-                  <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input type="text" id="firstname" name="firstname" required="required" class="form-control col-md-7 col-xs-12" value="<%= userProfile.local.firstname %>">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Last Name <span class="required">*</span>
-                  </label>
-                  <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input type="text" id="lastname" name="lastname" required="required" class="form-control col-md-7 col-xs-12" value="<%= userProfile.local.lastname %>">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Email <span class="required">*</span>
-                  </label>
-                  <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input type="text" id="email" name="email" required="required" class="form-control col-md-7 col-xs-12" value="<%= userProfile.local.email %>" disabled>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Password <span class="required">*</span>
-                  </label>
-                  <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input type="password" id="password" name="password" required="required" class="form-control col-md-7 col-xs-12" value="<%= user.local.password %>" disabled>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">admin
-                  </label>
-                  <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input type="checkbox" id="admin" name="admin" value="true" <% if(userProfile.local.admin) {%>checked<%}%> disabled>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">staff
-                  </label>
-                  <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input type="checkbox" id="staff" name= "staff" value="true" <% if(userProfile.local.staff) {%>checked<%}%> disabled>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">validator
-                  </label>
-                  <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input type="checkbox" id="validator" name="validator" value="true" <% if(userProfile.local.validator) {%>checked<%}%> disabled>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">user
-                  </label>
-                  <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input type="checkbox" id="user" name="user" value="true" <% if(userProfile.local.user) {%>checked<%}%> disabled>
+                    <input type="text" id="label" name="label" required="required" class="form-control col-md-7 col-xs-12" value="<%= disease.disease_label %>">
                   </div>
                 </div>
                 <div class="form-group">
                   <label class="control-label col-md-3 col-sm-3 col-xs-12" for="created">Created
                   </label>
                   <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input type="text" id="created" name="created" required="required" class="form-control col-md-7 col-xs-12" value="<%= moment(userProfile.local.created).format('DD MMM YYYY - HH:mm:ss') %>" disabled>
+                    <input type="text" id="created" name="created" class="form-control col-md-7 col-xs-12" value="<%= moment(disease.created).format('DD MMM YYYY - HH:mm:ss') %>" disabled>
                   </div>
                 </div>
+                <div class="form-group">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-12" for="lastedited">Last Edited
+                  </label>
+                  <div class="col-md-6 col-sm-6 col-xs-12">
+                    <input type="text" id="lastedited" name="lastedited" class="form-control col-md-7 col-xs-12" value="<%= moment(disease.lastedited).format('DD MMM YYYY - HH:mm:ss') %>" disabled>
+                  </div>
+                </div>
+
                 <div class="ln_solid"></div>
                 <div class="form-group">
                   <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">

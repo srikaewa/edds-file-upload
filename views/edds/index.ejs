@@ -148,7 +148,7 @@
                   </ul>
                 </li>
 
-                <li role="presentation" class="dropdown">
+                <!-- <li role="presentation" class="dropdown">
                   <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
                     <i class="fa fa-envelope-o"></i>
                     <span class="badge bg-green">6</span>
@@ -211,7 +211,7 @@
                       </div>
                     </li>
                   </ul>
-                </li>
+                </li> -->
               </ul>
             </nav>
           </div>
@@ -569,7 +569,7 @@
                       <thead class="thead-inverse">
                         <tr>
                           <th class="text-center" style="vertical-align:top;">Job ID</th>
-                          <th class="text-center" style="vertical-align:top;">Submit</th>
+                          <th class="text-center" style="vertical-align:top;">Submitted</th>
                           <!--<th class="text-center" style="vertical-align:top;">Filename</th>-->
                           <th class="text-center" style="vertical-align:top;">Type</th>
                           <th class="text-center" style="vertical-align:top;">Stage</th>
@@ -585,7 +585,7 @@
                       <% if(user.local.admin) { %>
                       <tr>
                         <td class="text-center" style="vertical-align:middle;"><%= eucaImages[i].jobId %></td>
-                        <td class="text-center" style="vertical-align:middle;"><%= eucaImages[i].submit %></td>
+                        <td class="text-center" style="vertical-align:middle;"><%= moment(eucaImages[i].submit).format('DD MMM YYYY - HH:mm:ss') %></td>
                         <!--<td class="text-center" style="vertical-align:middle;">
                           <%= eucaImages[i].filename %>
                         </td>-->
@@ -623,7 +623,7 @@
                         <% if(eucaImages[i].submitter == user.local.email) { %>
                           <tr>
                             <td class="text-center" style="vertical-align:middle;"><%= eucaImages[i].jobId %></td>
-                            <td class="text-center" style="vertical-align:middle;"><%= eucaImages[i].submit %></td>
+                            <td class="text-center" style="vertical-align:middle;"><%= moment(eucaImages[i].submit).format('DD MMM YYYY - HH:mm:ss') %></td>                             
                             <!--<td class="text-center" style="vertical-align:middle;">
                               <%= eucaImages[i].filename %>
                             </td>-->
@@ -710,10 +710,10 @@
                             <%= screeningJobs[i].culture %>
                           </td>
                           <td class="text-center" style="vertical-align:middle;">
-                            <%= moment(screeningJobs[i].breedingdate).format('Do MMM, YYYY') %>
+                            <%= moment(screeningJobs[i].breedingdate).format('DD MMM YYYY') %>
                           </td>
                           <td class="text-center" style="vertical-align:middle;">
-                            <%= moment(screeningJobs[i].collectingdate).format('Do MMM, YYYY') %>
+                            <%= moment(screeningJobs[i].collectingdate).format('DD MMM YYYY') %>
                           </td>
                         </tr>
                         <% } else { %>
@@ -727,10 +727,10 @@
                               <%= screeningJobs[i].culture %>
                             </td>
                             <td class="text-center" style="vertical-align:middle;">
-                              <%= moment(screeningJobs[i].breedingdate).format('Do MMM, YYYY') %>
+                              <%= moment(screeningJobs[i].breedingdate).format('DD MMM YYYY') %>
                             </td>
                             <td class="text-center" style="vertical-align:middle;">
-                              <%= moment(screeningJobs[i].collectingdate).format('Do MMM, YYYY') %>
+                              <%= moment(screeningJobs[i].collectingdate).format('DD MMM YYYY') %>
                             </td>
                           </tr>
                         <% } %>

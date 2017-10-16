@@ -57,11 +57,11 @@ var EucaImageSchema = new Schema({
   },
   submit: {
     type: Date,
-    default: new Date()
+    default: Date.now
   },
   lastedit: {
     type: Date,
-    default: new Date()
+    default: Date.now
   },
   latitude: {
     type: String,
@@ -122,8 +122,8 @@ var EucaDiseaseSchema = new Schema({
     default: 0.0
   },
   lastedited: {
-    type: String,
-    default: new Date()
+    type: Date,
+    default: Date.now
   }
 });
 

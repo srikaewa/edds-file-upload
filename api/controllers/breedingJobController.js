@@ -41,12 +41,8 @@ exports.eutech_create_a_breeding_job_data = function(req, res) {
     console.log("Created breeding job with -> " + req.body);
     //req.body.created = new Date(new Date().getTime() - new Date().getTimezoneOffset()*60*1000).toISOString()
     //req.body.lastedited = new Date(new Date().getTime() - new Date().getTimezoneOffset()*60*1000).toISOString()
-    req.body.created = new Date();
-    req.body.lastedited = new Date();
-    var bd = new Date(req.body.breedingdate);
-    var cd = new Date(req.body.collectingdate);
-    req.body.breedingdate = new Date(bd.getTime() - new Date().getTimezoneOffset()*60*1000).toISOString();
-    req.body.collectingdate = new Date(cd.getTime() - new Date().getTimezoneOffset()*60*1000).toISOString();
+    req.body.breedingdate = new Date(req.body.breedingdate);
+    req.body.collectingdate = new Date(req.body.collectingdate);
     var new_bj_data = new BreedingJob(req.body);
     //console.log("New job id -> " + new_bj_data._id);
     //new_bj_data.jobId = "eutech-jb-001-" + ("000000" + new_bj_data._id).slice(-6);
@@ -84,21 +80,10 @@ exports.eutech_edit_a_breeding_job_data = function(req, res) {
   });
 };
 
-exports.update_a_image_data = function(req, res) {
-  //console.log('UPDATE image - ' + req.body.lastedit);
-  req.body.lastedited = new Date(new Date().getTime() - new Date().getTimezoneOffset()*60*1000).toISOString();
-  EucaImage.findOneAndUpdate({_id: req.params.imageId}, req.body, {new: true}, function(err, task) {
-    if (err)
-      res.send(err);
-    console.log('PUT image with ' + task);
-    res.json(task);
-  });
-};
-
 exports.eutech_update_a_breeding_job_data = function(req, res) {
   console.log('UPDATE breeding job [' + req.params.jobId + '] -> ' + req.body.culture);
   //req.body.validated = false;
-  req.body.lastedited = new Date(new Date().getTime() - new Date().getTimezoneOffset()*60*1000).toISOString();
+  req.body.lastedited = new Date();
   BreedingJob.findOneAndUpdate({jobId: req.params.jobId}, req.body, {new: true}, function(err, breedingJob) {
     if (err)
       res.send(err);
@@ -116,32 +101,15 @@ exports.eutech_update_a_breeding_job_data = function(req, res) {
   });*/
 };
 
-exports.eutech_validate_a_image_data = function(req, res) {
-  console.log('VALIDATE image [' + req.body.validated + ']');
-  req.body.validated = true;
-  //req.body.validator = user.local.email;
-  EucaImage.findOneAndUpdate({_id: req.params.imageId}, req.body, {new: true}, function(err, task) {
+exports.eutech_timestamp_a_breeding_job_data = function(req, res) {
+  console.log('UPDATE breeding job [' + req.params.jobId + ']');
+  //req.body.validated = false;
+  BreedingJob.findOneAndUpdate({jobId: req.params.jobId}, {lastedited: new Date()}, {new: true}, function(err, breedingJob) {
     if (err)
       res.send(err);
-    console.log('UPDATE image validation with ' + task.validated);
-    res.render('details.ejs', {eucaImage: task});
-  });
-  /*req.body.lastedit = new Date();
-  EucaImage.findOneAndUpdate({_id: req.params.imageId}, req.body, {new: true}, function(err, task) {
-    if (err)
-      res.send(err);
-    console.log('PUT image with ' + task);
-    res.json(task);
-  });*/
-};
-
-exports.delete_a_image_data = function(req, res) {
-  EucaImage.remove({
-    _id: req.params.imageId
-  }, function(err, eucaImage) {
-    if (err)
-      res.send(err);
-    res.json({ message: 'Eucalyptus image[' + req.params.jobId + '] successfully deleted' });
+    console.log('UPDATE breeding job [' + breedingJob.jobId + '] -> ' + breedingJob.lastedited);
+    //res.render('breedingJob/details.ejs', {breedingJob: breedingJob});
+    res.json(breedingJob);
   });
 };
 

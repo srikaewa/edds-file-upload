@@ -255,10 +255,10 @@
                       <td>Culture</td><td><%= screeningJob.culture %></td>
                     </tr>
                     <tr>
-                      <td>Culturing date</td><td><%= moment(screeningJob.breedingdate).format('dddd, Do MMMM, YYYY') %></td>
+                      <td>Culturing date</td><td><%= moment(screeningJob.breedingdate).format('DD MMM YYYY') %></td>
                     </tr>
                     <tr>
-                      <td>Collecting date</td><td><%= moment(screeningJob.collectingdate).format('dddd, Do MMMM, YYYY') %></td>
+                      <td>Collecting date</td><td><%= moment(screeningJob.collectingdate).format('DD MMM YYYY') %></td>
                     </tr>
                     <tr>
                       <td>Round #</td><td><%= screeningJob.round %></td>
@@ -276,9 +276,9 @@
                       <td>Note</td><td><%= screeningJob.note %></td>
                     </tr>
                     <tr>
-                      <td>Created</td><td><%= moment(screeningJob.created).format('dddd, Do MMMM, YYYY - HH:mm:ss') %></td>
+                      <td>Created</td><td><%= moment(screeningJob.created).format('DD MMM YYYY - HH:mm:ss') %></td>
                     </tr>
-                    <td>Created</td><td><%= moment(screeningJob.lastedited).format('dddd, Do MMMM, YYYY - HH:mm:ss') %></td>
+                    <td>Created</td><td><%= moment(screeningJob.lastedited).format('DD MMM YYYY - HH:mm:ss') %></td>
                   </tr>
                   </tbody>
                 </table>

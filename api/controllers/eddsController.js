@@ -80,7 +80,6 @@ exports.eutech_create_a_edds_data = function(req, res) {
     //    res.send(err);
     var eu = edds_mod.update(function(edds){
       var new_edds_data = new EDDS();
-      new_edds_data.lastedited = new Date(new Date().getTime() - new Date().getTimezoneOffset()*60*1000).toISOString();
       //new_edds_data.lastedited = moment().format();
       new_edds_data.total_images = edds.total_images;
       new_edds_data.total_validated_images = edds.total_validated_images;

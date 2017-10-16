@@ -39,5 +39,6 @@ module.exports = function(app) {
     .get(breedingJobList.eutech_edit_a_breeding_job_data);
 
   app.route('/eutech/breedingJob/:jobId/update')
-    .post(breedingJobList.eutech_update_a_breeding_job_data);
+    .post(breedingJobList.eutech_update_a_breeding_job_data)
+    .get(breedingJobList.eutech_timestamp_a_breeding_job_data);
 };

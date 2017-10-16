@@ -41,9 +41,9 @@ exports.upload_file = function(req,res){
     new_image_data.filename = req.files[0].originalname;
     new_image_data.originalfilename = req.files[1].originalname;
     new_image_data.displayfilename = req.files[2].originalname;
-    var d2 = new Date(new Date().getTime() - new Date().getTimezoneOffset()*60*1000).toISOString().substr(0,19).replace('T', ' ');
-    new_image_data.submit = d2;
-    new_image_data.lastedit = new_image_data.submit;
+    //var d2 = new Date(new Date().getTime() - new Date().getTimezoneOffset()*60*1000).toISOString().substr(0,19).replace('T', ' ');
+    //new_image_data.submit = new Date();
+    //new_image_data.lastedit = new_image_data.submit;
     new_image_data.submitter = req.query.submitter;
     new_image_data.latitude = req.query.latitude;
     new_image_data.longitude = req.query.longitude;
@@ -69,7 +69,7 @@ exports.run_classify = function(req, res) {
     var exec = require('child_process').exec;
     var result = '';
     var command = "../edds/run_classifyEuca.sh /usr/local/MATLAB/MATLAB_Runtime/v92/ ../EucaUploads/"+ eucaImage.filename + " " + eucaImage.imageId + " " + "http://localhost:3009/eucaImages/";
-    console.log('EXEC command -> ' + command);
+    //console.log('EXEC command -> ' + command);
     var child = exec(command);
     //var child = exec('ls -al');
 
@@ -83,12 +83,28 @@ exports.run_classify = function(req, res) {
         //edds_mod.get_disease_label(function(diseaseLabel){
           //console.log("Update disease label " + diseaseLabel + " to " + )
           console.log("Update disease[" + eucaImage.diseasetype + "] to image " + eucaImage.imageId);
-          var eu = edds_mod.update(function(err, edds){
-            if(err)
-              res.send(err);
-            //console.log("Update EDDS => " + edds);
-            res.json(edds);
-            //res.redirect('/eutech/eucaImages')
+          async.series([
+            function(callback){
+              EucaImage.findOneAndUpdate({imageId: eucaImage.imageId},{lastedit: new Date()}, function(err, eucaImage){
+                if(err)
+                  res.send(err);
+                callback(null, eucaImage);
+              })
+            },
+            function(callback){
+              var eu = edds_mod.update(function(err, edds){
+                if(err)
+                  res.send(err);
+                //console.log("Update EDDS => " + edds);
+                //res.json(edds);
+                callback(null, edds);
+                //res.redirect('/eutech/eucaImages')
+              });
+            }
+          ], function(err, results){
+              if(err)
+                res.send(err);
+              console.log("RUN_CLASSIFY updated with image[" + eucaImage.imageId + "] sucessfully");
           });
         //});
     });
@@ -231,6 +247,7 @@ exports.update_a_image_data = function(req, res) {
 exports.eutech_update_a_image_data = function(req, res) {
   console.log('UPDATE image [' + req.params.imageId + ']');
   req.body.validated = false;
+  req.body.lastedit = new Date();
   EucaImage.findOneAndUpdate({_id: req.params.imageId}, req.body, {new: true}, function(err, eucaImage) {
     if (err)
       res.send(err);
@@ -248,7 +265,7 @@ exports.eutech_update_a_image_data = function(req, res) {
 
 exports.eutech_update_a_disease_label = function(req, res) {
   console.log('UPDATE image [' + req.params.imageId + ']');
-  EucaImage.findOneAndUpdate({_id: req.params.imageId}, {diseaselabel: req.params.diseaselabel}, {new: true}, function(err, eucaImage) {
+  EucaImage.findOneAndUpdate({_id: req.params.imageId}, {diseaselabel: req.params.diseaselabel, lastedit: new Date()}, {new: true}, function(err, eucaImage) {
     if (err)
       res.send(err);
     console.log('UPDATE image with ' + eucaImage.imageId + ' & ' + eucaImage.diseaselabel);
@@ -291,7 +308,7 @@ exports.eutech_update_a_disease_data = function(req, res) {
 
         //console.log("Results[1].disease_label =>" + dlabel.disease_label);
 
-        EucaImage.findOneAndUpdate({_id: req.params.imageId}, {validated: false, diseasetype: req.params.type, diseaselabel: results[1], retrain_needed: true, stage: req.params.stage, retrain_status: "retrain" , lastedit: new Date(new Date().getTime() - new Date().getTimezoneOffset()*60*1000).toISOString() }, {new: true}, function(err, eucaImage) {
+        EucaImage.findOneAndUpdate({_id: req.params.imageId}, {validated: false, diseasetype: req.params.type, diseaselabel: results[1], retrain_needed: true, stage: req.params.stage, retrain_status: "retrain" , lastedit: new Date() }, {new: true}, function(err, eucaImage) {
           if (err)
             res.send(err);
 
@@ -320,10 +337,10 @@ exports.eutech_update_a_disease_data = function(req, res) {
 
 exports.eutech_validate_a_image_data = function(req, res) {
   console.log('VALIDATE image [' + req.params.validated + ']');
-  var today = new Date(new Date().getTime() - new Date().getTimezoneOffset()*60*1000).toISOString();
+  //var today = new Date(new Date().getTime() - new Date().getTimezoneOffset()*60*1000).toISOString();
   //req.body.validated = true;
   //req.body.validator = user.local.email;
-  EucaImage.findOneAndUpdate({_id: req.params.imageId}, {validated: req.params.validated, validator:req.params.validator, lastvalidated: today}, {new: true}, function(err, eucaImage) {
+  EucaImage.findOneAndUpdate({_id: req.params.imageId}, {validated: req.params.validated, validator:req.params.validator, lastvalidated: new Date()}, {new: true}, function(err, eucaImage) {
     if (err)
       res.send(err);
     console.log('UPDATE image validation with ' + eucaImage.validated + ' @' + eucaImage.lastvalidated);

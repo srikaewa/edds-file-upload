@@ -254,6 +254,7 @@
                     <th class="text-center" style="vertical-align:top;">staff</th>
                     <th class="text-center" style="vertical-align:top;">validator</th>
                     <th class="text-center" style="vertical-align:top;">user</th>
+                    <th class="text-center" style="vertical-align:top;">Created</th>
                     <th class="text-center" style="vertical-align:top;">Edit</th>
                     <th class="text-center" style="vertical-align:top;">Delete</th>
                   </tr>
@@ -299,6 +300,9 @@
                     <% } else { %>
                       <i class="fa fa-times"></i>
                     <% } %>
+                  </td>
+                  <td class="text-center" style="vertical-align:middle;">
+                    <%= moment(users[i].local.created).format('DD MMM YYYY - HH:mm:ss') %>
                   </td>
                   <td  class="text-center" style="vertical-align:middle;">
                     <form class="form-inline" action="/users/edit/<%= users[i]._id %>" method="get">

@@ -10,13 +10,17 @@ var async = require('async');
 var moment = require('moment');
 
 var update = function (callback){
-      var yesterday = moment().subtract(1, 'days').startOf('day').format();
-      var today = moment().format();
-      console.log("Yesterday date => " + yesterday);
-      console.log("Today date => " + today);
+      //var yesterday = moment().subtract(1, 'days').startOf('day').format();
+      //var today = moment().format();
+      //var date = new Date();
+      //var today = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+      //var today = new Date();
+      var start = moment().startOf('day'); // set to 12:00 am today
+      var end = moment().endOf('day'); // set to 23:59 pm today
+
       async.parallel([
               function(callback){
-                EucaImage.count({submit: {"$gte": yesterday}}, function(err, numbOfEucaImageToday){
+                EucaImage.count({submit: {$gte: start, $lt: end}}, function(err, numbOfEucaImageToday){
                   if(err)
                     callback(err);
                   console.log("Number of euca image added today => " + numbOfEucaImageToday);
@@ -24,7 +28,7 @@ var update = function (callback){
                 });
               },
               function(callback){
-                EucaImage.count({validated: true, lastvalidated: {"$gte": yesterday}}, function(err, numbOfValidatedImageToday){
+                EucaImage.count({validated: true, lastvalidated: {$gte: start, $lt: end}}, function(err, numbOfValidatedImageToday){
                   if(err)
                     callback(err);
                   console.log("Number of validated euca image added today => " + numbOfValidatedImageToday);
@@ -59,12 +63,12 @@ var update = function (callback){
       ], function(err, results){
               if(err)
                 return err;
-              var lastedited = new Date(new Date().getTime() - new Date().getTimezoneOffset()*60*1000).toISOString();
+              //var lastedited = new Date(new Date().getTime() - new Date().getTimezoneOffset()*60*1000).toISOString();
               //console.log("Result[0] => " + results[0]);
               //console.log("Result[1] => " + results[1]);
               //new_edds_data.lastedited = moment().format();
 
-              EDDS.findOne({created: {$gte: yesterday}}, function(err, edds){
+              EDDS.findOne({created: {$gte: start, $lt: end}}, function(err, edds){
 
 
                 /*{total_images: results[2], total_validated_images: results[3], total_invalidated_images: results[2]-results[3],
@@ -78,6 +82,8 @@ var update = function (callback){
                   return err;
                 }
 
+                console.log("EDDS Today? => " + edds);
+
                 if(edds)
                 {
                   console.log('UPDATE edds with id = ' + edds._id);
@@ -87,7 +93,7 @@ var update = function (callback){
                   edds.total_images_today = results[0];
                   edds.total_validated_images_today = results[1]; edds.total_invalidated_images_today = results[0] - results[1];
                   edds.total_accuracy = (results[3]==0) ? 0 : (results[4]/results[3])*100;
-                  edds.lastedited = lastedited;
+                  edds.lastedited = new Date();
                   edds.save(function(err, edds){
                      if(err)
                       return callback(err, edds);
@@ -109,8 +115,8 @@ var update = function (callback){
                   console.log("No today EDDS data, let's create new one!");
                   var new_edds_data = new EDDS({total_images: results[2], total_validated_images: results[3], total_invalidated_images: results[2]-results[3],
                    total_images_today: results[0], total_validated_images_today: results[1], total_invalidated_images_today: results[0] - results[1],
-                   total_accuracy: (results[3]==0) ? 0 : (results[4]/results[3])*100,
-                   lastedited: lastedited});
+                   total_accuracy: (results[3]==0) ? 0 : (results[4]/results[3])*100});
+                   //new_edds_data.created = new Date(parseInt(new_edds_data._id.toString().substr(0, 8), 16) * 1000);
                   new_edds_data.save(function(err, edds){
                     if(err)
                       return(err);
@@ -138,7 +144,7 @@ var update = function (callback){
 
 var create_disease = function(edds, callback)
     {
-      var today = new Date(new Date().getTime() - new Date().getTimezoneOffset()*60*1000).toISOString();
+      //var today = new Date(new Date().getTime() - new Date().getTimezoneOffset()*60*1000).toISOString();
       var diseaselist = [];
       async.waterfall([
         function(callback){
@@ -188,7 +194,7 @@ var create_disease = function(edds, callback)
 
 var update_disease = function(edds, callback)
 {
-  var today = moment().format();
+  //var today = moment().format();
   var diseaselist = [];
   async.waterfall([
     function(callback){
@@ -219,7 +225,10 @@ var update_disease = function(edds, callback)
           {"$set": {"diseases.$.total_images": numberOfImages[0],
                     "diseases.$.total_images_today": numberOfImages[1],
                     "diseases.$.total_validated_images": numberOfImages[2],
-                    "diseases.$.total_accuracy": (numberOfImages[2] == 0) ? 0: ((numberOfImages[3]/numberOfImages[2])*100).toFixed(2)}},
+                    "diseases.$.total_accuracy": (numberOfImages[2] == 0) ? 0: ((numberOfImages[3]/numberOfImages[2])*100).toFixed(2),
+                    "diseases.$.lastedited" : new Date()
+                  }
+          },
           function(err, result){
             if(err)
             {
@@ -317,7 +326,7 @@ var get_color = function(index)
 
 var update_retrain_status = function(id, status, callback)
 {
-  EucaImage.findOneAndUpdate({imageId: id}, {retrain_status: status}, {new: true}, function(err, eucaImage){
+  EucaImage.findOneAndUpdate({imageId: id}, {retrain_status: status, lastedit: new Date()}, {new: true}, function(err, eucaImage){
     if(err)
       return err;
     return callback(eucaImage)

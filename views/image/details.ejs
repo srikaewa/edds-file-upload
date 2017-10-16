@@ -280,7 +280,7 @@
                     </td>
                   </tr>
                   <tr>
-                    <td><i class="fa fa-calendar"></i></td><td><%= eucaImage.submit %></td>
+                    <td><i class="fa fa-calendar"></i></td><td><%= moment(eucaImage.submit).format('DD MMM YYYY - HH:mm:ss') %></td>
                   </tr>
                   <tr>
                     <td><i class="fa fa-image"></i></td><td><%= eucaImage.filename %></td>
@@ -295,7 +295,7 @@
                     <td><i class="fa fa-clock-o"></i></td><td><%= eucaImage.elapsetime %> s</td>
                   </tr>
                   <tr>
-                    <td><i class="fa fa-pencil-square"></i></td><td><%= eucaImage.lastedit %></td>
+                    <td><i class="fa fa-pencil-square"></i></td><td><%= moment(eucaImage.lastedit).format('DD MMM YYYY - HH:mm:ss') %></td>
                   </tr>
                   <tr>
                     <td><i class="fa fa-map-marker"></i></td><td><%= eucaImage.latitude %>, <%= eucaImage.longitude%></td>

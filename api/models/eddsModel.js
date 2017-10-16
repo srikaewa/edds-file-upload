@@ -8,8 +8,8 @@ var connection = mongoose.createConnection("mongodb://localhost/EucaImageDb");
 var DiseaseSchema = new Schema({
   created: {
     type: Date,
-    default: new Date()
-  },
+    default: Date.now
+    },
   disease_number: {
     type: String
   },
@@ -38,8 +38,8 @@ var DiseaseSchema = new Schema({
   },
   lastedited: {
     type: Date,
-    default: new Date()
-  }
+    default: Date.now
+    }
 });
 
 var EDDSSchema = new Schema({
@@ -80,12 +80,12 @@ var EDDSSchema = new Schema({
   },
   created: {
     type: Date,
-    default: new Date()
-  },
+    default: Date.now
+    },
   lastedited: {
     type: Date,
-    default: new Date()
-  },
+    default: Date.now
+    },
   dayedited: {
     type: String,
     default: new Date(new Date().getTime() - new Date().getTimezoneOffset()*60*1000).toISOString().substr(9,1)

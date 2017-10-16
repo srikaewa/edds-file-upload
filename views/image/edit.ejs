@@ -232,7 +232,7 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
           <div class="x_panel">
             <div class="x_title">
-              <h2>Edit Eucalyptus Disease Details </h2>
+              <h2><a href="/eutech/eucaImages"><i class="fa fa-arrow-circle-o-left"></i> Edit Eucalyptus Disease Details </h2>
               <ul class="nav navbar-right panel_toolbox">
                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                 </li>
@@ -255,7 +255,7 @@
                 <table class="table">
                   <thead>
                     <tr>
-                      <th>Images</th>
+                      <th>Related Images</th>
                       <th></th>
                     </tr>
                   </thead>
@@ -274,8 +274,12 @@
                     </tr>
                   </thead>
                   <tbody>
+                    <tr>
+                      <td><i class="fa fa-user"></i></td><td><%= eucaImage.submitter %></td>
+                    </tr>
+
                   <tr>
-                    <td><img src="/img/ic_description_black_48dp.png" alt="<%= eucaImage.diseasetype %>" style="width:24px;height:24px;"></td>
+                    <td><i class="fa fa-info-circle"></i></td>
                     <td>
                       <!--<form method="post" action="update"> -->
                         <label for="diseasetype">Disease type:</label>
@@ -426,7 +430,7 @@
                     </td>
                   </tr>
                   <tr>
-                    <td><img src="/img/ic_check_circle_black_48dp.png" alt="<%= eucaImage.validated %>" style="width:24px;height:24px;"></td>
+                    <td><i class="fa fa-check-circle"></td>
                     <td>
                       <% if(!eucaImage.validated) {%>
                       <button class="btn btn-warning update_validate" id="<%= eucaImage.imageId %>">Invalidated</button>
@@ -497,25 +501,25 @@
                     </td>
                   </tr>
                   <tr>
-                    <td><img src="/img/ic_today_black_48dp.png" alt="<%= eucaImage.submit %>" style="width:24px;height:24px;"></td><td><%= eucaImage.submit %></td>
+                    <td><i class="fa fa-calendar"></i></td><td><%= moment(eucaImage.submit).format('DD MMM YYYY - HH:mm:ss') %></td>
                   </tr>
                   <!--<tr>
                     <td><img src="/img/ic_image_black_48dp.png" alt="<%= eucaImage.filename %>" style="width:24px;height:24px;"></td><td><%= eucaImage.filename %></td>
                   </tr> -->
                   <tr>
-                    <td><img src="/img/ic_satellite_black_48dp.png" alt="<%= eucaImage.imageId %>" style="width:24px;height:24px;"></td><td><%= eucaImage.imageId %></td>
+                    <td><i class="fa fa-list-alt"></i></td><td><%= eucaImage.imageId %></td>
                   </tr>
                   <tr>
-                    <td><img src="/img/ic_speaker_notes_black_48dp.png" alt="<%= eucaImage.jobId %>" style="width:24px;height:24px;"></td><td><%= eucaImage.jobId %></td>
+                    <td><i class="fa fa-bars"></i></td><td><%= eucaImage.jobId %></td>
                   </tr>
                   <tr>
-                    <td><img src="/img/ic_update_black_48dp.png" alt="<%= eucaImage.elapsetime %>" style="width:24px;height:24px;"></td><td><%= eucaImage.elapsetime %> s</td>
+                    <td><i class="fa fa-clock-o"></i></td><td><%= eucaImage.elapsetime %> s</td>
                   </tr>
                   <tr>
-                    <td><img src="/img/ic_cloud_done_black_48dp.png" alt="<%= eucaImage.elapsetime %>" style="width:24px;height:24px;"></td><td><%= eucaImage.lastedit %></td>
+                    <td><i class="fa fa-pencil-square"></i></td><td><%= moment(eucaImage.lastedit).format('DD MMM YYYY - HH:mm:ss') %></td>
                   </tr>
                   <tr>
-                    <td><img src="/img/ic_place_black_48dp.png" alt="<%= eucaImage.latitude %>,<%= eucaImage.longitude %>" style="width:24px;height:24px;"></td><td><%= eucaImage.latitude %>, <%= eucaImage.longitude%></td>
+                    <td><i class="fa fa-map-marker"></td><td><%= eucaImage.latitude %>, <%= eucaImage.longitude%></td>
                   </tr>
                   </tbody>
                 </table>            </div>

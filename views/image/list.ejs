@@ -255,12 +255,13 @@
                           <th class="text-center" style="vertical-align:middle;">Stage</th>
                           <th class="text-center" style="vertical-align:middle;">Level</th>
                           <th class="text-center" style="vertical-align:middle;">Area (%)</th>
-                          <th class="text-center" style="vertical-align:middle;">Edit</th>
                           <th class="text-center" style="vertical-align:middle;">Validation</th>
                           <th class="text-center" style="vertical-align:middle;">Retrain Needed</th>
                           <th class="text-center" style="vertical-align:middle;">Retrain Status</th>
                           <th class="text-center" style="vertical-align:middle;">Submitter</th>
+                          <th class="text-center" style="vertical-align:middle;">Submitted</th>
                           <th class="text-center" style="vertical-align:middle;">Last Edited</th>
+                          <th class="text-center" style="vertical-align:middle;">Edit</th>
                           <th class="text-center" style="vertical-align:middle;">Delete</th>
                         </tr>
                       </thead>
@@ -284,11 +285,6 @@
                               <%= eucaImages[i].area %>
                             </td>
                             <td class="text-center" style="vertical-align:middle;">
-                              <form method="get" action="eucaImages/<%= eucaImages[i].imageId %>/edit">
-                                <button class="btn btn-warning" type="submit">Edit</button>
-                              </form>
-                            </td>
-                            <td class="text-center" style="vertical-align:middle;">
                               <% if(eucaImages[i].validated) { %>
                                 <i class="fa fa-check" aria-hidden="true"></i>
                               <% } else { %>
@@ -306,14 +302,50 @@
                               <%= eucaImages[i].retrain_status %>
                             </td>
                             <td class="text-center" style="vertical-align:middle;"><%= eucaImages[i].submitter %></td>
-                            <td class="text-center" style="vertical-align:middle;"><%= moment(eucaImages[i].lastedit).format('do, MMM YYYY HH:mm:ss') %></td>
-
+                            <td class="text-center" style="vertical-align:middle;"><%= moment(eucaImages[i].submit).format('DD MMM YYYY - HH:mm:ss') %></td>
+                            <td class="text-center" style="vertical-align:middle;"><%= moment(eucaImages[i].lastedit).format('DD MMM YYYY - HH:mm:ss') %></td>
+                            <td class="text-center" style="vertical-align:middle;">
+                              <form method="get" action="eucaImages/<%= eucaImages[i].imageId %>/edit">
+                                <button type="submit" class="btn btn-default"><i class="fa fa-pencil" aria-hidden="true"></i>&nbsp &nbsp Edit </button>
+                              </form>
+                            </td>
                             <td  class="text-center" style="vertical-align:middle;">
                               <!--<form method="post" action="eucaImages/<%= eucaImages[i].imageId %>/delete"> -->
                               <!--  <button class="btn btn-danger" data-toggle="confirmation" data-placement="top">Delete</button> -->
-                              <!--</form> -->
-                              <button class="btn btn-danger del_alert" id="<%= eucaImages[i].imageId %>">Delete</button>
-                              <!-- JS dependencies -->
+                              <!--<form class="form-inline" action="/eutech/eucaImages/<%= eucaImages[i].imageId %>/delete" method="post"> -->
+                                  <button class="btn btn-danger <%= eucaImages[i].imageId %>" id="<%= eucaImages[i].imageId %>"><i class="fa fa-minus-circle" aria-hidden="true"></i>&nbsp &nbsp Delete </button>
+                                  <!-- bootbox code -->
+                                  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+                                  <script src="/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+                                  <script src="/lib/bootbox.min.js"></script>
+                                  <script>
+                                      $(document).on("click", ".<%= eucaImages[i].imageId %>", function(e) {
+                                          var imageId = ($(this).attr('id'));
+                                            bootbox.confirm({
+                                              message: "Delete image '" + imageId + "'? This operation cannot be undone...",
+                                              buttons: {
+                                                  confirm: {
+                                                      label: 'Yes',
+                                                      className: 'btn-danger'
+                                                  },
+                                                  cancel: {
+                                                      label: 'No',
+                                                      className: 'btn-default'
+                                                  }
+                                              },
+                                              callback: function (result) {
+                                                  //console.log('This was logged in the callback: ' + result);
+                                                  if(result)
+                                                  {
+                                                    $.post("/eutech/eucaImages/"+imageId + "/delete", function (data) {
+                                                      location.reload();
+                                                    });
+                                                }
+                                              }
+                                          });
+                                      });
+                                  </script>
+                                  <!-- </form> -->
                             </td>
                           </tr>
                         <% } %>

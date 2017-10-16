@@ -269,10 +269,10 @@
                     <%= screeningJobs[i].culture %>
                   </td>
                   <td class="text-center" style="vertical-align:middle;">
-                    <%= moment(screeningJobs[i].breedingdate).format('Do MMM, YYYY') %>
+                    <%= moment(screeningJobs[i].breedingdate).format('DD MMM YYYY') %>
                   </td>
                   <td class="text-center" style="vertical-align:middle;">
-                    <%= moment(screeningJobs[i].collectingdate).format('Do MMM, YYYY') %>
+                    <%= moment(screeningJobs[i].collectingdate).format('DD MMM YYYY') %>
                   </td>
                   <td class="text-center" style="vertical-align:middle;">
                     <%= screeningJobs[i].clone %>
@@ -290,10 +290,10 @@
                     <%= screeningJobs[i].note %>
                   </td>
                   <td class="text-center" style="vertical-align:middle;">
-                    <%= moment(screeningJobs[i].created).format('Do MMM, YYYY - HH:mm:ss') %>
+                    <%= moment(screeningJobs[i].created).format('DD MMM YYYY - HH:mm:ss') %>
                   </td>
                   <td class="text-center" style="vertical-align:middle;">
-                    <%= moment(screeningJobs[i].lastedited).format('Do MMM, YYYY - HH:mm:ss') %>
+                    <%= moment(screeningJobs[i].lastedited).format('DD MMM YYYY - HH:mm:ss') %>
                   </td>
                   <td  class="text-center" style="vertical-align:middle;">
                     <form class="form-inline" action="/eutech/breedingJob/<%= screeningJobs[i]._id %>" method="get">

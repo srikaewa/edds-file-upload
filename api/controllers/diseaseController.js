@@ -30,7 +30,7 @@ exports.eutech_create_a_disease_data = function(req, res) {
       if (err)
         res.send(err);
       //res.json(disease);
-      res.redirect('/eutech/diseases')
+      res.redirect('/eutech/diseases');
     });
 };
 
@@ -56,13 +56,12 @@ exports.eutech_edit_a_disease_data = function(req, res) {
 exports.eutech_update_a_disease_data = function(req, res) {
   console.log('UPDATE disease [' + req.params.diseaseId + ']');
   //req.body.validated = false;
-  req.body.lastedited = new Date(new Date().getTime() - new Date().getTimezoneOffset()*60*1000).toISOString();
-  Disease.findOneAndUpdate({_id: req.params.diseaseId}, req.body, {new: true}, function(err, disease) {
+  Disease.findOneAndUpdate({_id: req.params.diseaseId}, {disease_label: req.body.label, lastedited: new Date()}, {new: true}, function(err, disease) {
     if (err)
       res.send(err);
     console.log('UPDATE disease with ' + disease);
     //res.render('disease/details.ejs', {disease: disease});
-    res.json(disease);
+    res.redirect('/eutech/diseases');
   });
   /*req.body.lastedit = new Date();
   EucaImage.findOneAndUpdate({_id: req.params.imageId}, req.body, {new: true}, function(err, task) {

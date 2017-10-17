@@ -20,39 +20,46 @@ exports.eutech_edds_dashboard = function(req, res){
       res.render('edds/index.ejs', {edds: edds, diseaseList: diseaseList});
     });
   }); */
+  var eu = edds_mod.update(function(err, edds){
+      console.log("Update EDDS for today => " + edds.created);
 
-  async.parallel([
-    function(callback){
-      EDDS.find({}).sort({_id : -1}).limit(1).exec(function(err, edds){
-        if (err)
-          res.send(err);
-      callback(null, edds);
-      });
-    },
-    function(callback){
-      var dl = edds_mod.diseaselist(function(diseaseList){
-        callback(null, diseaseList);
-      });
-    },
-    function(callback){
-      EucaImage.find({}).sort({_id : -1}).limit(20).exec(function(err, eucaImages){
+    async.parallel([
+      function(callback){
+        EDDS.find({}).sort({_id : -1}).limit(1).exec(function(err, edds){
+          if (err)
+            res.send(err);
+        //console.log("EDDS => " + edds);
+        callback(null, edds);
+        });
+      },
+      function(callback){
+        var dl = edds_mod.diseaselist(function(diseaseList){
+          //console.log("diseaseList => " + diseaseList);
+          callback(null, diseaseList);
+        });
+      },
+      function(callback){
+        EucaImage.find({}).sort({_id : -1}).limit(20).exec(function(err, eucaImages){
+          if(err)
+            res.send(err);
+          //console.log("eucaImages => " + eucaImages);
+          callback(null, eucaImages);
+        });
+      },
+      function(callback){
+        ScreeningJob.find({}).sort({_id : -1}).limit(20).exec(function(err, screeningJobs){
+          if(err)
+            res.send(err);
+          //console.log("screeningJobs => " + screeningJobs);
+          callback(null, screeningJobs);
+        });
+      }
+    ], function(err, results){
         if(err)
-          res.send(err);
-        callback(null, eucaImages);
-      });
-    },
-    function(callback){
-      ScreeningJob.find({}).sort({_id : -1}).limit(20).exec(function(err, screeningJobs){
-        if(err)
-          res.send(err);
-        callback(null, screeningJobs);
-      });
-    }
-  ], function(err, results){
-      if(err)
-        res.send(err)
-      //console.log("Render => " + results[0] + results[1] + results[2]);
-      res.render('edds/index.ejs', {edds: results[0], diseaseList: results[1], eucaImages: results[2], screeningJobs: results[3]});
+          res.send(err)
+        //console.log("Render => " + results[0] + results[1] + results[2] + results[3]);
+        res.render('edds/index.ejs', {edds: results[0], diseaseList: results[1], eucaImages: results[2], screeningJobs: results[3]});
+    });
   });
 
 };

@@ -102,6 +102,9 @@ var update = function (callback){
                       {
                         create_disease(edds._id, function(err, result){
                           console.log("After create dieases => " + result);
+                          update_disease(edds._id, function(err, result){
+                            console.log("After update dieases => " + result);
+                          });
                         });
                       }else {
                         update_disease(edds._id, function(err, result){
@@ -120,10 +123,15 @@ var update = function (callback){
                   new_edds_data.save(function(err, edds){
                     if(err)
                       return(err);
+                    console.log("Creating diseases...");
                     if(edds.diseases.length == 0)
                       {
+                        console.log("Before creation of diseases...");
                         create_disease(edds._id, function(err, result){
                           console.log("After create dieases => " + result);
+                          update_disease(edds._id, function(err, result){
+                            console.log("After update dieases => " + result);
+                          });
                         });
                       }else {
                         update_disease(edds._id, function(err, result){
@@ -142,9 +150,10 @@ var update = function (callback){
       );
     };
 
-var create_disease = function(edds, callback)
+var create_disease = function(edds, c_dis)
     {
       //var today = new Date(new Date().getTime() - new Date().getTimezoneOffset()*60*1000).toISOString();
+      console.log("Inside create_disease...");
       var diseaselist = [];
       async.waterfall([
         function(callback){
@@ -170,15 +179,13 @@ var create_disease = function(edds, callback)
               {"_id": edds},
               {"$push": {"diseases": dc}},
               function(err, result){
-                //console.log("Disease pushed => " + result + " with id = " + edds);
+                console.log("Disease pushed => " + result._id + " with id = " + edds);
               });
             });
         }
       ], function(err, result){
-          if(err)
-            return(err);
           console.log("Create diseases data => " + result);
-          return callback(err, result);
+          return c_dis(err, result);
       });
 
       /*EucaImage.count({diseasetype: diseasetype}, function(err, numberOfDisease){
@@ -247,7 +254,9 @@ var update_disease = function(edds, callback)
 };
 
 var disease_count = function(type, callback){
-  var yesterday = moment().subtract(1, 'days').format();
+  //var yesterday = moment().subtract(1, 'days').format();
+  var start = moment().startOf('day'); // set to 12:00 am today
+  var end = moment().endOf('day'); // set to 23:59 pm today
   async.parallel([
     function(callback){
       EucaImage.count({diseasetype: type}, function(err, numberOfDisease){
@@ -258,7 +267,7 @@ var disease_count = function(type, callback){
       });
     },
     function(callback){
-      EucaImage.count({submit:{"$gte":yesterday}, diseasetype: type}, function(err, numberOfDiseaseToday){
+      EucaImage.count({submit:{$gte:start, $lt: end}, diseasetype: type}, function(err, numberOfDiseaseToday){
         if(err)
           return err;
         console.log("Num[" +type+ "] total today => " + numberOfDiseaseToday);

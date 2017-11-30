@@ -68,7 +68,19 @@ exports.run_classify = function(req, res) {
 
     var exec = require('child_process').exec;
     var result = '';
-    var command = "../edds/run_classifyEuca.sh /usr/local/MATLAB/MATLAB_Runtime/v92/ ../EucaUploads/"+ eucaImage.filename + " " + eucaImage.imageId + " " + "http://localhost:3009/eucaImages/";
+
+    // check ann type
+    var command;
+    if(req.params.annType == "sfam")
+    {
+      console.log('SFAM type...')
+      command = "../edds/run_classifyEuca.sh /usr/local/MATLAB/MATLAB_Runtime/v92/ ../EucaUploads/"+ eucaImage.filename + " " + eucaImage.imageId + " " + "http://localhost:3009/eucaImages/";
+    }
+    else {
+      console.log('AlexNet CNN type...');
+      command = "../edds/run_classifyEucaCNN.sh /usr/local/MATLAB/MATLAB_Runtime/v92/ ../EucaUploads/"+ eucaImage.filename + " " + eucaImage.imageId + " " + "http://localhost:3009/eucaImages/";
+    }
+
     //console.log('EXEC command -> ' + command);
     var child = exec(command);
     //var child = exec('ls -al');
@@ -401,4 +413,46 @@ exports.get_disease_type = function(req, res) {
 
 exports.table_summarize = function(req, res) {
   res.render('tables.ejs');
+};
+
+exports.eutech_disease_folder = function(req, res) {
+  EucaImage.find({diseaselabel: req.params.diseaselabel, validated: true}, function(err, eucaImages) {
+    if (err)
+      res.send(err);
+    //var res_end = '{"imageId":"' + eucaImage.imageId + '","diseasetype":"' + eucaImage.diseasetype + '", "stage":"' + eucaImage.stage + '","level":"' + eucaImage.level + '","lastedit":"' + eucaImage.lastedit + '","elapsetime":"'+ eucaImage.elapsetime + '"}';
+    //console.log('GET files =' + eucaImage.diseasetype + ' for image [' + eucaImage.imageId + '] submitted by ' + eucaImage.submitter);
+    // Dependencies
+    var filelist = '';
+    if(eucaImages.length>0)
+    {
+      for(var i=0; i<eucaImages.length - 1; i++)
+        filelist+=eucaImages[i].filename + ',';
+      filelist+=eucaImages[eucaImages.length - 1].filename;
+      res.json({filecount: eucaImages.length, files: filelist});
+    }
+    else {
+      res.json({ message: 'No eucaimage with disease label ' + req.params.diseaselabel + ' found!' });
+    }
+  });
+};
+
+exports.eutech_disease_stage_folder = function(req, res) {
+  EucaImage.find({diseaselabel: req.params.diseaselabel, stage: req.params.stage, validated: true}, function(err, eucaImages) {
+    if (err)
+      res.send(err);
+    //var res_end = '{"imageId":"' + eucaImage.imageId + '","diseasetype":"' + eucaImage.diseasetype + '", "stage":"' + eucaImage.stage + '","level":"' + eucaImage.level + '","lastedit":"' + eucaImage.lastedit + '","elapsetime":"'+ eucaImage.elapsetime + '"}';
+    //console.log('GET files =' + eucaImage.diseasetype + ' for image [' + eucaImage.imageId + '] submitted by ' + eucaImage.submitter);
+    // Dependencies
+    var filelist = '';
+    if(eucaImages.length>0)
+    {
+      for(var i=0; i<eucaImages.length - 1; i++)
+        filelist+=eucaImages[i].filename + ',';
+      filelist+=eucaImages[eucaImages.length - 1].filename;
+      res.json({filecount: eucaImages.length, files: filelist});
+    }
+    else {
+      res.json({ message: 'No eucaimage with disease label ' + req.params.diseaselabel + ' found!' });
+    }
+  });
 };

@@ -22,7 +22,7 @@ module.exports = function(app) {
   app.route('/api/photo')
     .post(eucaImageList.upload_file);
 
-  app.route('/runClassify/:imageId')
+  app.route('/runClassify/:imageId/:annType')
     .get(eucaImageList.run_classify);
   app.route('/runRetrain/:imageId/:diseasetype/:stage')
     .get(eucaImageList.run_retrain);
@@ -60,5 +60,9 @@ module.exports = function(app) {
   app.route('/eutech/eucaImages/:imageId/validate/:validated/:validator')
     .post(eucaImageList.eutech_validate_a_image_data);
 
+  app.route('/eutech/eucaImages/folder/:diseaselabel')
+    .get(eucaImageList.eutech_disease_folder);
 
+  app.route('/eutech/eucaImages/folder/:diseaselabel/:stage')
+    .get(eucaImageList.eutech_disease_stage_folder);
 };
